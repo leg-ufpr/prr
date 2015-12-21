@@ -1,0 +1,17 @@
+---
+title: "Pesquisa Reproduzível"
+author: "Fernando Mayer & Walmes Zeviani"
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+
+opts_chunk$set(
+    dev.args=list(family = "Palatino"))
+
+options(width = 68)
+```
+
+****
+# Introdução #
+
