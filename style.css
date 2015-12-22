@@ -8,9 +8,11 @@ tt, code, pre {
     font-family: "Inconsolata", "Andale Mono", monospace;
 }
 
+/*
 code {
     font-size: 16px;
 }
+*/
 
 pre code {
     font-size: 14px;
