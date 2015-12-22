@@ -8,9 +8,18 @@ tt, code, pre {
     font-family: "Inconsolata", "Andale Mono", monospace;
 }
 
-code {
-    font-size: 16px;
+/* Controla o título. */
+#header {
+    text-align: center;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
 }
+
+/* Controla o sumário. */
+/* #TOC { display: block; } */
+/* h1.title {} */
+/* h4.author {} */
+/* code { font-size: 16px; } */
 
 pre code {
     font-size: 14px;
