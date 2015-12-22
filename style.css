@@ -21,6 +21,16 @@ tt, code, pre {
 /* h4.author {} */
 /* code { font-size: 16px; } */
 
+p {
+    /* margin: 0px 0px 10px; */
+    text-indent: 1em;
+    text-align: justify;
+}
+
+pre {
+    word-break: keep-all;
+}
+
 pre code {
     font-size: 14px;
 }
