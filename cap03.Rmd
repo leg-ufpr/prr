@@ -149,13 +149,13 @@ Authors@R: as.person(c(
     "Walmes Marques Zeviani <walmes@ufpr.br> [aut]"))
 Description: Esse é o primeiro pacoteque estamos fazendo. Nesse tutorial
     o pacote será desenvolvido com funções, dados e vinheta.
-Depends:
-    R (>= %s)
 License: GPL-3
 URL: http://git.leg.ufpr.br/leg/prr
 BugReports: http://git.leg.ufpr.br/leg/prr/issues
 LazyData: true
-Encoding: UTF-8', getRversion()))
+Encoding: UTF-8
+Depends:
+    R (>= %s)', getRversion()))
 ```
 
 Abaixo serão especificados os detalhes para a criação de cada um dos
@@ -546,5 +546,294 @@ envolvem esse arquivo. O mais importante é saber quais funções serão
 exportadas do seu pacote, quais serão importadas, e de que maneira
 podemos especificar essas funções.
 
+### Exportando funções ###
+
+Exportar funções do seu pacote nada mais é que torná-las disponíveis
+para o usuário. No desenvolvimento de um pacote, normalmente são criadas
+algumas funções internas ou auxiliares, que são utilizadas apenas por
+uma ou mais funções principais e nunca chamadas diretamente. Se em
+nenhum momento estas funções precisarem ser utilizadas pelo usuário do
+pacote, então elas não precisam (e não devem) ser exportadas, para
+minimizar a possibilidade de conflito com outros pacotes.
+
+Quando um pacote é carregado com `library()` ou `require()`, ele é
+"anexado" (*attached*) ao *workspace* do usuário, tornando assim as
+funções exportadas disponíveis para serem utilizadas. Você pode conferir
+a lista de pacotes anexados em seu *workspace* com `search()`.
+
+Por padrão, quando iniciamos um pacote com a função `create()` do pacote
+`devtools`, é criado um arquivo `NAMESPACE` que exporta automaticamente
+**todas** as funções que forem criadas, e que não começem com um ponto
+`.`. O arquivo `NAMESPACE` inicial possui a especificação a seguir, que
+indica que são exportadas todos os objetos que não começam com ponto.
+
+```{r echo=FALSE, comment=NA, cache=TRUE}
+cat(namespace, sep = "\n")
+```
+
+No entanto, se você não quiser exportar todas as funções de dentro do
+diretório `R/`, será necessário especificar quais funções deseja
+exportar. Para isso, basta usar a tag `@export` na documentação da
+função com o `roxygen2` (assim como usamos na documentação da função
+`soma.R` acima). A função `document()` é a responsável por verificar as
+funções que possuem `@export` e colocá-las adequadamente no arquivo
+`NAMESPACE`. Dessa forma, usando o nosso exemplo, após escrever as
+funções com `@export` e rodar `document()`, o arquivo `NAMESPACE` passa
+a listá-las.
+
+```{r echo=FALSE, comment=NA, cache=TRUE}
+cat(readLines("./meupacote/NAMESPACE"), sep = "\n")
+```
+
+Cada objeto exportado, nesse caso todos funções, aparece nesse arquivo,
+um em cada linha. Caso existam objetos que você não queira exportar,
+basta não colocar a tag `@export` na documentação. (Na verdade, as
+funções não exportadas não precisam nem ser documentadas, mas é sempre
+uma boa prática escrever a documentação até mesmo para você no futuro).
+
+### Importando funções ###
+
+Normalmente as funções que estamos criando para um pacote utilizam
+funções de outros pacotes. Todas as funções dos pacotes que são
+distribuídos e automaticamente carregados quando você inicia uma sessão
+do R, são disponíveis para serem utilizadas em qualquer outra função,
+sem a necessidade de qualquer especificação adicional. Estes pacotes
+básicos do R são: `base`, `utils`, `datasets`, `grDevices`, `graphics`,
+`stats`, e `methods`. Esse conjunto de pacotes já garante uma grande
+quantidade de funções, no entanto, algumas vezes podem ser necessárias
+funções específicas de outros pacotes.
+
+Existem três formas básicas de importar, ou seja, utilizar funções de
+outros pacotes dentro do seu pacote:
+
+  1. `pacote::funcao()`: chamar uma função utilizando o operador `::` é
+     recomendado quando o função for utilizada poucas vezes. Dessa forma
+     fica claro no seu pacote aonde uma função externa está sendo
+     utilizada.
+  2. `@importFrom pacote funcao`: se uma funcao for utilizada váras
+     vezes dentro de um pacote, ou se mais de uma função do mesmo pacote
+     for utilizada, recomenda-se especifica-las com a tag `@importFrom`
+     na documentação `roxygen2`. Dessa forma não é necessário utilizar o
+     operador `::` na chamada das funções, o que torna o código um pouco
+     mais legível se muitas funções externas forem utilizadas.
+  3. `@import pacote`: se o seu pacote depende de muitas funções de
+     outro(s) pacote(s), então o mais razoável é importar todas as
+     funções do pacote. Isso é feito utilizando a tag `@import` na
+     documentação do `roxygen2` da função. Dessa forma, todas as funções
+     do pacote estarão disponíveis para serem utilizadas no seu pacote.
+
+Já vimos anteriromemte na seção `DESCRIPTION` que exite um campo
+`Imports` que serve para especificar de quais pacotes o seu depende. Se
+você utilizou qualquer um dos três métodos acima para importar uma ou
+várias funções, então **obrigatoriamente** o pacote que contém estas
+funções deve ser listado no campo `Imports` (ou `Depends`) do arquivo
+`DESCRIPTION`.
+
+O campo `Imports` do DESCRIPTION e a etiqueta `@imports` da
+documentação, embora os nomes sejam iguais, seus papeis são distintos. O
+`Imports` apenas verifica se os pacotes listado está presente equanto
+que o `@imports` importa as funções para uso e tem ligação com o
+`NAMESPACE`.
+
+Uma distinção importante é que listar os pacotes no campo `Imports` do
+arquivo `DESCRIPTION` garante que o usuário terá instalado os pacotes
+necessários para que o seu funcione. No entanto, ele não é o responsável
+por carregar e tornar as funções desse pacote disponível. Esse papel é
+feito por algum dos três métodos citados acima, que por consequência
+irão atualizar o arquivo `NAMESPACE`, que é o verdadeiro responsável por
+carregar os pacotes e funções necessárias para o uso do seu pacote.
+
+Por exemplo, vamos criar uma função personalizada para fazer um gráfico
+de pontos utilizando a função `xyplot()` do pacote `lattice`. Vamos
+supor que esse gráfico personalizado usa um `x` no lugar do ponto (`pch
+= 4`), e de cor preto (`col = 1`), já que o padrão do `lattice` é azul
+claro. Vamos chamar essa função de `meuxy()` e colocá-la no arquivo
+`meuxy.R` do diretório `R/`. O conteúdo desse arquivo é exibido a
+seguir.
+
+```{r, echo=FALSE, comment=NA, include=FALSE}
+file.copy(from = "aux/plotTriRet.R",
+          to = "meupacote/R/plotTriRet.R",
+          overwrite = TRUE)
+```
+```{r, echo=FALSE, comment=NA, cache=TRUE}
+cat(readLines("./meupacote/R/plotTriRet.R"), sep = "\n")
+```
+
+Agora é necessário rodar a função `document()` para gerar o arquivo
+`man/plotTriRec.Rd`. Isso também atualiza o arquivo `NAMESPACE`, com a
+exportação da função `plotTriRet()`, e a importação da função `xyplot()`
+do pacote `lattice`.
+
+```{r, echo=TRUE, eval=FALSE}
+document()
+```
+```{r, echo=FALSE, eval=TRUE}
+document("meupacote/")
+```
+
+Note que, na mensagem acima, além de criar o arquivo `meuxy.Rd`, houve
+uma atualização do arquivo `NAMESPACE` para importar a função `xyplot()`
+da `lattice`. Ou seja, já estamos exportando a função `meuxy()`, e
+importando a função `xyplot()` do pacote `lattice`, através da função
+`importFrom()`, colocada no `NAMESPACE`.
+
+```{r, echo=FALSE, comment=NA}
+cat(readLines("./meupacote/NAMESPACE"), sep = "\n")
+```
+
+Note que utilizamos a etiqueta (*tag*)
+
+```{r, eval=FALSE, highlight=FALSE}
+#' @importFrom lattice xyplot
+```
+
+Mas poderíamos também ter utilizado o operador `::` diretamente na
+função, por exemplo
+
+```{r, eval=FALSE}
+plotTriRet <- function(a, b, ...){
+    x <- c(0, a, 0, 0)
+    y <- c(0, 0, b, 0)
+    lattice::xyplot(y ~ x, type = c("l", "g"), aspect = "iso",
+                    xlab = NULL, ylab = NULL, col = 1, ...)
+}
+```
+
+E, nesse caso, não precisariamos usar a tag `@importFrom`. O resultado
+no `NAMESPACE` seria o mesmo. A tag `@import` também poderia ter sido
+utilizada, por exemplo,
+
+```{r, eval=FALSE, highlight=FALSE}
+#' @import lattice
+```
+
+No entanto, nesse caso não há vantagem em importar todo o pacote pois
+estamos utilizando apenas uma função.
+
+Como mencionameos anteriormente, a importação de funções realizadas até
+aqui, cria as entradas necessárias no arquivo `NAMESPACE` e torna as
+funções disponíveis para o pacote. Sempre que importarmos qualquer
+função, será necessário acresentar o nome do pacote à que a função
+pertence no arquivo `DESCRIPTION`, mais especificamente no campo
+`Imports`. Isso garante que o usuário que instalar o seu pacote também
+terá instalado o pacote necessário para que o seu funcione. Esta
+inserção deve ser feita manualmente, e dessa forma,
+o arquivo `DESCRIPTION` ficaria atualizado com o seguinte conteúdo
+(repare a última linha):
+
+```{r, eval=FALSE}
+## Adiciona lattice ao campo Imports no DESCRIPTION.
+use_package(package = "lattice", type = "Imports")
+```
+```{r echo=FALSE, comment=NA, cache=FALSE}
+use_package(package = "lattice", type = "Imports", pkg = "./meupacote/")
+cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
+```
+
+Os campos dentro do arquivo `DESCRIPTION` não seguem uma ordem
+establecida conforme você já pode perceber. Em geral, por razões óbvias,
+os campos iniciais sempre fornecem as informações para humanos e no
+final os campos que controlam a construção.
+
 ****
-# Começando um pacote #
+# Construindo o pacote #
+
+A última etapa é finalmente construir o pacote, ou seja, gerar um
+arquivo fonte (ou binário) que pode ser distribuído para os usuários
+instalarem.
+
+Antes de construir o pacote, podemos rodar uma série de checagens para
+conferir se todos os componentes do pacote estão funcionando como seria
+o esperado. Essa checagem é feita com o comando `R CMD check` depois de
+construir o pacote. No entanto, como estamos usando o `devtools`,
+podemos simplificar e utilizar a função `check()` para realizar a mesma
+checagem automaticamente, de dentro de uma sessão do R, e deixar para
+construir o pacote só no final quando tudo estiver funcionando.
+
+```{r, echo=TRUE, eval=FALSE}
+check()
+```
+```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+## Essa chamada so mostra a parte inicial do output.
+check("meupacote/")
+```
+```{r, echo=FALSE, eval=TRUE}
+## Para mostrar o output da chamada da funcao foi necessario chamar o
+## Rscript dentro do system.
+cat(system("Rscript -e 'library(devtools); check(\"./meupacote/\")'",
+           intern = TRUE),
+    sep = "\n")
+```
+
+Note que esta checagem é bem completa, e se o *status* final for `OK`,
+então o pacote está funcionando e pronto para ser instalado. Se nesta
+checagem aparecer no final algum `NOTE`, significa que o pacote funciona
+mas algumas coisas precisam ser arrumadas. Se houverem `ERROR`s, o
+processo de checagem é parado e não é possível instalar o seu pacote até
+que no seja arrumado.
+
+Finalmente para construir o pacote, usaremos a função `build()` do
+pacote `devtools`.
+
+```{r, echo=TRUE, eval=FALSE}
+build()
+```
+```{r, echo=FALSE, eval=TRUE, cache=TRUE, results='hide'}
+## Essa chamada so mostra a parte inicial do output.
+build("meupacote/")
+```
+```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+## Para mostrar o output da chamada da funcao foi necessario chamar o
+## Rscript dentro do system.
+cat(system("Rscript -e 'library(devtools); build(\"meupacote/\")'",
+           intern = TRUE),
+    sep = "\n")
+```
+
+O resultado da chamada dessa função é o arquivo `r dir(pattern =
+".tar.gz")` que contém o código-fonte do seu pacote e está pronto para
+ser distribuído e instalado no Linux e Mac.
+
+No mesmo diretório onde você está desenvolvendo o pacote, você pode ter
+outros arquivos e diretórios. Por exemplo, algumas pessoas preferem ter
+um diretório que não irá fazer parte do pacote, mas que serve para
+guardar *scripts* de teste, bases de dados, material em desenvolvimento,
+etc. Nestes casos é necessário especificar que estes arquivos e
+diretórios devem ser ignorados no processo de checagem (`check()`) e
+construção do pacote (`build()`). Caso algum arquivo ou diretório que
+não seja comum ao pacote do R, esses comandos retornarão com um erro, e
+não será possível construir o pacote. Para evitar estes erros e ao mesmo
+tempo manter esses arquivos e diretórios, liste-os pelo nome no arquivo
+`.Rbuildignore` na raíz do pacote. Por exemplo, se você tiver o
+diretório `playground/` e um arquivo chamdo `teste.R`, coloque no
+arquivo `.Rbuildignore`:
+
+```
+teste.R
+playground/
+```
+
+Para gerar um arquivo binário (`.zip`) para instalar no Windows, o
+processo é mais complicado (como tudo no Windows). Esse arquivo binário
+só é possível ser gerado de dentro do Windows, o que, em muitos casos,
+não está disponível para uso. Uma opção então é utilizar o
+`r renderUrl("*win-builder*","http://win-builder.r-project.org/",rty)`,
+um servidor Windows disponibilizado pelos mantenedores do R para que
+pessoas sem acesso ao Windows possam gerar arquivos binários de
+pacotes. O processo consiste em entrar na página e enviar o código-fonte
+(`.tar.gz`) por upload. Em alguns minutos você recebe um email com o
+link para baixar a versão binária do seu pacote para Windows.
+
+Como estamos usando o `devtools`, podemos apenas utilizar a função
+`build_win()`, que irá fazer todo esse processo automaticamente. O link
+com a versão binária do arquivo será enviado para o email colocado no
+campo `Maintainer` no arquivo `DESCRIPTION`, por isso é importante que
+seja um email válido.
+
+```{r eval=FALSE}
+build_win()
+```
+
+Uma vantagem dessa função é que ela também roda uma checagem para ver se
+o pacote funcionará adequadamente no Windows.
