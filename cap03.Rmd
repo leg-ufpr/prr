@@ -129,15 +129,14 @@ write.dcf(
     list(Package = "meupacote",
          Title = "Meu Primeiro Pacote R",
          Version = "0.0-1",
-         Author = "Fernando Mayer <fernandomayer@ufpr.br>",
+         Author = "Walmes Zeviani <walmes@ufpr.br>",
+         Maintaner = "Fernando Mayer <fernandomayer@ufpr.br>",
          Description = "O que esse pacote faz",
-         Depends = sprintf("R (>= %s)", getRversion()),
          License = "GPL-3",
-         LazyData = "true"),
+         LazyData = "true",
+         Depends = sprintf("R (>= %s)", getRversion())),
     file = "meupacote/DESCRIPTION"),
     indent = 4)
-
-cat()
 ```
 ```{r}
 cat(file = "meupacote/DESCRIPTION", sep = "\n",
@@ -567,7 +566,7 @@ Por padrão, quando iniciamos um pacote com a função `create()` do pacote
 `.`. O arquivo `NAMESPACE` inicial possui a especificação a seguir, que
 indica que são exportadas todos os objetos que não começam com ponto.
 
-```{r echo=FALSE, comment=NA, cache=TRUE}
+```{r echo=FALSE, comment=NA}
 cat(namespace, sep = "\n")
 ```
 
@@ -581,7 +580,7 @@ funções que possuem `@export` e colocá-las adequadamente no arquivo
 funções com `@export` e rodar `document()`, o arquivo `NAMESPACE` passa
 a listá-las.
 
-```{r echo=FALSE, comment=NA, cache=TRUE}
+```{r echo=FALSE, comment=NA}
 cat(readLines("./meupacote/NAMESPACE"), sep = "\n")
 ```
 
@@ -656,7 +655,7 @@ file.copy(from = "aux/plotTriRet.R",
           to = "meupacote/R/plotTriRet.R",
           overwrite = TRUE)
 ```
-```{r, echo=FALSE, comment=NA, cache=TRUE}
+```{r, echo=FALSE, comment=NA}
 cat(readLines("./meupacote/R/plotTriRet.R"), sep = "\n")
 ```
 
@@ -726,7 +725,7 @@ o arquivo `DESCRIPTION` ficaria atualizado com o seguinte conteúdo
 ## Adiciona lattice ao campo Imports no DESCRIPTION.
 use_package(package = "lattice", type = "Imports")
 ```
-```{r echo=FALSE, comment=NA, cache=FALSE}
+```{r echo=FALSE, comment=NA}
 use_package(package = "lattice", type = "Imports", pkg = "./meupacote/")
 cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
 ```
@@ -754,11 +753,11 @@ construir o pacote só no final quando tudo estiver funcionando.
 ```{r, echo=TRUE, eval=FALSE}
 check()
 ```
-```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+```{r, echo=FALSE, eval=TRUE, comment=NA}
 ## Essa chamada so mostra a parte inicial do output.
 check("meupacote/")
 ```
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, comment=NA}
 ## Para mostrar o output da chamada da funcao foi necessario chamar o
 ## Rscript dentro do system.
 cat(system("Rscript -e 'library(devtools); check(\"./meupacote/\")'",
@@ -779,11 +778,11 @@ pacote `devtools`.
 ```{r, echo=TRUE, eval=FALSE}
 build()
 ```
-```{r, echo=FALSE, eval=TRUE, cache=TRUE, results='hide'}
+```{r, echo=FALSE, eval=TRUE, results="hide", comment=NA}
 ## Essa chamada so mostra a parte inicial do output.
 build("meupacote/")
 ```
-```{r, echo=FALSE, eval=TRUE, cache=TRUE}
+```{r, echo=FALSE, eval=FALSE, results="hide", comment=NA}
 ## Para mostrar o output da chamada da funcao foi necessario chamar o
 ## Rscript dentro do system.
 cat(system("Rscript -e 'library(devtools); build(\"meupacote/\")'",
