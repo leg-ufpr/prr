@@ -16,3 +16,4 @@ source("config.R")
 rty <- "md"
 ```
 
+  * <http://kbroman.org/pkg_primer/pages/tests.html>
