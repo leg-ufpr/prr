@@ -63,6 +63,41 @@ meio de divulgação do pacote que é, nesse capítulo serão descritos os
 passos para adicionar vinhetas ao pacote. Vamos considerar vinhetas em
 HTML e PDF escritas em RMarkDown e compiladas com o knitr.
 
+A documentação é impessoal e pontual, a vinheta não. O artigo é formal e
+demorado, a vinheta.  Usos: descrição geral; material suplementar;
+estudo de caso; detalhamento de algoritimos;
+
+# Consultar vinhetas #
+
+#### Vinhetas dos pacotes instalados ####
+
+Certamente alguns dos pacotes que você tem instalado no seu SO possuem
+vinheta. Se você está reproduzindo o código desse tutorial, então você
+tem o `devtools` e o `roxygen2`. Para acessar as vinhetas disponíveis
+você pode usar as opções ilustradas abaixo.
+
+```{r, eval=FALSE}
+## Exibe todas as vinhetas disponíveis no console.
+vignette()
+```
+```{r}
+## Exibe as vinhetas de um único pacote no console.
+vignette(package = "roxygen2")
+```
+```{r, eval=FALSE}
+## Abre uma vinheta pelo nome (essa é do pacote roxygen2).
+vignette(topic = "rd")
+vignette(topic = "rd", package = "roxygen2")
+
+## Exibe todas as vinhetas disponíveis no navegador.
+browseVignettes()
+
+## Exibe apenas as vinhetas de um pacote.
+browseVignettes(package = "roxygen2")
+```
+
+#### Vinhetas dos pacotes no CRAN ####
+
 # Adicionando vinheta #
 
 As vinhetas ficam no `inst/doc/` quando o pacote é instalado. Os fontes
@@ -117,20 +152,6 @@ para gerar links na home da documentação (suponho).
 A vantagem do HTML é que uma index pode dar acesso às várias vinhetas de
 um pacote. Torna fácil para o usuário iniciante.
 
-```{r, eval=FALSE}
-## Exibe todas as vinhetas disponíveis no console.
-vignette()
-
-## Abre uma vinheta pelo nome (essa é do pacote roxygen2).
-vignette("rd")
-vignette("rd", package = "roxygen2")
-
-## Exibe todas as vinhetas disponíveis no navegador.
-browseVignettes()
-
-## Exibe as vinhetas de um pacote.
-browseVignettes(package = "roxygen2")
-```
 
 ```
 ## Meta dados de uma vinheta.
@@ -140,7 +161,7 @@ browseVignettes(package = "roxygen2")
 % \VignetteKeyword{palavra2}
 ```
 
-<!---------------------------------------------------------------------- -->
+<!--------------------------------------------- -->
 
 A coisa que mais fácil ajuda você a conhecer as funcionalidades de um
 pacote é sem dúvida a sua vinheta (*vignette*). Um pacote pode ter
