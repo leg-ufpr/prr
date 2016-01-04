@@ -16,54 +16,52 @@ source("config.R")
 rty <- "md"
 ```
 
-A documentação de um pacote é indispensável para sua
+A documentação de um pacote é indispensável para sua criação e
 distribuição. Tecnicamente falando, não tem como fazer um pacote R sem
 documentação para os objetos exportados. Por mais breve que seja, a
-documentação precisa existir para o pacote ser contruído e, portanto, a
+documentação precisa existir para o pacote ser construído e, portanto, a
 documentação é uma exigência.
 
 Os usuários consultam a documentação quando sabem exatamente o que
 procurar. Exceto pela sessão *Exemplos*, a documentação não se destina a
 mostrar a conexão entre funções ou seu uso coordenado para solução de
 certos problemas. Isso porque as páginas de ajuda descrevem objetos
-individualmente ou em grupos pequenos fornecendo uma orientação
+individualmente, ou em grupos pequenos, fornecendo uma orientação
 específica e não uma visão geral e integrada.
 
 No primeiro contato com um pacote, por outro lado, o que o usuário
-deseja é de uma visão geral dele. Uma espécie de trailer ou enredo. A
-documentação é um documento teodioso de leer para alguém que quer uma
-visão geral, pois ela é como uma descrição de cada personagem e não da
-forma como eles se envolvem.
+deseja é de uma visão geral dele, uma espécie de trailer ou enredo. A
+documentação é teodiosa de ler para alguém que quer uma visão geral,
+pois ela é como uma descrição de cada personagem e não da forma como
+eles se envolvem.
 
 A palavra *vignette* admite traduções como vinheta, esboço e epsódio. No
 contexto de um pacote R, uma vinheta é uma documentação auxiliar do
-pacote que descreve o uso coordenado das funções que contém (ou
+mesmo que descreve o uso coordenado das funções que contém (ou
 *datasets*) na solução de um problema ou sobre um tema. É usada para dar
-uma visão geral dos recusos do pacote
+uma visão geral dos recusos do pacote.
+
 
 As vinhetas não são exigidas nos pacotes, embora seja a melhor forma de
 apresentá-lo. Certamente pela mesma razão, não existe restrição de
 tamanho nem forma e fica como responsabilidade dos autores usar do bom
-senso ao escrever uma vinheta. O que é marcante, no entanto, é que as
-vinhetas fazem mistura de prosa e código. Antes da versão 3.0.0 do R, as
-vinhetas eram documentos Sweave e nas versões mais recentes, vinhetas
-não Sweave foram permitidas.
+senso ao escrever uma vinheta e até mesmo quantas vinhetas ter. Se um
+pacote é multitemático ou se a solução para diferentes problemas são
+longas, é melhor ter vinhetas dedicadas a cada um.
 
-REVIEW
+O que é marcante, no entanto, é que as vinhetas fazem mistura de prosa e
+código. Antes da versão 3.0.0 do R, as vinhetas eram documentos Sweave e
+nas versões mais recentes, vinhetas não Sweave foram permitidas.
 
-Diferente de um artigo que é muito formal e da documentação que é muito
-específica, as vinhetas são informais e gerais.
+Sendo ou não documentos Sweave, nas as vinhetas são permitidos gráficos
+e outputs de resultados R, além de tabelas e equações. As vinhetas em
+HTML, consideradas a partir da versão 3.0.0, podem até mesmo ter vídeos,
+animações em gif, gráficos em JavaScript e OpenGL.
 
-As vinhetas podem ter gráficos e outputs de resultados R, além de
-tabelas e equações. As vinhetas em HTML podem ter vídeos, animações em
-gif, gráficos em javascript e opengl.
-
-Um pacote pode ter mais de uma vinheta.
-
-O usuários leem pouco a documentação e movem-se para a sessão exemplos
-para ver como as funções funcionam.
-Usuários gostam de instruções práticas, discussão e interpração dos
-resultados.
+Diante de todos esses recursos que uma vinheta contém e pelo excelente
+meio de divulgação do pacote que é, nesse capítulo serão descritos os
+passos para adicionar vinhetas ao pacote. Vamos considerar vinhetas em
+HTML e PDF escritas em RMarkDown e compiladas com o knitr.
 
 # Adicionando vinheta #
 
