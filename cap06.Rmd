@@ -8,6 +8,26 @@ library(knitr)
 
 opts_chunk$set(
     dev.args=list(family = "Palatino"))
+opts_knit$set(eval.after = "fig.cap")
+
+## http://stackoverflow.com/questions/13848137/figure-captions-references-using-knitr-and-markdown-to-html
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap = function(refName, text) {
+        i <<- i + 1
+        ref[[refName]] <<- i
+        paste("Figura ", i, ": ", text, sep = "")
+    },
+    ref = function(refName) {
+        ref[[refName]]
+    })
+})
+
+## Tipo de output necessário para saber como gerar os captions.
+ishtml <- any(grepl(pattern = "^html_document",
+                    x = readLines("_output.yaml")))
 
 options(width = 68)
 
