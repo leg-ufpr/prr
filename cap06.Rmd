@@ -89,7 +89,7 @@ estudo de caso; detalhamento de algoritimos;
 
 # Consultar vinhetas #
 
-#### Vinhetas dos pacotes instalados ####
+## Pacotes instalados ##
 
 Certamente alguns dos pacotes que você tem instalado no seu SO possuem
 vinheta. Se você está reproduzindo o código desse tutorial, então você
@@ -99,12 +99,10 @@ você pode usar as opções ilustradas abaixo.
 ```{r, eval=FALSE}
 ## Exibe todas as vinhetas disponíveis no console.
 vignette()
-```
-```{r}
+
 ## Exibe as vinhetas de um único pacote no console.
 vignette(package = "roxygen2")
-```
-```{r, eval=FALSE}
+
 ## Abre uma vinheta pelo nome (essa é do pacote roxygen2).
 vignette(topic = "rd")
 vignette(topic = "rd", package = "roxygen2")
@@ -116,7 +114,74 @@ browseVignettes()
 browseVignettes(package = "roxygen2")
 ```
 
-#### Vinhetas dos pacotes no CRAN ####
+```{r, include=FALSE}
+cap <-
+"Distribuição do número de vinhetas por pacote nos pacotes oficiais do R
+disponíveis no CRAN."
+
+if (ishtml) {
+    cap <- fig$cap("vin", cap)
+}
+
+tb <- structure(
+    c(0.774686165394073, 0.171735473016695, 0.0535783615892326),
+    class = "table",
+    .Dim = 3L,
+    .Dimnames = structure(list(y = c("0", "1", ">1")),
+                          .Names = "y"))
+
+tbl <- structure(
+    list(px = c(5986L, 1327L, 235L, 85L, 34L, 29L, 11L, 4L, 3L, 4L, 2L,
+                1L, 0L, 1L, 0L, 0L, 0L, 1L, 0L, 1L, 1L, 0L, 1L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 1L),
+         x = 0:45),
+    .Names = c("px", "x"),
+    row.names = c(NA, -46L),
+    class = "data.frame")
+
+totPack <- sum(tbl$px)
+totVin <- sum(tbl$px * tbl$x)
+m <- totVin / totPack
+
+```
+
+## Pacotes oficiais no CRAN ##
+
+Para os pacotes que são oficiais (que estão no CRAN), você pode
+consultar as vinhetas, bem a documentação, online. Os pacotes estão no
+endereço `https://cran.r-project.org/web/packages/<pacote>/index.html`,
+em que `<pacote>` é um nome. Nessas páginas existe uma seção com URLs
+para as vinhetas, quando disponíveis, logo abaixo da documentação em
+PDF.
+
+Nós fizemos um *web scraping* no site do CRAN e verificamos que 22.5%
+dos pacotes oficiais do R tem pelo menos uma vinheta, sendo que 17.2%
+tem apenas uma e 5.4% tem mais que uma, conforme a Figura
+`r fig$ref("vin")`.
+
+Existe um total de `r totVin` distribuídas em `r totPack` pacotes, o que
+dá uma média de `r round(m, 2)` vinhetas por pacote. Esse *web scrap*
+levou 150 minutos e foi feito no dia 04 de Janeiro de 2016.
+
+```{r, echo=FALSE, results="hide", fig.cap=cap}
+plot(px ~ x, data = tbl, type = "h", lwd = 4,
+     xlab = "Número de vinhetas no pacote",
+     ylab = "Número de pacotes")
+par(fig = c(0.15, 0.95, 0.15, 1), new = TRUE)
+pie(tb,
+    col = c("red", "orange", "yellow"),
+    labels = sprintf(fmt = "%s (%0.1f%s)",
+                     c(0, 1, ">1"), 100*tb, "%"))
+text(x = 0, y = 0.9, labels = "Frequência relativa", cex = 1.2)
+```
+
+Além dos pacotes oficiais existem pacotes em desenvolvimento no GitHub,
+por exemplo, cuja vinheta pode também estar disponível. Esse é o caso do
+pacote [breedR].
+
+Fica aqui aquela pergunta tipo Tostines: um pacote tem mais vinhetas
+por que é mais usado ou é mais usado por que tem mais vinhetas?
 
 # Adicionando vinheta #
 
@@ -295,3 +360,5 @@ output em PDF.
 
 Por fim, basta executar `check()` e `build()` mais uma vez para incluir
 as vinhetas no `.tar.gz` do seu pacote.
+
+[breedR]: https://github.com/famuvie/breedR/tree/master/inst/doc
