@@ -178,90 +178,48 @@ text(x = 0, y = 0.9, labels = "Frequência relativa", cex = 1.2)
 
 Além dos pacotes oficiais existem pacotes em desenvolvimento no GitHub,
 por exemplo, cuja vinheta pode também estar disponível. Esse é o caso do
-pacote [breedR].
+pacote
+`r renderUrl("breedR","https://github.com/famuvie/breedR/tree/master/inst/doc",rty)`.
 
 Fica aqui aquela pergunta tipo Tostines: um pacote tem mais vinhetas
 por que é mais usado ou é mais usado por que tem mais vinhetas?
 
-# Adicionando vinheta #
+# Criando a vinheta #
 
-As vinhetas ficam no `inst/doc/` quando o pacote é instalado. Os fontes
-ficam em `vignettes/`
-
-`R CMD check` ou `devtools::check()` avalia as vinhetas, extrai o código
-e avalia sua execussão sequêncial, chunk por chunk.
-
-`R CMD build` vai criar o PDF ou HTML da vinheta e colocar no
-`inst/doc/`, para isso vai rodar a engine declarada (knitr ou Sweave,
-rmarkdown, enfim).
-
-A partir da versão 3.0.0, o R admite vignettes engines diferentes do
-Sweave. No caso, permite usar o **knitr** para gerar PDF e HTML.
-
-  * <http://r-pkgs.had.co.nz/vignettes.html>
-  * <http://kbroman.org/pkg_primer/pages/vignettes.html>
-  * <http://yihui.name/en/2012/09/r-package-markdown-vignettes/>
-  * <https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Writing-package-vignettes>
-  * <http://rmflight.github.io/posts/2014/07/vignetteAnalysis.html>
-  * <http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf>
-  * <https://www.statistik.lmu.de/~leisch/Sweave/Sweave-Rnews-2003-2.pdf>
-  * <http://www.magesblog.com/2012/01/survey-writing-package-vignette.html>
-  * <https://tagteam.harvard.edu/hub_feeds/1981/feed_items/1395647>
-  * <https://stat545-ubc.github.io/packages00_index.html>
-  * <https://cran.r-project.org/web/packages/knitr/vignettes/knitr-markdown.html>
-
-O jeito antigo de fazer pacote:
-
-  * <http://biostat.mc.vanderbilt.edu/wiki/Main/HowToCreateAnRPackage>
-  * <http://leg.ufpr.br/~paulojus/embrapa/Rembrapa/Rembrapase37.html>
-
-O que são as vinhetas?
-
-  - Documentação extendida do pacote? De certa forma sim.
-  - Uma documentação menos pontual e mais geral? Sim.
-  - Substitui um artigo? Não, pois artigos não exibem código;
-  - É uma propaganda do pacote? Sem dúvida.
-  - A melhor forma de apresentar uma introdução geral do pacote.
-  - Pode dar detalhes técnicos que não caberiam na documentação.
-  - Pode demonstrar aspectos que não documentação não seria possível
-    porque lá só tem código de input.
-  - Uma vinheta é livre para ter figuras, links, gifs, tabelas, listas,
-    até app shiny e gráficos dinâmicos como o googleVis.
-
-Elas ficam no diretório `vignettes/`. São parte do sistema de
-ajuda/documentação do pacote.
-
-As entradas com % no YAML são ignoradas pelo LaTex e processadas pelo R
-para gerar links na home da documentação (suponho).
-
-A vantagem do HTML é que uma index pode dar acesso às várias vinhetas de
-um pacote. Torna fácil para o usuário iniciante.
-
-
-```
-## Meta dados de uma vinheta.
-% \VignetteIndexEntry{}      ## Título no index.html
-% \VignetteDepends{}         ## Pacotes do qual depende
-% \VignetteKeyword{palavra1} ## Palavras-chave.
-% \VignetteKeyword{palavra2}
-```
-
-<!--------------------------------------------- -->
-
-A coisa que mais fácil ajuda você a conhecer as funcionalidades de um
-pacote é sem dúvida a sua vinheta (*vignette*). Um pacote pode ter
-várias vinhetas, cada uma exibindo um tema diferente de funcionalidades.
+Como ja esclarecemos, a vinheta sem dúvida ajuda você a conhecer as
+funcionalidades de um pacote e é a melhor forma de divulgá-lo. Um pacote
+pode ter várias vinhetas, cada uma exibindo um tema diferente de
+funcionalidades.
 
 Produzir a vinheta de um pacote é tão fácil quanto as demais partes
-dele. Usaremos os recursos disponíveis no *devtools* mais uma vez.
+dele. O pacote *devtools* também possui os recursos para trabalharmos
+com as vinhetas, desde a criação até a inclusão dela como componente do
+pacote, etapas que veremos a seguir.
 
-A vinheta será escrita em
-`r renderUrl("RmarkDown","http://rmarkdown.rstudio.com/",rty)`. Escrever
-vinhetas têm uma excelente
-`r renderUrl("documentação","http://r-pkgs.had.co.nz/vignettes.html",rty)`.
-
+Antes disso, no entanto, vale comentar que as vinhetas são mais
+facilmente escritas se você considerar
+`r renderUrl("RMarkDown","http://rmarkdown.rstudio.com/",rty)`,
+embora isso não seja
+uma exigência. As vinhetas podem ser escritas em LaTex entrelaçado com
+R, queremos dizer, tanto da forma antiga com o
+`r renderUrl("Sweave","https://www.statistik.lmu.de/~leisch/Sweave/",rty)`
+ou da forma mais recente com o
+`r renderUrl("knitr","http://yihui.name/knitr/",rty)`.
 A vantagem de escrever em MarkDown é a velocidade, praticidade e poder
-obter vinhetas em html e pdf facilmente.
+obter vinhetas em HTML e PDF facilmente.
+
+STOP
+
+O Hadley mantem uma ampla documentação sobre 
+`r renderUrl("produção de vinhetas","http://r-pkgs.had.co.nz/vignettes.html",rty)`,
+com o qual nos baseamos para expor o que vem a seguir.
+
+O comando `use_vignette()` é quem cria a estrutura necessária para
+acomodar uma vinheta com os devidos cuidados. Ao executá-lo, é criado o
+diretório `vignettes/` com um arquivo `.Rmd` e, além disso, ele adiciona
+ao campo `Suggests` no `DESCRIPTION` os pacotes `knitr` e `rmarkdown`,
+necessários para gerar a vinheta. Não fosse a gentileza do pacote
+`devtools`, poderíamos esquecer dessa última etapa.
 
 ```{r, eval=FALSE, include=FALSE}
 ## DESCRIPTION antes do use_vignette().
@@ -280,26 +238,20 @@ if (file.exists("./meupacote/vignettes/minhaVinheta1.Rmd")){
 library(devtools)
 use_vignette("minhaVinheta1", pkg = "./meupacote/")
 ```
-```{r, echo=FALSE}
-## DESCRIPTION depois do use_vignette().
-cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
-```
-
-O comando `use_vignette()` cria o diretório `vignettes/` com um arquivo
-`.Rmd` com o nome que você usou. Além disso ele adiciona ao campo
-`Suggests` no `DESCRIPTION` os pacotes `knitr` e `rmarkdown`,
-necessários para gerar a vinheta.
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, comment=NA}
 ## Mostra diretório e arquivos criados.
 cat(system("tree --charset=ascii ./meupacote/ | head -n -2",
            intern = TRUE), sep = "\n")
 ```
+```{r, echo=FALSE, comment=NA}
+## DESCRIPTION depois do use_vignette().
+cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
+```
 
-Esse arquivo é criado já com conteúdo para poder orientá-lo. No topo do
-arquivo tem uma parte de meta dados escrita em YAML (*yet another markup
-language*) que detalha as informações do documento e definem o processo
-de sua criação.
+O arquivo `Rmd` é criado já com conteúdo para poder orientá-lo. No topo
+do arquivo tem uma parte de meta dados escrita em YAML (*yet another
+markup language*) que detalha as informações do documento e definem o
+processo de sua criação.
 
 ```{r, echo=FALSE}
 ## Mostra o YAML da vinheta original.
@@ -307,26 +259,38 @@ cat(readLines("./meupacote/vignettes/minhaVinheta1.Rmd")[1:10],
     sep = "\n")
 
 ## Nada entrou no .Rbuildignore.
-## cat(readLines("./meupacote/.Rbuildignore"),
-##     sep = "\n")
+## cat(readLines("./meupacote/.Rbuildignore"), sep = "\n")
+```
+
+TODO As entradas com % no YAML são ignoradas pelo LaTex e processadas
+pelo R para gerar links na home da documentação (suponho).  A vantagem
+do HTML é que uma index pode dar acesso às várias vinhetas de um
+pacote. Torna fácil para o usuário iniciante.
+
+```
+## Meta dados de uma vinheta.
+% \VignetteIndexEntry{}      ## Título no index.html
+% \VignetteDepends{}         ## Pacotes do qual depende
+% \VignetteKeyword{palavra1} ## Palavras-chave.
+% \VignetteKeyword{palavra2}
 ```
 
 Edite à vontade esse arquivo fazendo a melhor propaganda possível do seu
-pacote. Tome cuidado com os pacotes que vai usar. É indicado que eles
-estejam nos campos do seu `DESCRIPTION`, senão no `Imports`, pelo menos
-no `Suggests`. Abaixo o arquivo que criamos, que está muito simples,
-logicamente, mas é apenas para marcar território mesmo.
+pacote. Tome cuidado com os pacotes que a sua vinheta vai usar. É comum
+as vinhetas chamarem pacotes para fazer gráficos, como o `lattice`,
+`ggplot2` e `plotrix`. É indicado que eles estejam nos campos do seu
+`DESCRIPTION`, se não no `Imports`, pelo menos no `Suggests`.
 
-TODO trocar essa vinheta por uma da função `baskara()` com os métodos.
+## Vinhetas em HTML ##
 
 ```{r, include=FALSE}
-file.copy(from = "aux/minhaVinheta1.Rmd",
-          to = "meupacote/vignettes/minhaVinheta1.Rmd",
+file.copy(from = "aux/pitagoras.Rmd",
+          to = "meupacote/vignettes/pitagoras.Rmd",
           overwrite = TRUE)
 ```
 ```{r, echo=FALSE, comment=NA}
 ## Mostra a vinheta mínima.
-cat(readLines("./meupacote/vignettes/minhaVinheta1.Rmd"),
+cat(readLines("./meupacote/vignettes/pitagoras.Rmd"),
     sep = "\n")
 ```
 
@@ -351,8 +315,8 @@ sink()
 ```
 ```
 Building meupacote vignettes
-Moving minhaVinheta1.html, minhaVinheta1.R to inst/doc/
-Copying minhaVinheta1.Rmd to inst/doc/
+Moving pitagoras.html, pitagoras.R to inst/doc/
+Copying pitagoras.Rmd to inst/doc/
 ```
 
 TODO Incluir a vinheta do `pitagoras()` ou outra funcionalidade com
@@ -361,4 +325,23 @@ output em PDF.
 Por fim, basta executar `check()` e `build()` mais uma vez para incluir
 as vinhetas no `.tar.gz` do seu pacote.
 
-[breedR]: https://github.com/famuvie/breedR/tree/master/inst/doc
+## Vinhetas em PDF
+
+TODO Demonstrar um dataset e uma função.
+
+As vinhetas ficam no `inst/doc/` quando o pacote é instalado. Os fontes
+ficam em `vignettes/`
+
+Elas ficam no diretório `vignettes/`. São parte do sistema de
+ajuda/documentação do pacote.
+
+`R CMD check` ou `devtools::check()` avalia as vinhetas, extrai o código
+e avalia sua execussão sequêncial, chunk por chunk.
+
+`R CMD build` vai criar o PDF ou HTML da vinheta e colocar no
+`inst/doc/`, para isso vai rodar a engine declarada (knitr ou Sweave,
+rmarkdown, enfim).
+
+A partir da versão 3.0.0, o R admite vignettes engines diferentes do
+Sweave. No caso, permite usar o **knitr** para gerar PDF e HTML.
+
