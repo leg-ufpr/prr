@@ -27,3 +27,66 @@ fig <- local({
         ref[[refName]]
     })
 })
+
+##----------------------------------------------------------------------
+## Função para exportar uma figura para outputs em latex ou html.
+
+renderImg <- function(img, caption, rty) {
+    img <- img[1]
+    if (!file.exists(img)) {
+        stop(sprintf("File '%s' was not found.", img))
+    }
+    caption <- caption[1]
+    if (!is.character(caption)) {
+        stop("The 'caption' provided is not character.")
+    }
+    out <- switch(rty,
+                  tex = {
+                      sprintf(
+                          fmt = paste(
+                              '\\begin{figure}[htbp]',
+                              '\\centering',
+                              '\\includegraphics{%s}',
+                              '\\caption{%s}',
+                              '\\end{figure}', sep = "\n"),
+                          img, caption)
+                  },
+                  html = {
+                      sprintf(
+                          fmt = paste(
+                              '<div class="figure">',
+                              '<img src="%s" alt="%s">',
+                              '<p class="caption">%s</p>',
+                              '</div>', sep = "\n"),
+                          img, caption, caption)
+                  },
+                  {
+                      sprintf("![](%s)", img)
+                  })
+    cat(out)
+}
+
+## renderImg("ufpr.png", "askdj akjs dlksdjf sdf", "tex")
+## renderImg("ufpr.png", "askdj akjs dlksdjf sdf", "html")
+## renderImg("ufpr.png", "askdj akjs dlksdjf sdf", "md")
+
+## Como usar!
+## 
+## ```{r, echo=FALSE, results="asis"}
+## ## Verifica se output é html.
+## ishtml <- any(grepl(pattern = "^html_document",
+##                     x = readLines("_output.yaml")))
+## 
+## img <- "ufpr.png"                ## Nome do arquivo.
+## cap <- "A legenda dessa imagem." ## Legenda.
+## 
+## ## Caption que tem contador.
+## if (ishtml) {
+##     cap <- fig$cap(img, cap)
+## }
+## 
+## ## Output conforme extensão de saída: html ou tex.
+## renderImg(img = img, caption = cap,
+##           rty = ifelse(ishtml, "html", "tex"))
+## 
+## ```
