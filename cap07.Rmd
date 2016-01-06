@@ -4,16 +4,8 @@ author: "Fernando Mayer & Walmes Zeviani"
 ---
 
 ```{r setup, include=FALSE}
-library(knitr)
-
-opts_chunk$set(
-    dev.args=list(family = "Palatino"))
-
-options(width = 68)
-
-## Carrega as definições de sessão.
+source("setup_knitr.R")
 source("config.R")
-rty <- "md"
 ```
 
   * <http://kbroman.org/pkg_primer/pages/tests.html>
