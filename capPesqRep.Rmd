@@ -1,0 +1,147 @@
+---
+title: "Pesquisa reproduzível"
+author: "Fernando Mayer & Walmes Zeviani"
+---
+
+```{r setup, include=FALSE}
+## Carrega as definições de sessão.
+source("setup_knitr.R")
+source("config.R")
+
+## Tipo de output necessário para saber como gerar os captions.
+ishtml <- any(grepl(pattern = "^html_document",
+                    x = readLines("_output.yaml")))
+
+## Carrega as definições de sessão.
+source("config.R")
+rty <- "md"
+```
+
+# Como a ciência funciona
+
+* Replicação
+	- Muitas vezes difícil
+* Reproducibilidade
+	- Mais fácil. O mínimo de qualquer pesquisa é ser reproduzível 
+* Elementos da reproducibilidade:
+	1. Dados
+	2. Código
+	3. Documentação
+	4. Distribuição
+
+# Pesquisa reproduzível
+
+> *The source code is real*
+>
+> > ESS Project
+
+Pseudo-código para escrever um artigo ou relatório científico:
+
+```{r, results="asis", eval=FALSE}
+1. Importe uma base de dados para um *software*
+2. Execute um procedimento analítico
+3. Gere tabelas e figuras separadamente
+4. Copie os resultados de análises
+5. Coloque tudo isso em um editor de texto e escreva o documento
+```
+
+Mudou alguma linha na base de dados? Esqueceu de algo? Volte para o item
+(1) e repita o processo (e boa sorte)!
+
+Pseudo-código para escrever um artigo ou relatório científico
+**reprodutível**:
+
+```{r, results="asis", eval=FALSE}
+1. Use o R Markdown e realize os 5 passos acima em um único documento
+```
+
+Mudou alguma linha na base de dados? Esqueceu de algo? Altere o código e
+gere um novo documento.
+
+* Dessa forma, um documento pode ser gerado dinamicamente a partir de um
+  **código-fonte**.
+* Da mesma forma que um *software* possui seu código-fonte, um documento
+  dinâmico é o código-fonte de um relatório.
+* É uma combinação de código de computador e as correspondentes
+  narrativas descrevendo o resultado que o código está gerando (números,
+  tabelas, figuras, ...).
+* Quando **compilamos** o documento dinâmico, o código de computador é
+  executado, e as saídas são apresentadas. Portanto obtemos um documento
+  final que mistura **código** e **texto**.
+* Como gerenciamos apenas o código-fonte do documento, ficamos livres de
+  todas as etapas manuais mencionadas acima.
+
+# Literate Programming
+
+> *Instead of imagining that our main task is to instruct a computer what
+> to do, let us concentrate rather on explaining to humans what we want
+> the computer to do.*
+>
+> > Donald Knuth
+
+O ideia básica por trás de documentos dinâmicos decorre diretamente do
+conceito de *literate programming* ("programação letrada"), um paradigma
+concebido por [Donald Knuth][] em 1984.
+
+<table>
+<tr>
+<td align="center"><img src="img/knuth.jpg" height="50%"></td>
+<td align="center"><img src="img/Literate_Programming_book_cover.jpg" height="55%"></td>
+</tr>
+</table>
+
+* O conceito é o de misturar **literatura** (o texto em uma
+  linguagem humana) com **códigos de programação**, tornando claro cada
+  etapa de um programa e/ou análise
+* Com um único código-fonte, podemos
+	- Produzir documentos para humanos (HTML, PDF, ...) &rArr; *weave*
+	- Produzir documentos para máquinas (código) &rArr; *tangle*
+* Knuth criou um sistema chamado **WEB** para fazer essa mistura
+  dos seus textos em $TeX$ com a linguagem Pascal 
+* Atualmente muitos outros sistemas existem para misturar códigos
+  com texto em várias linguagens
+
+## Literate Programming no R
+
+Com a ascensão do R no início dos anos 2000, [Friedrich Leisch] criou
+o [Sweave] em 2002
+
+* S + weave
+* Permite "entrelaçar" textos do $LaTeX$ com códigos do R
+* Ainda é muito utilizado e já é distribuído como uma função do R
+  dentro do pacote `utils`
+
+No final de 2011, [Yihui Xie][] criou o pacote [knitr][] com
+a proposta de ser mais flexível, fácil e **preparado para a Web**
+
+> *knitr = Sweave + cacheSweave + pgfSweave + weaver +
+>     animation::saveLatex + R2HTML::RweaveHTML +
+>    highlight::HighlightWeaveLatex + 0.2 * brew + 0.1 *
+>    SweaveListingUtils + more*
+
+* knit + R
+* Uma re-implementação mais moderna do Sweave
+* Permite "entrelaçar" textos do $LaTeX$, HTML e **Markdown** com
+  códigos do R
+* Também permite misturar texto com códigos de outras linguagens:
+  Python, awk, C++, shell.
+* Adiciona muitas facilidades como
+	- Cache
+	- Decoração e formatação automática de códigos
+	- Geração de gráficos mais direta
+
+
+<!-- links -->
+
+[Donald Knuth]: https://en.wikipedia.org/wiki/Donald_Knuth
+[MathJax]: http://www.mathjax.org
+[Dingus]: http://daringfireball.net/projects/markdown/dingus
+[Markdown]: http://daringfireball.net/projects/markdown
+[rmarkdown]: http://rmarkdown.rstudio.com
+[Friedrich Leisch]: http://www.statistik.lmu.de/~leisch
+[Sweave]: https://www.statistik.lmu.de/~leisch/Sweave
+[Yihui Xie]: http://yihui.name/
+[knitr]: http://yihui.name/knitr
+[Pandoc]: http://pandoc.org/
+[YAML]: http://yaml.org/
+[linguagem de marcação]: https://pt.wikipedia.org/wiki/Linguagem_de_marcação/
