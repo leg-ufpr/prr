@@ -14,11 +14,11 @@
 
 - Parte 2
   - Capitulo 4 - Pacotes R
-	- Introdução
-	- Estrutura de um pacote
-	- Disponibilização
+	  - Introdução
+	  - Estrutura de um pacote
+	  - Disponibilização
   - Capitulo 5 - Criando um pacote
-	- devtools e roxygen
+	  - devtools e roxygen
   - Capitulo 6 - Adicionando dados
   - Capitulo 7 - Métodos
   - Capitulo 8 - Vinheta
