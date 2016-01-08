@@ -160,7 +160,7 @@ text(x = 0, y = 0.9, labels = "Frequência relativa", cex = 1.2)
 Além dos pacotes oficiais existem pacotes em desenvolvimento no GitHub,
 por exemplo, cuja vinheta pode também estar disponível. Esse é o caso do
 pacote
-`r renderUrl("breedR","https://github.com/famuvie/breedR/tree/master/inst/doc",rty)`.
+[breedR](https://github.com/famuvie/breedR/tree/master/inst/doc)
 
 Fica aqui aquela pergunta tipo Tostines: um pacote tem mais vinhetas
 por que é mais usado ou é mais usado por que tem mais vinhetas?
@@ -179,20 +179,20 @@ pacote, etapas que veremos a seguir.
 
 Antes disso, no entanto, vale comentar que as vinhetas são mais
 facilmente escritas se você considerar
-`r renderUrl("RMarkDown","http://rmarkdown.rstudio.com/",rty)`,
+[RMarkDown](http://rmarkdown.rstudio.com/),
 embora isso não seja
 uma exigência. As vinhetas podem ser escritas em LaTex entrelaçado com
 R, queremos dizer, tanto da forma antiga com o
-`r renderUrl("Sweave","https://www.statistik.lmu.de/~leisch/Sweave/",rty)`
+[Sweave](https://www.statistik.lmu.de/~leisch/Sweave/)
 ou da forma mais recente com o
-`r renderUrl("knitr","http://yihui.name/knitr/",rty)`.
+[knitr](http://yihui.name/knitr/).
 A vantagem de escrever em MarkDown é a velocidade, praticidade e poder
 obter vinhetas em HTML e PDF facilmente.
 
 STOP
 
 O Hadley mantem uma ampla documentação sobre 
-`r renderUrl("produção de vinhetas","http://r-pkgs.had.co.nz/vignettes.html",rty)`,
+[produção de vinhetas](http://r-pkgs.had.co.nz/vignettes.html),
 com o qual nos baseamos para expor o que vem a seguir.
 
 O comando `use_vignette()` é quem cria a estrutura necessária para
