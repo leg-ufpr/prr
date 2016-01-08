@@ -212,7 +212,7 @@ library(devtools)
 ## Cria a primeira vinheta do pacote.
 use_vignette("minhaVinheta1")
 ```
-```{r, echo=FALSE}
+```{r, echo=FALSE, results="hide"}
 if (file.exists("./meupacote/vignettes/minhaVinheta1.Rmd")){
     file.remove("./meupacote/vignettes/minhaVinheta1.Rmd")
 }
@@ -234,7 +234,7 @@ do arquivo tem uma parte de meta dados escrita em YAML (*yet another
 markup language*) que detalha as informações do documento e definem o
 processo de sua criação.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, comment=NA}
 ## Mostra o YAML da vinheta original.
 cat(readLines("./meupacote/vignettes/minhaVinheta1.Rmd")[1:10],
     sep = "\n")
@@ -263,6 +263,10 @@ as vinhetas chamarem pacotes para fazer gráficos, como o `lattice`,
 `DESCRIPTION`, se não no `Imports`, pelo menos no `Suggests`.
 
 ## Vinhetas em HTML ##
+
+```{r}
+opts_chunk$set(eval = FALSE)
+```
 
 ```{r, include=FALSE}
 file.copy(from = "aux/pitagoras.Rmd",
