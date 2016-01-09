@@ -20,3 +20,6 @@ cap*.tex
 cap*.md
 meupacote/*
 data-raw/*.txt
+*_cache/
+*_files/
+meupacote_*.tar.gz
