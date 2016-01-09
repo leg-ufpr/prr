@@ -1,0 +1,10 @@
+---
+title: "Métodos e Funções Genéricas"
+author: "Fernando Mayer & Walmes Zeviani"
+---
+
+```{r setup, include=FALSE}
+source("setup_knitr.R")
+source("config.R")
+```
+
