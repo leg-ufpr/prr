@@ -2,8 +2,8 @@
 
 - **Título**: Pesquisa reproduzível com o R: de documentos dinâmicos à
   pacotes
-  
-- **Instrutores**: Fernando Mayer, Walmes Zeviani (LEG/UFPR)
+
+- **Instrutores**: Fernando Mayer & Walmes Zeviani (LEG/UFPR)
 
 - **Resumo**: Pesquisa reproduzível é a ideia geral onde análise de
   dados, e de maneira mais geral, descobertas científicas, devem ser
@@ -40,3 +40,42 @@
   `roxygen2`. A intenção é que os atendentes do curso saiam preparados
   para utilizar essas ferramentas em suas próprias pesquisas, ajudando a
   ampliar a forma como se faz pesquisa reproduzível atualmente.
+
+<!-- BRAINSTORM -->
+
+  * embora reconhecida a importância da PR, sua baixa adoção é por
+    desconhecimento das melhores ferramentas.
+  * documentos híbridos.
+  * literate programming & reproducible research.
+  * Usam o R: Emacs org-mode com babel, knitr markdown e sweave.
+  * mistura prosa, código, dados e resultados computacionais (figuras,
+    tabelas, valores)
+  * Bem sucedida comunicação e verificação/asseguração dos resultados da
+    pesquisa requerem que os código seja distribuído junto com os
+    resultados acompanhado de prosa explicativa.
+  * As ferramentas garantem reproducibilidade da pesquisa sem
+    acrescentar grande demanda/exigência/empenho do autor.
+  * Dificuldade de outros reproduzirem os resultados para entender com
+    segurança/integralmente as conclusões da pesquisa ou mesmo aplicares
+    variações da metodologia ou ela a outras fontes.
+  * Reproducibilidade dos resultados e comunicação precisa são duas
+    noções centrais de uma boa ciência.
+  * Os códigos podem ser extraídos e aplicados à outras fontes ou
+    receber modificações nos valores de entrada.
+  * Permite a construção programática/automatica de tabelas e gráficos,
+    centrais na circulação científica.
+  * Eles podem ser resultados da geração do documento e se atualizam a
+    medida que a prosa e o código amadurecem.
+  * Sweave (Leisch 2002)são documentos que consistem de blocos de código
+    R inseridos no meio de prosa/documentos Latex. knitr permite que
+    seja markdown a markup language. Org usa org. Rhtml também é
+    possível.
+  * Recurso de cache armazena os artefatos para uso futuro evitando o
+    custo de processar o tempo todo.
+  * Chunk headers controlam execução e exportação.
+  * weaving: (tecer, narrate, describe) exportação para leitura humana.
+  * tangling: exportação/extração do código para execução por um
+    compilador/computador. Código do tangle podem gerar um script
+    excutável ou autocontido, serve para adaptações.
+  * Os leitores podem recriar o documentos dos fontes e popular com
+    novas intruções, experimentar variações ou dados próprios.
