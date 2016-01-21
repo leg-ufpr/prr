@@ -13,42 +13,31 @@
   reproducibilidade cresce na proporção que surgem problemas complexos
   ou incomuns que recebem soluções elaboradas ou específicas. Como em
   outras áreas, na Estatística as análises de dados empregam métodos
-  novos e algoritmos especializados, além ainda de envolvem grandes
-  bases de dados e alto processamento computacional. Em situações como
-  essa, surge a dificuldade de outros 1) reproduzirem os resultados da
-  pesquisa para entender com segurança e integralmente as conclusões, 2)
-  aplicarem variações da metodologia no mesmo contexto e 3) empregarem
-  em outros contextos.
-
-  A pesquisa reproduzível se baseia preodominantemente nos documentos
-  híbridos, que misturam prosa e código. Nestes, uma grande vantagem é
-  que as tabelas e gráficos são gerados programaticamente e, por isso,
-  atualizados com o código.
-
-  Para a estatística, Sweave foi o primeiro recurso dessa modalidade e
-  consiste de blocos de código R inseridos no meio de prosa em
-  documentos LaTeX. Atualmente, pode-se usar MarkDown, Org, HTML, e até
-  documentos do OpenOffice Writer, no lugar do LaTeX, para a prosa. Para
-  os fragmentos de código R existe amplo controle na execução e
-  exportação dos resultados, como *layout* de tabelas, dimensão de
-  figuras e armazenamento de artefatos (*cache*).
-
-  A reproducibilidade assegura que as pessoas reproduzam os resultados
-  ao invés de se preocuparem em reimplementar a partir das descrições,
-  imcompletas ou imprecisas, de um documento (artigo, tese).
-
-  Um pouco mais complicado para quem escreve porém muito melhor para
-  quem lê.
-  As ferramentas garantem reproducibilidade da pesquisa sem
-  acrescentar grande demanda/exigência/empenho do autor.
-
-  Embora reconhecida a importância da PR, sua baixa adoção é por
-  desconhecimento das melhores ferramentas.
-
-  Este curso será focado nas ferramentas para análise estatística
-  documentada, que permitem que cientistas publiquem suas análises em um
-  único documento que irá permitir que outros cientistas executem a
-  mesma análise e obtenham os mesmos resultados, modifiquem e estendam.
+  novos e algoritmos especializados, além ainda de cada vez mais
+  envolvem grandes bases de dados e alto processamento computacional. Em
+  situações como essa, surge a dificuldade de outros 1) reproduzirem os
+  resultados da pesquisa para entender com segurança e integralmente as
+  conclusões, 2) aplicarem variações da metodologia no mesmo contexto e
+  3) empregarem em outros contextos. A pesquisa reproduzível se baseia
+  preodominantemente nos documentos híbridos, que misturam prosa e
+  código. Para a Estatística, Sweave foi o primeiro recurso dessa
+  modalidade e consiste de fragmentos de código R inseridos no meio de
+  prosa em documentos LaTeX. Atualmente, pode-se usar MarkDown, Org,
+  HTML, e até documentos do OpenOffice Writer, no lugar do LaTeX, para a
+  prosa. Para os fragmentos de código R existe amplo controle na
+  execução e exportação dos resultados, como *layout* de tabelas,
+  dimensão de figuras e armazenamento de artefatos (*cache*). Portanto,
+  uma das principais vantagens é que as tabelas e gráficos são gerados
+  programaticamente e, por isso, atualizados com o código, diminuindo o
+  trabalho de revisão pelos autores. A Pesquisa Reproduzível assegura
+  que os leitores reproduzam os resultados ao invés de se preocuparem em
+  reimplementar a partir das descrições, incompletas ou imprecisas,
+  fornecidas no documento (artigo, tese). Embora reconhecida a
+  importância da Pesquisa Reproduzível, sua baixa adoção é, em maior
+  parte, pelo desconhecimento das melhores ferramentas, hoje
+  abundantes. O desconhecimento dos melhores meios, além de exigir
+  elevada dedicação dos autores, tem pouca garantia de
+  reproducibilidade.
 
 - **Objetivos**: Este curso tem como objetivo fornecer os conceitos e
   ferramentas por trás da comunicação de analises de dados modernas, de
