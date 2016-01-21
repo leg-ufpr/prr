@@ -5,23 +5,50 @@
 
 - **Instrutores**: Fernando Mayer & Walmes Zeviani (LEG/UFPR)
 
-- **Resumo**: Pesquisa reproduzível é a ideia geral onde análise de
-  dados, e de maneira mais geral, descobertas científicas, devem ser
-  publicadas contendo os dados e o código de análise, para que outras
-  pessoas possam verificar os resultados e até mesmo continuar a
-  construir ideias sobre eles. A necessidade da reproducibilidade vem
-  crescendo dramaticamente, ao mesmo tempo que as análises de dados
-  estão se tornando mais complexas, envolvendo grandes bases de dados e
-  alto processamento computacional. A reproducibilidade permite que as
-  pessoas se concentrem no conteúdo da análise de dados, ao invés de se
-  preocuparem com os detalhes superficiais descritos em um
-  documento. Além disso, a reproducibilidade torna uma análise mais útil
-  para qualquer pessoa, pois os dados e o código que realmente geraram
-  os resultados estão disponíveis. Este curso será focado nas
-  ferramentas para análise estatística documentada, que permitem que
-  cientistas publiquem suas análises em um único documento que irá
-  permitir que outros cientistas executem a mesma análise e obtenham os
-  mesmos resultados.
+- **Resumo**:
+
+  A ideia central da Pesquisa Reproduzível é que a bem sucedida
+  comunicação e validação dos resultados precisa que o código seja
+  distribuído junto com os resultados. A necessidade da
+  reproducibilidade cresce na proporção que surgem problemas complexos
+  ou incomuns que recebem soluções elaboradas ou específicas. Como em
+  outras áreas, na Estatística as análises de dados empregam métodos
+  novos e algoritmos especializados, além ainda de envolvem grandes
+  bases de dados e alto processamento computacional. Em situações como
+  essa, surge a dificuldade de outros 1) reproduzirem os resultados da
+  pesquisa para entender com segurança e integralmente as conclusões, 2)
+  aplicarem variações da metodologia no mesmo contexto e 3) empregarem
+  em outros contextos.
+
+  A pesquisa reproduzível se baseia preodominantemente nos documentos
+  híbridos, que misturam prosa e código. Nestes, uma grande vantagem é
+  que as tabelas e gráficos são gerados programaticamente e, por isso,
+  atualizados com o código.
+
+  Para a estatística, Sweave foi o primeiro recurso dessa modalidade e
+  consiste de blocos de código R inseridos no meio de prosa em
+  documentos LaTeX. Atualmente, pode-se usar MarkDown, Org, HTML, e até
+  documentos do OpenOffice Writer, no lugar do LaTeX, para a prosa. Para
+  os fragmentos de código R existe amplo controle na execução e
+  exportação dos resultados, como *layout* de tabelas, dimensão de
+  figuras e armazenamento de artefatos (*cache*).
+
+  A reproducibilidade assegura que as pessoas reproduzam os resultados
+  ao invés de se preocuparem em reimplementar a partir das descrições,
+  imcompletas ou imprecisas, de um documento (artigo, tese).
+
+  Um pouco mais complicado para quem escreve porém muito melhor para
+  quem lê.
+  As ferramentas garantem reproducibilidade da pesquisa sem
+  acrescentar grande demanda/exigência/empenho do autor.
+
+  Embora reconhecida a importância da PR, sua baixa adoção é por
+  desconhecimento das melhores ferramentas.
+
+  Este curso será focado nas ferramentas para análise estatística
+  documentada, que permitem que cientistas publiquem suas análises em um
+  único documento que irá permitir que outros cientistas executem a
+  mesma análise e obtenham os mesmos resultados, modifiquem e estendam.
 
 - **Objetivos**: Este curso tem como objetivo fornecer os conceitos e
   ferramentas por trás da comunicação de analises de dados modernas, de
@@ -43,39 +70,16 @@
 
 <!-- BRAINSTORM -->
 
-  * embora reconhecida a importância da PR, sua baixa adoção é por
-    desconhecimento das melhores ferramentas.
-  * documentos híbridos.
-  * literate programming & reproducible research.
-  * Usam o R: Emacs org-mode com babel, knitr markdown e sweave.
-  * mistura prosa, código, dados e resultados computacionais (figuras,
-    tabelas, valores)
+Novas soluções, problemas complexos e soluções também.
+
+  * Os leitores podem recriar o documentos dos fontes e popular com
+    novas intruções, experimentar variações ou dados próprios.
   * Bem sucedida comunicação e verificação/asseguração dos resultados da
     pesquisa requerem que os código seja distribuído junto com os
     resultados acompanhado de prosa explicativa.
   * As ferramentas garantem reproducibilidade da pesquisa sem
     acrescentar grande demanda/exigência/empenho do autor.
-  * Dificuldade de outros reproduzirem os resultados para entender com
-    segurança/integralmente as conclusões da pesquisa ou mesmo aplicares
-    variações da metodologia ou ela a outras fontes.
-  * Reproducibilidade dos resultados e comunicação precisa são duas
-    noções centrais de uma boa ciência.
-  * Os códigos podem ser extraídos e aplicados à outras fontes ou
-    receber modificações nos valores de entrada.
-  * Permite a construção programática/automatica de tabelas e gráficos,
-    centrais na circulação científica.
-  * Eles podem ser resultados da geração do documento e se atualizam a
-    medida que a prosa e o código amadurecem.
-  * Sweave (Leisch 2002)são documentos que consistem de blocos de código
-    R inseridos no meio de prosa/documentos Latex. knitr permite que
-    seja markdown a markup language. Org usa org. Rhtml também é
-    possível.
-  * Recurso de cache armazena os artefatos para uso futuro evitando o
-    custo de processar o tempo todo.
-  * Chunk headers controlam execução e exportação.
   * weaving: (tecer, narrate, describe) exportação para leitura humana.
   * tangling: exportação/extração do código para execução por um
     compilador/computador. Código do tangle podem gerar um script
     excutável ou autocontido, serve para adaptações.
-  * Os leitores podem recriar o documentos dos fontes e popular com
-    novas intruções, experimentar variações ou dados próprios.
