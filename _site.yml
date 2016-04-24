@@ -1,0 +1,39 @@
+name: "prr"
+output_dir: "."
+exclude: ["README.md", "CONTRIBUTING.md"]
+output:
+  html_document:
+    theme: flatly
+    highlight: default
+    code_folding: show
+    number_sections: false
+    toc: true
+    toc_depth: 4
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+navbar:
+  title: "PRR"
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "Sobre"
+      icon: fa-info
+      href: about.html
+    - text: "Sumário"
+      icon: fa-gear
+      menu:
+        - text: "Introdução"
+        - text: "Proposta"
+          href: proposta.html
+        - text: "---------"
+        - text: "Resumo"
+        - text: "Pacote R"
+          href: resumo_web.html
+    - text: "Slides"
+      href: slides.html
+  right:
+    - text: GitHub
+      icon: fa-github fa-lg
+      href: https://github.com/leg-ufpr/prr

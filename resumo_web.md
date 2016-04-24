@@ -1,3 +1,8 @@
+---
+title: "Pesquisa reproduzível com o R: de documentos dinâmicos a pacotes"
+---
+
+
 - **Título**: Pesquisa reproduzível com o R: de documentos dinâmicos a
   pacotes
 

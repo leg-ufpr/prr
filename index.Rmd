@@ -1,0 +1,7 @@
+---
+title: "Pesquisa Reproduzível com R"
+---
+
+```{r setup, include=FALSE}
+source("setup_knitr.R")
+```

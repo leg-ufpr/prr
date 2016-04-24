@@ -1,4 +1,6 @@
-# Proposta para mini-curso 61ª RBras
+---
+title: "Proposta para mini-curso 61ª RBras"
+---
 
 - **Título**: Pesquisa reproduzível com o R: de documentos dinâmicos à
   pacotes
