@@ -12,6 +12,8 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
+    includes:
+      after_body: footer.html
 navbar:
   title: "PRR"
   left:
