@@ -3,7 +3,7 @@ title: "Pesquisa Reproduzível"
 author: "Fernando Mayer & Walmes Zeviani"
 output:
   html_document:
-    toc: false
+    toc: true
 ---
 
 ```{r setup, include=FALSE}

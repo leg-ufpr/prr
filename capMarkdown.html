@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Fernando Mayer &amp; Walmes Zeviani" />
+
+
+<title>Markdown e Pandoc</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/default.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+<script src="site_libs/navigation-1.0/codefolding.js"></script>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">PRR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="capPesqRep.html">Pesquisa reproduzível</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Documentos dinâmicos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capMarkdown.html">Markdown com pandoc</a>
+    </li>
+    <li>
+      <a href="capDocDin.html">Documentos dinâmicos no R</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Pacotes R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capIntroPac.html">Introdução</a>
+    </li>
+    <li>
+      <a href="capPacEstrut.html">Estrutura de um pacote</a>
+    </li>
+    <li>
+      <a href="capCriaPac.html">Criando um pacote</a>
+    </li>
+    <li>
+      <a href="capAdiDados.html">Adicionando dados</a>
+    </li>
+    <li>
+      <a href="capFunMet.html">Métodos e funções genéricas</a>
+    </li>
+    <li>
+      <a href="capVinheta.html">Vinhetas</a>
+    </li>
+    <li>
+      <a href="capTestes.html">Testes</a>
+    </li>
+    <li>
+      <a href="capFunExt.html">Funções externas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Compartilhamento
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capCompPac.html">Pacotes</a>
+    </li>
+    <li>
+      <a href="capCompDados.html">Dados e texto</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/leg-ufpr/prr">
+    <span class="fa fa-github fa-lg"></span>
+     
+    GitHub
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+</ul>
+</div>
+
+
+<h1 class="title toc-ignore">Markdown e Pandoc</h1>
+<h4 class="author"><em>Fernando Mayer &amp; Walmes Zeviani</em></h4>
+
+</div>
+
+
+<div id="o-que-e-markdown" class="section level1">
+<h1>O que é Markdown?</h1>
+<blockquote>
+<p><em>Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</em></p>
+<blockquote>
+<p>John Gruber</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown">Markdown</a> é uma <a href="https://pt.wikipedia.org/wiki/Linguagem_de_marcação/">linguagem de marcação</a> simples para escrever textos</li>
+<li>O texto pode ser lido sem nenhum processamento, ou seja, da maneira como está escrito</li>
+<li>Outras linguagens de marcação como HTML e <span class="math inline">\(LaTeX\)</span> requerem um grande número de <em>tags</em> para formatar o texto, muitas vezes dificultando a leitura do código-fonte</li>
+<li>A proposta do Markdown é que o escritor se concentre no texto e não na formatação</li>
+<li>Pode ser convertido para vários outros formatos além de HTML</li>
+</ul>
+<div id="sintaxe-do-markdown" class="section level2">
+<h2>Sintaxe do Markdown</h2>
+<p>A sintaxe do Markdown é muito simples, e pode ser resumida da seguinte forma:</p>
+<div id="cabecalhos" class="section level3">
+<h3>Cabeçalhos</h3>
+<pre><code># Título
+## Sub-título
+### Sub-sub-título</code></pre>
+</div>
+<div id="italico" class="section level3">
+<h3>Itálico</h3>
+<pre><code>*Este texto aparecerá em itálico.*</code></pre>
+<p><em>Este texto aparecerá em itálico.</em></p>
+</div>
+<div id="negrito" class="section level3">
+<h3>Negrito</h3>
+<pre><code>**Este texto aparecerá em negrito.**</code></pre>
+<p><strong>Este texto aparecerá em negrito.</strong></p>
+</div>
+<div id="listas-nao-ordenadas" class="section level3">
+<h3>Listas não-ordenadas</h3>
+<pre><code>- Primeiro item
+- Segundo item
+- Terceiro item</code></pre>
+<ul>
+<li>Primeiro item</li>
+<li>Segundo item</li>
+<li>Terceiro item</li>
+</ul>
+</div>
+<div id="listas-ordenadas" class="section level3">
+<h3>Listas ordenadas</h3>
+<pre><code>1. Primeiro item
+2. Segundo item
+3. Terceiro item</code></pre>
+<ol style="list-style-type: decimal">
+<li>Primeiro item</li>
+<li>Segundo item</li>
+<li>Terceiro item</li>
+</ol>
+</div>
+<div id="sub-listas" class="section level3">
+<h3>Sub-listas</h3>
+<p>Utilize 4 espaços para criar uma sub-lista:</p>
+<pre><code>1. Primeiro item
+    - Um sub-item
+    - Outro sub-item
+2. Segundo item
+3. Terceiro item</code></pre>
+<ol style="list-style-type: decimal">
+<li>Primeiro item
+<ul>
+<li>Um sub-item</li>
+<li>Outro sub-item</li>
+</ul></li>
+<li>Segundo item</li>
+<li>Terceiro item</li>
+</ol>
+</div>
+<div id="links" class="section level3">
+<h3>Links</h3>
+<p>Links para endereços Web podem ser inseridos com <code>[texto](link)</code>:</p>
+<pre><code>O criador do conceito de &quot;literate programming&quot; foi
+[Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth).</code></pre>
+<p>O criador do conceito de “literate programming” foi <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>.</p>
+<pre><code>Devemos instalar o pacote [knitr](http://yihui.name/knitr) para poder
+usar o R Markdown.</code></pre>
+<p>Devemos instalar o pacote <a href="http://yihui.name/knitr">knitr</a> para poder usar o R Markdown.</p>
+</div>
+<div id="imagens" class="section level3">
+<h3>Imagens</h3>
+<p>Para inserir uma imagem, a sintaxe é a mesma de inserir um link, mas com uma exclamação (<code>!</code>) na frente: <code>![texto](imagem)</code>.</p>
+<p>O link para a imagem pode ser um enderço Web:</p>
+<pre><code>![Logo do R](http://developer.r-project.org/Logo/Rlogo-5.png)</code></pre>
+<div class="figure">
+<img src="http://developer.r-project.org/Logo/Rlogo-5.png" alt="Logo do R" />
+<p class="caption">Logo do R</p>
+</div>
+<p>Ou um endereço local:</p>
+<pre><code>![Logo do Markdown](img/markdown.png)</code></pre>
+<div class="figure">
+<img src="img/markdown.png" alt="Logo do Markdown" />
+<p class="caption">Logo do Markdown</p>
+</div>
+</div>
+<div id="paragrafo" class="section level3">
+<h3>Parágrafo</h3>
+<p>Para criar parágrafos basta pular uma linha:</p>
+<pre><code>O criador do conceito de &quot;literate programming&quot; foi
+[Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth).
+
+Devemos instalar o pacote [knitr](http://yihui.name/knitr) para poder
+usar o R Markdown.</code></pre>
+<p>O criador do conceito de “literate programming” foi <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>.</p>
+<p>Devemos instalar o pacote <a href="http://yihui.name/knitr">knitr</a> para poder usar o R Markdown.</p>
+</div>
+<div id="codigos" class="section level3">
+<h3>Códigos</h3>
+<p>Para apresentar códigos na própria linha, colocamos o texto entre duas crases (<code>`</code>):</p>
+<pre><code>Para gerar números aleatórios de uma distribuição normal no R, use a
+função `rnorm()`.</code></pre>
+<p>Para gerar números aleatórios de uma distribuição normal no R, use a função <code>rnorm()</code>.</p>
+<p>Para apresentar blocos de código, coloque o texto entre três crases seguidas (<code>```</code>) no início e no final:</p>
+<pre><code>```
+x &lt;- rnorm(n = 10, mean = 100, sd = 5)
+hist(x, main = &quot;&quot;)
+```</code></pre>
+<pre><code>x &lt;- rnorm(n = 10, mean = 100, sd = 5)
+hist(x, main = &quot;&quot;)</code></pre>
+<p>Note que esse código não será interpretado, ele apenas será mostrado no texto. Esse será o papel do R aqui!</p>
+</div>
+<div id="tabelas" class="section level3">
+<h3>Tabelas</h3>
+<p>Tabelas podem ser escritas da seguinte forma:</p>
+<pre><code>    Caracter | Permissão
+    ---------|----------
+    `r`      | Permissão de leitura (*read*)
+    `w`      | Permissão de escrita (*write*)
+    `x`      | Permissão de execução (*execute*)
+    `-`      | Permissão desabilitada</code></pre>
+<p>Para gerar o seguinte resultado:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Caracter</th>
+<th align="left">Permissão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>r</code></td>
+<td align="left">Permissão de leitura (<em>read</em>)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>w</code></td>
+<td align="left">Permissão de escrita (<em>write</em>)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>x</code></td>
+<td align="left">Permissão de execução (<em>execute</em>)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>-</code></td>
+<td align="left">Permissão desabilitada</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="equacoes-matematicas" class="section level3">
+<h3>Equações matemáticas</h3>
+<p>Equações matemáticas podem ser escritas em formato <span class="math inline">\(LaTeX\)</span>. A página HTML resultante irá remderizar as equações através do <a href="http://www.mathjax.org">MathJax</a>.</p>
+<p>Equações na própria linha podem ser inseridas entre <code>$</code>:</p>
+<pre><code>Um modelo de regressão linear simples:  $Y = \beta_0 + \beta_1 x + \epsilon$.</code></pre>
+<p>Um modelo de regressão linear simples: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span>.</p>
+<p>Equações podem ser exibidas entre <code>$$</code>:</p>
+<pre><code>$$
+f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}
+e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
+$$</code></pre>
+<p><span class="math display">\[
+f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}
+e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
+\]</span></p>
+</div>
+</div>
+<div id="escrevendo-um-documento-em-markdown" class="section level2">
+<h2>Escrevendo um documento em Markdown</h2>
+<p>Um documento Markdown possui a extensão <code>.md</code> (embora não seja a única possível).</p>
+<p>Veja o arquivo de exemplo <a href="Exemplo1.md" class="uri">Exemplo1.md</a>.</p>
+<p>Para converter um documento Markdown em HTML é necessário um <strong>conversor</strong>.</p>
+<p>O conversor padrão do Markdown é escrito em Perl, e pode ser integrado em diversas ferramentas, mas não é apropriado para usuários comuns.</p>
+<p>Para testar a conversão do documento, copie e cole na página do <a href="http://daringfireball.net/projects/markdown/dingus">Dingus</a>.</p>
+</div>
+</div>
+<div id="pandoc" class="section level1">
+<h1>Pandoc</h1>
+<p>O <a href="http://pandoc.org/">Pandoc</a> é um conversor extremamente versátil, capaz de converter diversos formatos, incluindo Markdown para HTML.</p>
+<p>Se o Pandoc estiver instalado no seu sistema (Linux) é possível converter o documento com</p>
+<pre class="sh"><code>pandoc -f markdown -t html Exemplo1.md -o Exemplo1.html</code></pre>
+<p>O pacote <code>knitr</code> possui a função <code>pandoc()</code> que é um <em>wrapper</em> para executar o programa <code>pandoc</code> no sistema.</p>
+<pre class="r"><code>pandoc(input = &quot;Exemplo1.md&quot;, format = &quot;html&quot;)</code></pre>
+<p>Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo <a href="Exemplo1.html" class="uri">Exemplo1.html</a> no navegador.</p>
+<div id="usando-o-knitr-com-markdown" class="section level2">
+<h2>Usando o knitr com Markdown</h2>
+<p>No exemplo anterior, escrevemos um documento em Markdown (<code>.md</code>) e inserimos códigos do R, que são apenas apresentados no documento final.</p>
+<p>Agora vamos usar o knitr a nosso favor, fazedo com que ele interprete e retorne resultados dos códigos que inserimos.</p>
+<p>Para isso renomeie a extensão do arquivo de <code>.md</code> para <code>.Rmd</code>.</p>
+<p>Os blocos de códigos (ou <em>chunks</em>) agora devem conter uma marcação especial para indicar que devem ser interpretados pelo R. Para isso, colocamos <code>{r}</code> no início de cada bloco, que agora ficam</p>
+<pre><code>```{r}
+x &lt;- rnorm(n = 10, mean = 100, sd = 5)
+hist(x, main = &quot;&quot;)
+```</code></pre>
+<p>Usando o mesmo exemplo anterior, vamos renomear o arquivo <code>Exemplo1.md</code> para <code>Exemplo1-knitr.Rmd</code> e incluir a marção <code>{r}</code>.</p>
+<p>Também é possível colocar códigos do R para serem renderizados na própria linha com <code>`r `</code>, por exemplo, <code>`r 2+2`</code> gera o resultado 4 no documento.</p>
+<p>Veja o arquivo <a href="Exemplo1-knitr.Rmd" class="uri">Exemplo1-knitr.Rmd</a>. Agora usamos o knitr, através da função <code>knit()</code> para compilar o documento <code>.Rmd</code> em um documento com sintaxe Markdown <code>.md</code></p>
+<pre class="r"><code>knit(&quot;Exemplo1-knitr.Rmd&quot;)</code></pre>
+<table>
+<tr>
+<td align="center">
+<img src="img/knit.svg" height="50%">
+</td>
+</tr>
+</table>
+<p>O resultado da compilação pode ser vista no arquivo <a href="Exemplo1-knitr.md" class="uri">Exemplo1-knitr.md</a>.</p>
+<p>Agora temos um documento em Markdown com os códigos do R avaliados. Mas ainda precisamos processar esse arquivo para gerar o arquivo <code>.html</code> através do Pandoc</p>
+<pre class="r"><code>pandoc(input = &quot;Exemplo1-knitr.md&quot;, format = &quot;html&quot;)</code></pre>
+<p>que gera o arquivo <a href="Exemplo1-knitr.html" class="uri">Exemplo1-knitr.html</a> que pode ser visualizado no navegador.</p>
+</div>
+<div id="metadados" class="section level2">
+<h2>Metadados</h2>
+<p>Uma opção interessante ao utilizar o Pandoc é incluir metados no formato <a href="http://yaml.org/">YAML</a>.</p>
+<p>Os metadados em YAML são escritos em formato de lista aninhada, e o Pandoc usa essas informações para incluir, por exemplo, título, autor, e data em um documento.</p>
+<p>A opção mais importante para o <code>rmarkdown</code> é o campo <code>output</code>, que permite especificar o formato desejado de saída, o mesmo especificado no argumento <code>output_format =</code> da função <code>render()</code>.</p>
+<p>Os metadados em YAML são colocados sempre no <strong>início</strong> de um documento, e são delimitados por <code>---</code>. Exemplo típico:</p>
+<pre><code>---
+title: &quot;Meu documento em R Markdown&quot;
+author: &quot;Fernando Mayer&quot;
+date: 18 de setembro, 2015
+output: html_document
+---</code></pre>
+<p>Veja o arquivo <a href="Exemplo1-yaml.Rmd" class="uri">Exemplo1-yaml.Rmd</a>.</p>
+<p>Com isso, não é mais necessário especificar o argumento <code>output_format =</code> na chamada da função <code>render()</code>.</p>
+<p>Também é possível incluir vários formatos ao mesmo tempo, por exemplo</p>
+<pre><code>---
+title: &quot;Meu documento em R Markdown&quot;
+author: &quot;Fernando Mayer&quot;
+date: 18 de setembro, 2015
+output:
+  html_document: default
+  pdf_document: default
+---</code></pre>
+<p>E compilar todos eles ao mesmo tempo com</p>
+<pre class="r"><code>render(&quot;Exemplo1-yaml.Rmd&quot;, output_format = &quot;all&quot;)</code></pre>
+<p>Veja <a href="Exemplo1-yaml.html" class="uri">Exemplo1-yaml.html</a>, e <a href="Exemplo1-yaml.pdf" class="uri">Exemplo1-yaml.pdf</a>.</p>
+<!-- links -->
+</div>
+</div>
+
+<center>
+  <hr width="100%" size="3px">
+  <p> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+      <img src="img/CC_by-nc-sa_80x15.png" alt="Licença Creative Commons 4.0"> </a>
+  </p>
+  <p> <font size="2"> Este conteúdo
+      está disponível por meio da Licença Creative Commons 4.0 </font>
+  </p>
+</center>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -9,9 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Fernando Mayer &amp; Walmes Zeviani" />
 
 
-<title></title>
+<title>Documentos dinâmicos no R</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
@@ -383,15 +384,159 @@ div.tocify {
 </div>
 
 
+<h1 class="title toc-ignore">Documentos dinâmicos no R</h1>
+<h4 class="author"><em>Fernando Mayer &amp; Walmes Zeviani</em></h4>
 
 </div>
 
 
-<div id="pesquisa-reproduzivel-com-o-r-de-documentos-dinamicos-a-pacotes" class="section level1">
-<h1>Pesquisa Reproduzível com o R: de documentos dinâmicos à pacotes</h1>
-<p><a href="http://www.leg.ufpr.br/~fernandomayer">Fernando Mayer</a> &amp; <a href="http://www.leg.ufpr.br/~walmes">Walmes Zeviani</a> (LEG/UFPR)</p>
-<p><strong>Pesquisa reproduzível com o R: de documentos dinâmicos a pacotes</strong> é um minicurso que será apresentado na <a href="http://rbras2016.ufba.br/pt/">RBRAS 2016</a>, em Salvador (BA), nos dias 24 e 25 de maio de 2016.</p>
-<p>Este repositório contém o código fonte de todas as páginas do curso. Para acessar o conteúdo vá em: <a href="http://cursos.leg.ufpr.br/prr" class="uri">http://cursos.leg.ufpr.br/prr</a></p>
+<div id="opcoes-do-knitr" class="section level1">
+<h1>Opções do knitr</h1>
+<p>Todas as opções do knitr para controlar a saída dos resultados de códigos do R são válidas para o R Markdown.</p>
+<ul>
+<li>Para afetar um único <em>chunk</em>, coloque as opções individualmente
+<pre><code>```{r, opt1=val1, opt2=val2}
+# código
+```</code></pre></li>
+<li>Para afetar <strong>todos</strong> os <em>chunks</em> de um documento, use a função <code>knitr::opts_chunk$set()</code>:
+<pre><code>```{r, echo=FALSE}
+knitr::opts_chunk$set(opt1 = val1,
+                  opt2 = val2
+)
+```</code></pre></li>
+</ul>
+<p>As opções mais importantes são</p>
+<ul>
+<li><code>eval = FALSE</code> para não avaliar o código, apenas mostrar</li>
+<li><code>echo = FALSE</code> para não mostrar o código, apenas as saídas</li>
+<li><code>results = &quot;hide&quot;</code> para não mostrar as saídas</li>
+<li><code>results = &quot;asis&quot;</code> para que o resultado seja tratado como texto literal em Markdown. Por exemplo, para gerar uma tabela a partir de um objeto do R, podemos usar a função <code>knitr::kable()</code>
+<pre><code>```{r, results="asis"}
+kable(head(iris))
+```</code></pre></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.1</td>
+<td align="right">3.5</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.9</td>
+<td align="right">3.0</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.3</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.6</td>
+<td align="right">3.1</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.0</td>
+<td align="right">3.6</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.4</td>
+<td align="right">3.9</td>
+<td align="right">1.7</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>warning = FALSE</code> e <code>message = FALSE</code> para suprimir as mensagens de aviso</li>
+<li><code>fig.width = 5</code> and <code>fig.height = 5</code> para alterar o tamanho dos gráficos gerados pelo R (em polegadas)</li>
+<li><code>cache = TRUE</code> para armazenar os resultados</li>
+</ul>
+<p>A lista completa de opções está em <a href="http://yihui.name/knitr/options" class="uri">http://yihui.name/knitr/options</a>.</p>
+</div>
+<div id="usando-o-r-markdown" class="section level1">
+<h1>Usando o R Markdown</h1>
+<p>Para facilitar a conversão de arquivos <code>.Rmd</code> em <code>.html</code>, usamos o pacote <a href="http://rmarkdown.rstudio.com">rmarkdown</a>, através da função <code>render()</code>.</p>
+<p>A função <code>render()</code> é uma <em>wrapper</em> que internamente chama a <code>knitr::knit()</code> e posteriormente converte o documento para <code>.html</code> usando o Pandoc.</p>
+<p>A vantagem de usar a <code>rmarkdown::render()</code> é que ela possui uma série de opções que facilitam a conversão de documentos além de já renderizar páginas HTML mais amigáveis (atrvés de arquivos CSS).</p>
+<p>Para usar esse função você precisa:</p>
+<ol style="list-style-type: decimal">
+<li>Instalar o pacote <code>rmarkdown</code> com <code>install.packages(&quot;rmarkdown&quot;)</code></li>
+<li>Instalar o Pandoc no seu sistema</li>
+</ol>
+<p>No RStudio, esse pacote já vem instalado, assim como uma versão embutida do Pandoc.</p>
+<p>Usando o exemplo anterior, vamos compilar o arquivo <a href="Exemplo1-knitr.Rmd" class="uri">Exemplo1-knitr.Rmd</a> com</p>
+<pre class="r"><code>## Carrega o pacote
+library(rmarkdown)
+render(&quot;Exemplo1-knitr.Rmd&quot;)</code></pre>
+<table>
+<tr>
+<td align="center">
+<img src="img/split_apply_combine.svg" height="50%">
+</td>
+</tr>
+</table>
+<p>E o resultado pode ser visto no arquivo <a href="Exemplo1-knitr.html" class="uri">Exemplo1-knitr.html</a>.</p>
+<p>No RStudio, esse processo todo pode ser feito pelo botão <kbd>Knit<kbd>.</p>
+</div>
+<div id="convertendo-r-markdown-para-outros-formatos" class="section level1">
+<h1>Convertendo R Markdown para outros formatos</h1>
+<p>Por padrão, a função <code>render()</code> gera um arquivo <code>.html</code> mas existem outros formatos finais possíveis graças ao <strong>Pandoc</strong>.</p>
+<p>A chamada anterior é equivalente a</p>
+<pre class="r"><code>render(&quot;Exemplo1-knitr.Rmd&quot;, output_format = &quot;html_document&quot;)</code></pre>
+<p>O pacote <code>rmarkdown</code> possui uma série de formatos de saída, que possuem os sufixos <code>_document</code> para documentos, e <code>_presentation</code> para apresentações (slides). Alguns deles:</p>
+<ul>
+<li>Documentos:
+<ul>
+<li><code>html_document</code></li>
+<li><code>pdf_document</code></li>
+<li><code>word_document</code></li>
+</ul></li>
+<li>Apresentações:
+<ul>
+<li><code>ioslides_presentation</code></li>
+<li><code>slidy_presentation</code></li>
+<li><code>beamer_presentation</code></li>
+</ul></li>
+</ul>
+<p>Podemos converter um documento em R Markdown para PDF com</p>
+<pre class="r"><code>render(&quot;Exemplo1-knitr.Rmd&quot;, output_format = &quot;pdf_document&quot;)</code></pre>
+<p>O resultado é o arquivo <a href="Exemplo1-knitr.pdf" class="uri">Exemplo1-knitr.pdf</a>. A função <code>render()</code> usa o Pandoc para converter Markdown para <span class="math inline">\(LaTeX\)</span>, e depois para PDF.</p>
+<p>Um documento do Word pode ser gerado com</p>
+<pre class="r"><code>render(&quot;Exemplo1-knitr.Rmd&quot;, output_format = &quot;word_document&quot;)</code></pre>
+<p>Para gerar <a href="Exemplo1-knitr.docx" class="uri">Exemplo1-knitr.docx</a>.</p>
+<p>Apresentações em slides HTML podem ser geradas em diversos formatos, um deles é o <code>ioslides</code></p>
+<pre class="r"><code>render(&quot;Exemplo1-knitr.Rmd&quot;, output_format = &quot;ioslides_presentation&quot;,
+       output_file = &quot;Exemplo1-knitr-ioslides.html&quot;)</code></pre>
+<p>Veja o resultado em <a href="Exemplo1-knitr-ioslides.html" class="uri">Exemplo1-knitr-ioslides.html</a>.</p>
+<p>Apresentações em beamer</p>
+<pre class="r"><code>render(&quot;Exemplo1-knitr.Rmd&quot;, output_format = &quot;beamer_presentation&quot;,
+       output_file = &quot;Exemplo1-knitr-beamer.pdf&quot;)</code></pre>
+<p>Com resultado no arquivo <a href="Exemplo1-knitr-beamer.pdf" class="uri">Exemplo1-knitr-beamer.pdf</a>.</p>
+<!-- links -->
 </div>
 
 <center>

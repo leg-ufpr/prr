@@ -1,0 +1,14 @@
+---
+title: "Compartilhando pacotes"
+output:
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+source("setup_knitr.R")
+```
+
+# Github e Gitlab
+
+# CRAN

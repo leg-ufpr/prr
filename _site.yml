@@ -19,16 +19,38 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Sobre"
-      href: about.html
     - text: "Pesquisa reproduzível"
+      href: capPesqRep.html
+    - text: Documentos dinâmicos
       menu:
-        - text: "Introdução"
-        - href: capPesqRep.html
-        - text: "Literate programming"
-          href: capLitProg.html
-        - text: "Documentos dinâmicos"
-        - href: capDocDin.html
+      - text: "Markdown com pandoc"
+        href: capMarkdown.html
+      - text: "Documentos dinâmicos no R"
+        href: capDocDin.html
+    - text: "Pacotes R"
+      menu:
+      - text: "Introdução"
+        href: capIntroPac.html
+      - text: "Estrutura de um pacote"
+        href: capPacEstrut.html
+      - text: "Criando um pacote"
+        href: capCriaPac.html
+      - text: "Adicionando dados"
+        href: capAdiDados.html
+      - text: "Métodos e funções genéricas"
+        href: capFunMet.html
+      - text: "Vinhetas"
+        href: capVinheta.html
+      - text: "Testes"
+        href: capTestes.html
+      - text: "Funções externas"
+        href: capFunExt.html
+    - text: "Compartilhamento"
+      menu:
+      - text: "Pacotes"
+        href: capCompPac.html
+      - text: "Dados e texto"
+        href: capCompDados.html
     - text: "Slides"
       href: slides.html
   right:

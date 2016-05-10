@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Fernando Mayer &amp; Walmes Zeviani" />
+
+
+<title>Pesquisa Reproduzível</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/default.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+<script src="site_libs/navigation-1.0/codefolding.js"></script>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">PRR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="capPesqRep.html">Pesquisa reproduzível</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Documentos dinâmicos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capMarkdown.html">Markdown com pandoc</a>
+    </li>
+    <li>
+      <a href="capDocDin.html">Documentos dinâmicos no R</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Pacotes R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capIntroPac.html">Introdução</a>
+    </li>
+    <li>
+      <a href="capPacEstrut.html">Estrutura de um pacote</a>
+    </li>
+    <li>
+      <a href="capCriaPac.html">Criando um pacote</a>
+    </li>
+    <li>
+      <a href="capAdiDados.html">Adicionando dados</a>
+    </li>
+    <li>
+      <a href="capFunMet.html">Métodos e funções genéricas</a>
+    </li>
+    <li>
+      <a href="capVinheta.html">Vinhetas</a>
+    </li>
+    <li>
+      <a href="capTestes.html">Testes</a>
+    </li>
+    <li>
+      <a href="capFunExt.html">Funções externas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Compartilhamento
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="capCompPac.html">Pacotes</a>
+    </li>
+    <li>
+      <a href="capCompDados.html">Dados e texto</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/leg-ufpr/prr">
+    <span class="fa fa-github fa-lg"></span>
+     
+    GitHub
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+</ul>
+</div>
+
+
+<h1 class="title toc-ignore">Pesquisa Reproduzível</h1>
+<h4 class="author"><em>Fernando Mayer &amp; Walmes Zeviani</em></h4>
+
+</div>
+
+
+<div id="introducao" class="section level1">
+<h1>Introdução</h1>
+<p>Atualmente a evolução da tecnologia, mais especificamente em como coletamos, processamos e analisamos dados, têm possibilitado a interpretação de bases de dados complexas e de alta dimensão. Algumas bases de dados podem ser geradas quase que instantaneamente, se comparado à alguns anos atrás. Além disso, utilizamos o alto poder computacional atual para combinar bases de dados existentes (que já possuem grandes dimensões) em bases de dados cada vez maiores. Também utilizamos a alta capacidade de processamento para implementar rotinas de análise cada vez mais sofistivadas e complexas.</p>
+<p>Mas quem garante que toda essa informação, e todo esse resultado que vem sendo gerado pode ser confiável? Não existe uma resposta direta para essa pergunta, e certamente a confiabilidade de uma informação depende de muitos fatores. Uma possibilidade é confiarmos na afirmação que alguém fez, e simplesmente acreditar que isso seja verdade. Você tomaria um comprimido que alguém está distribuindo na rua afirmando que ele cura a sua dor de cabeça? E se um médico lhe oferecesse esse mesmo comprimido, isso faria você tomar o remédio com mais segurança? Certamente sim, mas quem garante que o médico não possa estar errado e o remédio causar um efeito colateral devastador em você? A resposta para essa pergunta é fácil. Considerando que o médico seja responsável, ele <strong>pesquisou</strong> antes de indicar a medicação para alguém. Mas quem garante que a pesquisa que o médico se baseou é confiável? É aí que entra a teoria da ciência e as formas de validação de um resultado. (<em>Arrumar essa ideia e continuar…</em>)</p>
+<p>As análises, os modelos e os algoritmos que usamos hojem em dia são muito mais complexos do que no passado. Ter um entendimento básico de tudo isso é difícil, até mesmo para os mais qualificados, e é quase impossível descerver todos os detalhes em palavras apenas. Por isso, entender o que alguém fez em uma análise de dados atualmente, requer olhar para o <em>código</em>, e examinar minuciosamente as rotinas utilizadas pelas pessoas.</p>
+</div>
+<div id="como-a-ciencia-funciona" class="section level1">
+<h1>Como a ciência funciona</h1>
+<p>A ciência é …</p>
+<p>Para que um resultado de uma pesquisa científica possa ser considerado como válido, é necessário que este resultado possa ser <strong>replicado</strong> por diversos cientistas. A replicação é um dos pilares fundamentais da ciência. Basicamente é necessário que diversos cientistas coletem e analisem dados de forma independente, e cheguem no mesmo resultado. Dessa forma se você chegar à conclusão de que X causa Y, ou que a vitamina C melhora a doença Z, ou que alguma coisa causa algum problema, será necessário que outros cientistas, independentes de você, cheguem no mesmo resultado. Se muitas pessoas diferentes chegarem à mesma conclusão de forma independente, então tendemos a pensar que a relação ou resultado provavelmente é verdadeiro.</p>
+<p>A replicação na ciência têm sido praticada há muitos anos. No entanto, hojem em dia esta prática tem se tornado cada vez mais desafiadora, uma vez que os estudos estão se tornando cada vez maiores e mais caros, e a disponibilidade de recursos financeiros para pesquisas cada vez mais escassa. Além disso, existem estudos que dificilmente podem ser replicados, como por exemplo, a avaliação do impacto de um terremoto em um determinado local, a evolução do crescimento de uma floresta, ou um estudo clínico que acompanhou as reações de pacientes à um medicamento durante 20 anos.</p>
+<p>Existem muitas boas razões pelas quais não podemos replicar um estudo. Se replicar não é possível, então a opção seria não fazer nada, e ter como informação apenas o resultado de um estudo. No entanto, não fazer nada não é (e não pode ser) uma opção para cientistas. É nesse ponto que entra o conceito de <strong>pesquisa reproduzível</strong>. A ideia é criar uma espécie de “padrão mínimo”, ou um “meio-termo” entre replicar um estudo e não fazer nada, fazer algo no meio. O problema básico é que temos o padrão ideal, que é a replicação, e o padrão nulo, que é não fazer nada. O que pode ser feito entre o melhor (que não é possível) e o pior (que não é desejável), é a reprodução dos resultados. É uma forma de preencher a lacuna de informação entre replicação e nada.</p>
+<pre><code>Figura com esquema de replicação e reprodução
+
+##------------------------------------------------------------------------
+## Replicação
+
++------------------+
+|                  |                         +------------------+
+|      Estudo      |                         |                  |
+|        1         | +--------------------&gt;  |   Resultado X    |
+|      Dados       |                         |                  |
+|                  |                         +------------------+
++------------------+
++------------------+
+|                  |                         +------------------+
+|      Estudo      |                         |                  |
+|        2         | +--------------------&gt;  |   Resultado X    |
+|      Dados       |                         |                  |
+|                  |                         +------------------+
++------------------+
++------------------+
+|                  |                         +------------------+
+|      Estudo      |                         |                  |
+|        3         | +--------------------&gt;  |   Resultado X    |
+|      Dados       |                         |                  |
+|                  |                         +------------------+
++------------------+
+
+##------------------------------------------------------------------------
+## Reprodução
+
+                             +---------------+
+                             |  Resultado X  |
+                     +-----&gt; |               |
+                     |       +---------------+
+                     |
++------------------+ |
+|                  | |                      +-------------------+
+|      Estudo      | |                      |                   |
+|        1         | +--------------------&gt; |    Resultado X    |
+|      Dados       | |                      |                   |
+|                  | |                      +-------------------+
++------------------+ |
+                     |
+                     |        +--------------+
+                     +------&gt; |  Resultado X |
+                              |              |
+                              +--------------+</code></pre>
+<p>Uma pesquisa reproduzível é aquela que pode ser replicada por outras pessoas de maneira independente, com o objetivo de que todas cheguem ao mesmo resultado. Por isso, uma parte fundamental da pesquisa reproduzível é tornar disponíveis os <strong>dados</strong> do estudo original, e os <strong>métodos computacionais</strong> (em forma de código) utilizados para se chegar no resultado. Dessa forma, qualquer pessoa poderá olhar para os dados, realizar a análise proposta, e chegar exatamente nos mesmos resultados.</p>
+<p>Nesse ponto, a pergunta é: se reproduzir uma análise leva à um resultado já conhecido e esperado, então qual seria o propósito de se fazer (ou de tornar) uma pesquisa reproduzível? Como mencionado anteriormente, a pesquisa reproduzível não é uma forma de replicação, mas é melhor do que não se fazer nada. O propósito principal de reproduzir uma pesquisa é o de <strong>validação da análise de dados</strong>. Como não há coleta de dados e métodos analíticos independentes, realmente é difícil validar a questão científica propriamente dita. Mas, se conseguimos reproduzir uma análise e chegar no mesmo resultado do autor original, então de alguma forma estamos validando aquela análise de dados. Com isso, no mínimo podemos ter confiança de que aquela análise foi realizada apropriadamente e que os métodos corretos foram utilizados.</p>
+<p>Além disso, a possibilidade de reproduzir um estudo com os dados originais também permite que diferentes cientistas, com diferentes visões e ideias possam colaborar no sentido de continuar a pesquisa, ou sugerir outras abordagens de análise, ou abrindo novas possibilidades para novas perguntas. Dessa forma, a pesquisa reproduzível deve ser vista como um processo dinâmico, e não estático, onde o fim seria chegar no resultado esperado. O verdadeiro trunfo da pesquisa reproduzível é quando novas ideias e perguntas surgem a partir dos resultados encontrados, e a disponibilização de dados e códigos podem fazer com que o processo de geração de conhecimento (que é um dos objetivos da ciência) seja mais rápido e dinâmico. No futuro, podem existir outras abordagens e formas de pensar no mesmo problema, e nesse sentido, novos métodos podem ser utilizados para analisar os dados disponibilizados. Se o resultado encontrado for sempre o mesmo, também tendemos a acreditar que deve ser verdadeiro.</p>
+<p>E a questão sobre propriedade intelectual, plágio, etc?</p>
+<p>Nos últimos anos têm havido muita discussão sobre pesquisa reproduzível na literatura científica e na mídia. Muitas revistas científicas tem atualizado suas políticas de publicação, para encorajar a reproducibilidade dos artigos publicados. Em 2012, foi discutido em um programa de TV um incidente com uma pesquisa promissora para um teste de câncer na universidade de Duke. Chegou-se à conclusão que os resultados da pesquisa não podiam ser reproduzidos, levando até a paralisação do estudo. (<em>Aqui precisa citar fontes e talvez dar mais detalhes. Procurar casos mais concretos</em>.)</p>
+</div>
+<div id="boas-praticas-para-a-computacao-cientifica" class="section level1">
+<h1>Boas práticas para a computação científica</h1>
+<p>Para promover, encorajar, e padronizar a reproducibilidade de investigações científicas, algumas práticas podem ser adotadas. De maneira geral, as peças chave de pesquisa reproduzível são:</p>
+<ul>
+<li>Disponibilização de dados e metadados</li>
+<li>Disponibilização do código computacional que gerou a análise, que deve ser completamente especificado</li>
+<li>Todos os passos da análise devem ser descritas, incluindo o pré-processamento de dados quando houver, para que as pessoas possam estudá-la e reproduzi-la</li>
+</ul>
+<p>De maneira mais específica, podemos listar oito práticas consideradas essenciais para que a reproducibilidade seja eficiente:</p>
+<ol style="list-style-type: decimal">
+<li>Escreva programas para humanos, não para computadores</li>
+<li>Deixe o computador fazer o trabalho</li>
+<li>Faça alterações incrementais</li>
+<li>Não repita você mesmo (ou outros)</li>
+<li>Prepare para erros</li>
+<li>Otimize código apenas depois que ele funcionar</li>
+<li>Documente a ideia e o propósito, não a mecânica do programa</li>
+<li>Colabore</li>
+</ol>
+<p>(<em>Expandir essa parte baseada em Wilson et al, 2014</em>).</p>
+</div>
+<div id="elementos-da-reproducibilidade" class="section level1">
+<h1>Elementos da reproducibilidade</h1>
+<ol style="list-style-type: decimal">
+<li>Dados</li>
+<li>Código</li>
+<li>Documentação</li>
+<li>Distribuição</li>
+</ol>
+</div>
+<div id="analise-de-dados-como-arte" class="section level1">
+<h1>Análise de dados como arte</h1>
+<p>Em 1974, Donald Knuth descreveu a diferença entre arte e ciência da seguinte forma:</p>
+<blockquote>
+<p>Ciência é conhecimento que entendemos tão bem que podemos ensiná-la para um computador. Todo o resto é arte.</p>
+</blockquote>
+<p>Imagine um compositor escrevendo a letra de uma música. Certamente existem regras gerais de como uma boa música deve ser estruturada: qual a duração, número de versos, etc. Em outras palavras, existe um estrutura geral (mesmo que abstrata) para músicas em geral. No entanto, o conhecimento dessa estrutura e de teoria musical sozinhas não fazem uma boa música. É necessário algo mais. Em algum momento, o compositor deve injetar algo mais, alguma coisa que faça com que sua música seja diferente das outras e que as pessoas queiram ouvir. Esta parte criativa é difícil de explicar, mas é essencial para o processo de composição. Se não fosse assim, bastaria programarmos um computador para compor músicas, o que (para o bem ou para o mal) ainda não aconteceu.</p>
+<p>Assim como a composição de uma música, o processo de analisar dados também é uma arte. Não é uma coisa que podemos ensinar para um computador. Análise de dados também possui uma estrutura geral e teorias envolvidas como regressão linear, árvores de classificação, etc., e todas estas teorias já foram ensinadas para os computadores. No entanto, cabe ao analista de dados saber como juntar todas estas ferramentas e aplicá-las para responder questões relevantes para a ciência e para as pessoas. (Peng e Matsui, 2015).</p>
+</div>
+<div id="pesquisa-reproduzivel" class="section level1">
+<h1>Pesquisa reproduzível</h1>
+<blockquote>
+<p><em>The source code is real</em></p>
+<blockquote>
+<p>ESS Project</p>
+</blockquote>
+</blockquote>
+<p>Pseudo-código para escrever um artigo ou relatório científico:</p>
+<pre class="r"><code>1. Importe uma base de dados para um *software*
+2. Execute um procedimento analítico
+3. Gere tabelas e figuras separadamente
+4. Copie os resultados de análises
+5. Coloque tudo isso em um editor de texto e escreva o documento</code></pre>
+<p>Mudou alguma linha na base de dados? Esqueceu de algo? Volte para o item (1) e repita o processo (e boa sorte)!</p>
+<p>Pseudo-código para escrever um artigo ou relatório científico <strong>reprodutível</strong>:</p>
+<pre class="r"><code>1. Use o R Markdown e realize os 5 passos acima em um único documento</code></pre>
+<p>Mudou alguma linha na base de dados? Esqueceu de algo? Altere o código e gere um novo documento.</p>
+<ul>
+<li>Dessa forma, um documento pode ser gerado dinamicamente a partir de um <strong>código-fonte</strong>.</li>
+<li>Da mesma forma que um <em>software</em> possui seu código-fonte, um documento dinâmico é o código-fonte de um relatório.</li>
+<li>É uma combinação de código de computador e as correspondentes narrativas descrevendo o resultado que o código está gerando (números, tabelas, figuras, …).</li>
+<li>Quando <strong>compilamos</strong> o documento dinâmico, o código de computador é executado, e as saídas são apresentadas. Portanto obtemos um documento final que mistura <strong>código</strong> e <strong>texto</strong>.</li>
+<li>Como gerenciamos apenas o código-fonte do documento, ficamos livres de todas as etapas manuais mencionadas acima.</li>
+</ul>
+</div>
+<div id="literate-programming" class="section level1">
+<h1>Literate Programming</h1>
+<blockquote>
+<p><em>Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to humans what we want the computer to do.</em></p>
+<blockquote>
+<p>Donald Knuth</p>
+</blockquote>
+</blockquote>
+<p>O ideia básica por trás de documentos dinâmicos decorre diretamente do conceito de <em>literate programming</em> (“programação letrada”), um paradigma concebido por <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> em 1984.</p>
+<table>
+<tr>
+<td align="center">
+<img src="img/knuth.jpg" height="50%">
+</td>
+<td align="center">
+<img src="img/Literate_Programming_book_cover.jpg" height="55%">
+</td>
+</tr>
+</table>
+<ul>
+<li>O conceito é o de misturar <strong>literatura</strong> (o texto em uma linguagem humana) com <strong>códigos de programação</strong>, tornando claro cada etapa de um programa e/ou análise</li>
+<li>Com um único código-fonte, podemos
+<ul>
+<li>Produzir documentos para humanos (HTML, PDF, …) ⇒ <em>weave</em></li>
+<li>Produzir documentos para máquinas (código) ⇒ <em>tangle</em></li>
+</ul></li>
+<li>Knuth criou um sistema chamado <strong>WEB</strong> para fazer essa mistura dos seus textos em <span class="math inline">\(TeX\)</span> com a linguagem Pascal</li>
+<li>Atualmente muitos outros sistemas existem para misturar códigos com texto em várias linguagens</li>
+</ul>
+<div id="literate-programming-no-r" class="section level2">
+<h2>Literate Programming no R</h2>
+<p>Com a ascensão do R no início dos anos 2000, <a href="http://www.statistik.lmu.de/~leisch">Friedrich Leisch</a> criou o <a href="https://www.statistik.lmu.de/~leisch/Sweave">Sweave</a> em 2002</p>
+<ul>
+<li>S + weave</li>
+<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span> com códigos do R</li>
+<li>Ainda é muito utilizado e já é distribuído como uma função do R dentro do pacote <code>utils</code></li>
+</ul>
+<p>No final de 2011, <a href="http://yihui.name/">Yihui Xie</a> criou o pacote <a href="http://yihui.name/knitr">knitr</a> com a proposta de ser mais flexível, fácil e <strong>preparado para a Web</strong></p>
+<blockquote>
+<p><em>knitr = Sweave + cacheSweave + pgfSweave + weaver + animation::saveLatex + R2HTML::RweaveHTML + highlight::HighlightWeaveLatex + 0.2 </em> brew + 0.1 <em> SweaveListingUtils + more</em></p>
+</blockquote>
+<ul>
+<li>knit + R</li>
+<li>Uma re-implementação mais moderna do Sweave</li>
+<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span>, HTML e <strong>Markdown</strong> com códigos do R</li>
+<li>Também permite misturar texto com códigos de outras linguagens: Python, awk, C++, shell.</li>
+<li>Adiciona muitas facilidades como
+<ul>
+<li>Cache</li>
+<li>Decoração e formatação automática de códigos</li>
+<li>Geração de gráficos mais direta</li>
+</ul></li>
+</ul>
+<!-- links -->
+</div>
+</div>
+
+<center>
+  <hr width="100%" size="3px">
+  <p> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+      <img src="img/CC_by-nc-sa_80x15.png" alt="Licença Creative Commons 4.0"> </a>
+  </p>
+  <p> <font size="2"> Este conteúdo
+      está disponível por meio da Licença Creative Commons 4.0 </font>
+  </p>
+</center>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
