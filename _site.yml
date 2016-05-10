@@ -18,21 +18,17 @@ navbar:
   title: "PRR"
   left:
     - text: "Home"
-      icon: fa-home
       href: index.html
     - text: "Sobre"
-      icon: fa-info
       href: about.html
-    - text: "Sumário"
-      icon: fa-gear
+    - text: "Pesquisa reproduzível"
       menu:
         - text: "Introdução"
-        - text: "Proposta"
-          href: proposta.html
-        - text: "---------"
-        - text: "Resumo"
-        - text: "Pacote R"
-          href: resumo_web.html
+        - href: capPesqRep.html
+        - text: "Literate programming"
+          href: capLitProg.html
+        - text: "Documentos dinâmicos"
+        - href: capDocDin.html
     - text: "Slides"
       href: slides.html
   right:

@@ -5,6 +5,10 @@ date: March 22, 2005
 output: ioslides_presentation
 ---
 
+```{r setup, include=FALSE}
+source("setup_knitr.R")
+```
+
 # In the morning
 
 ## Getting up
