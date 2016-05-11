@@ -1,0 +1,36 @@
+# whitelist
+branches:
+  only:
+    - master
+    - gh-pages
+
+# environment variables
+env:
+  - R_LIBS_USER=~/R
+
+# install dependencies
+install:
+  - sudo apt-add-repository -y ppa:marutter/rdev
+  - sudo apt-get update
+  - curl -L -O https://download1.rstudio.org/rstudio-0.99.892-amd64-debian.tar.gz
+  - tar -zxvf rstudio-0.99.892-amd64-debian.tar.gz
+  - sudo cp rstudio-0.99.892/bin/pandoc/pandoc /usr/local/bin/pandoc
+  - sudo cp rstudio-0.99.892/bin/pandoc/pandoc-citeproc /usr/local/bin/pandoc-citeproc
+  - which pandoc
+  - which pandoc-citeproc
+  - pandoc --version
+  - sudo apt-get install r-base
+  - "[ ! -d ~/R ] && mkdir ~/R"
+  - R --version
+  - Rscript -e '.libPaths(); sessionInfo()'
+  - Rscript -e 'install.packages("devtools", type = "source", repos = "http://cran-r.c3sl.ufpr.br/")'
+  - Rscript -e 'devtools::install_github("yihui/knitr")'
+  - Rscript -e 'devtools::install_github("rstudio/rmarkdown")'
+
+# build site
+
+before_script:
+  - rm -rf figures
+
+script:
+  - Rscript -e 'rmarkdown::render_site()'
