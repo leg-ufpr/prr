@@ -1,5 +1,7 @@
 # Pesquisa Reproduzível com o R: de documentos dinâmicos à pacotes
 
+[![Build Status](https://travis-ci.org/leg-ufpr/prr.svg)](https://travis-ci.org/leg-ufpr/prr)
+
 [Fernando Mayer] & [Walmes Zeviani] (LEG/UFPR)
 
 **Pesquisa reproduzível com o R: de documentos dinâmicos a pacotes** é

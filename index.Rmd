@@ -9,6 +9,8 @@ output:
 source("setup_knitr.R")
 ```
 
+[![Build Status](https://travis-ci.org/leg-ufpr/prr.svg)](https://travis-ci.org/leg-ufpr/prr)
+
 # Apresentação
 
 **Pesquisa reproduzível com o R: de documentos dinâmicos a pacotes** é
