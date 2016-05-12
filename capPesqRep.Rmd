@@ -85,13 +85,13 @@ pelas pessoas.
   tentar reproduzir o trabalho, o que também foi em vão.
 
   Depois disso, uma série de investigações foram realizadas, inclusive
-  por outros pesquisadoresda Duke, levando a cessar os ensaios clínicos
+  por outros pesquisadores da Duke, levando a cessar os ensaios clínicos
   já iniciados pela Universidade. Dr. Potti pediu demissão, e depois foi
   descoberto que ele tinha envolvimento com empresas da área biomédica.
 
   Como lição: o processo de revisão por pares de revistas científicas
   depende da disponibilidade de pesquisadores, que frequentemente não
-  tem a disponibilidade para revisar uma publicação da maneira como
+  tem o tempo necessário para revisar uma publicação da maneira como
   deveria. Além do mais, a seção "métodos" de um artigo deveria conter
   toda a informação necessária para que a análise seja reproduzida, o
   que frequentemente não acontece.
@@ -100,7 +100,51 @@ pelas pessoas.
 
 # Como a ciência funciona
 
-A ciência é ...
+A Ciência é um processo de aprendizado da natureza, onde ideias
+concorrentes sobre como funciona o mundo são medidas contra observações
+(Feynman, 1965, 1985). Como as nossas descrições do mundo são quase
+sempre incompletas, e nossas medidas envolvem incerteza e imprecisão,
+nós precisamos de métodos para avaliar a concordância das ideias
+concorrentes e as observações. Estes métodos geralmente constituem o
+campo da Estatística (Stigler, 1986).
+
+Existe um modelo comumente aceito para o processo científico. A ideia
+geral é de que existe uma "árvore de aprendizado" a partir de
+experimentos críticos, denominada por Platt (1964) de **inferência
+forte** (*strong inference*), e que consiste das seguintes etapas:
+
+1. Conceber hipóteses alternativas.
+2. Conceber um experimento crucial (ou vários deles) com possíveis
+   resultados alternativos, onde cada um poderá excluir, dentro do
+   possível, uma ou mais hipóteses.
+3. Realizar o experimento de forma a obter resultados mais confiáveis
+   possíveis.
+4. Reciclar o procedimento, criando subhipóteses ou hipóteses
+   sequenciais para refinar as possibilidades que restam, e assim por
+   diante.
+
+Esta visão de Platt é naturalmente uma extensão lógica do trabalho de
+Popper (1979), que revolucionou a filosofia da Ciência no século 20, ao
+argumentar que uma hipótese não pode ser provada, apenas desprovada. A
+essência do método Popperiano é "desafiar" uma hipótese repetidamente.
+Se a hipótese permanece válida então ela não é validada, mas adquire um
+certo "grau de confiança", que na prática passa a ser tratada como
+verdadeira. Coincidindo com esta filosofia de Popper está o trabalho
+estatístico de Ronald Fisher, Karl Perason, Jerzy Neyman e outros, que
+desenvolveram grande parte da teoria estatística atual associada à
+"testes de hipótese".
+
+A etapa 4 do modelo acima é uma das partes fundamentais da Ciência,
+tanto para verificar e validar resultados, quanto para criar novas
+hipóteses a partir de hipóteses correntes. E não necessariamente esta
+etapa deve ser conduzida sempre pelas mesmas pessoas. Muitas vezes,
+pesquisadores com diferentes visões e interpretações é que podem fazer
+essa etapa evoluir de maneira mais rápida, ou mais profunda. Mas para
+isso, é necessário primeiro que a pesquisa original seja **replicável**
+por outros cientistas. E é nesse ponto que podem surgir dificuldades,
+com será exposto abaixo.
+
+# Replicação e reprodução na Ciência
 
 Para que um resultado de uma pesquisa científica possa ser considerado
 como válido, é necessário que este resultado possa ser **replicado** por
@@ -112,7 +156,8 @@ que a vitamina C melhora a doença Z, ou que alguma coisa causa algum
 problema, será necessário que outros cientistas, independentes de você,
 cheguem no mesmo resultado. Se muitas pessoas diferentes chegarem à
 mesma conclusão de forma independente, então tendemos a pensar que a
-relação ou resultado provavelmente é verdadeiro.
+relação ou resultado provavelmente é verdadeiro (que vai de encontro com
+a filosofia de Popper).
 
 A replicação na ciência têm sido praticada há muitos anos. No entanto,
 hojem em dia esta prática tem se tornado cada vez mais desafiadora, uma
@@ -126,15 +171,19 @@ durante 20 anos.
 
 Existem muitas boas razões pelas quais não podemos replicar um
 estudo. Se replicar não é possível, então a opção seria não fazer nada,
-e ter como informação apenas o resultado de um estudo. No entanto, não
+e ter como informação apenas o resultado de *um* estudo. No entanto, não
 fazer nada não é (e não pode ser) uma opção para cientistas. É nesse
 ponto que entra o conceito de **pesquisa reproduzível**. A ideia é criar
 uma espécie de "padrão mínimo", ou um "meio-termo" entre replicar um
-estudo e não fazer nada, fazer algo no meio. O problema básico é que
-temos o padrão ideal, que é a replicação, e o padrão nulo, que é não
+estudo e não fazer nada, ou seja, fazer algo no meio. O problema básico
+é que temos o padrão ideal, que é a replicação, e o padrão nulo, que é não
 fazer nada. O que pode ser feito entre o melhor (que não é possível) e o
 pior (que não é desejável), é a reprodução dos resultados. É uma forma
 de preencher a lacuna de informação entre replicação e nada.
+
+
+A diferença entre replicação e reprodução está esquematizada na figura
+abaixo.
 
 ```
 Figura com esquema de replicação e reprodução
@@ -224,17 +273,33 @@ métodos podem ser utilizados para analisar os dados disponibilizados. Se
 o resultado encontrado for sempre o mesmo, também tendemos a acreditar
 que deve ser verdadeiro.
 
-E a questão sobre propriedade intelectual, plágio, etc?
-
 Nos últimos anos têm havido muita discussão sobre pesquisa reproduzível
 na literatura científica e na mídia. Muitas revistas científicas tem
 atualizado suas políticas de publicação, para encorajar a
-reproducibilidade dos artigos publicados. Em 2012, foi discutido em um
-programa de TV um incidente com uma pesquisa promissora para um teste de
-câncer na universidade de Duke. Chegou-se à conclusão que os resultados
-da pesquisa não podiam ser reproduzidos, levando até a paralisação do
-estudo. (*Aqui precisa citar fontes e talvez dar mais detalhes. Procurar
-casos mais concretos*.)
+reproducibilidade dos artigos publicados. Por exemplo, a *Public Library
+of Science* (PLoS) possui como requerimento para publicação a
+disponibilização *online* dos dados necessários para reproduzir uma
+pesquisa.
+
+Nesse ponto podem surgir algumas preocupações por parte dos cientistas:
+Como fica a questão da propriedade intelectual? Como fica a
+disponibilização de dados que foram coletados com financiamento privado
+ou público? Até que ponto a disponibilização dos dados não irá
+prejudicar meus projetos futuros? Será que não posso sofrer plágio?
+
+Muitas pesquisas tem mostrado que os cientistas estão preocupados em
+disponibilizar seus dados em detrimento de pesquisas futuras. Na própria
+PLoS, cerca de 60% das publicações não disponibilizam dados suficientes
+para que as pesquisas possam ser reproduzidas. (Van Noorden, 2014).
+
+Como lidar e argumentar contra isso?
+
+# Elementos da reproducibilidade
+
+1. Dados
+2. Código
+3. Documentação
+4. Distribuição
 
 # Boas práticas para a computação científica
 
@@ -262,14 +327,6 @@ essenciais para que a reproducibilidade seja eficiente:
 8. Colabore
 
 (*Expandir essa parte baseada em Wilson et al, 2014*).
-
-
-# Elementos da reproducibilidade
-
-1. Dados
-2. Código
-3. Documentação
-4. Distribuição
 
 
 # Análise de dados como arte
