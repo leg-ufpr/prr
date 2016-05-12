@@ -20,7 +20,7 @@ comparado à alguns anos atrás. Além disso, utilizamos o alto poder
 computacional atual para combinar bases de dados existentes (que já
 possuem grandes dimensões) em bases de dados cada vez maiores. Também
 utilizamos a alta capacidade de processamento para implementar rotinas
-de análise cada vez mais sofistivadas e complexas.
+de análise cada vez mais sofisticadas e complexas.
 
 Mas quem garante que toda essa informação, e todo esse resultado que vem
 sendo gerado pode ser confiável? Não existe uma resposta direta para
@@ -38,13 +38,65 @@ que a pesquisa que o médico se baseou é confiável? É aí que entra a
 teoria da ciência e as formas de validação de um
 resultado. (*Arrumar essa ideia e continuar...*)
 
-As análises, os modelos e os algoritmos que usamos hojem em dia são
+As análises, os modelos e os algoritmos que usamos hoje em dia são
 muito mais complexos do que no passado. Ter um entendimento básico
 de tudo isso é difícil, até mesmo para os mais qualificados, e é quase
-impossível descerver todos os detalhes em palavras apenas. Por isso,
+impossível descrever todos os detalhes em palavras apenas. Por isso,
 entender o que alguém fez em uma análise de dados atualmente, requer
 olhar para o *código*, e examinar minuciosamente as rotinas utilizadas
 pelas pessoas.
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Um estudo de caso</div>
+  <div class="panel-body">
+
+  Em 2006, um artigo no *New England Journal of Medicine*, dos Drs. Anil
+  Potti, Joseph Nevins e colaboradores da Universidade de Duke, chamou a
+  atenção da comunidade médica em geral. Os autores relataram que
+  poderiam prever a evolução do câncer de pulmão de um paciente usando
+  dispositivos chamados de matrizes de expressão, que rastreiam os
+  padrões de atividade de milhares de genes em uma amostra de tecido
+  como uma imagem colorida. Alguns meses mais tarde, eles publicaram na
+  *Nature Medicine* que eles tinham desenvolvido uma técnica semelhante,
+  que utilizou a expressão de genes em culturas de laboratório de
+  células cancerosas, conhecidas como linhas de células, para prever a
+  quimioterapia mais eficaz para pacientes que sofrem de câncer de
+  pulmão, mama ou de ovário.
+
+  Aparentemente, os resultados publicados pareciam um enorme avanço no
+  tratamento do câncer. De fato, algumas semanas depois da publicação
+  na *Nature Medicine*, um grupo de bioestatísticos do MD Anderson
+  Cancer Centre tentava reproduzir os resultados do artigo, com a
+  finalidade de usar a nova técnica. Ao encontrar algumas dificuldades,
+  os pesquisadores entraram em contato com Dr. Potti, solcitando os
+  dados brutos e os códigos da análise conduzida em Duke.
+
+  Os pesquisadores de Duke forneceram o material, e logo começaram a
+  surgir diversos questionamentos sobre a metodologia utilizada
+  originalmente. Os pesquisadores que tantavam reproduzir a análise
+  encontraram diversas falhas como linhas de células com nomes errados,
+  nomes e números de células inconsistentes, etc.
+
+  Os questionamentos foram publicamente respondidos, e além disso, o
+  grupo de Duke iniciou três ensaios clínicos baseados nos trabalhos
+  publicados. Também havia a intenção de utilizar a metodologia em um
+  ensaio clínico financiado pela *America's National Cancer Institute*
+  (NCI), o que levou Lisa McShane, uma bioestatística da NCI, também
+  tentar reproduzir o trabalho, o que também foi em vão.
+
+  Depois disso, uma série de investigações foram realizadas, inclusive
+  por outros pesquisadoresda Duke, levando a cessar os ensaios clínicos
+  já iniciados pela Universidade. Dr. Potti pediu demissão, e depois foi
+  descoberto que ele tinha envolvimento com empresas da área biomédica.
+
+  Como lição: o processo de revisão por pares de revistas científicas
+  depende da disponibilidade de pesquisadores, que frequentemente não
+  tem a disponibilidade para revisar uma publicação da maneira como
+  deveria. Além do mais, a seção "métodos" de um artigo deveria conter
+  toda a informação necessária para que a análise seja reproduzida, o
+  que frequentemente não acontece.
+  </div>
+</div>
 
 # Como a ciência funciona
 
@@ -134,7 +186,7 @@ Figura com esquema de replicação e reprodução
                               +--------------+
 ```
 
-Uma pesquisa reproduzível é aquela que pode ser replicada por outras
+Uma pesquisa reproduzível é aquela que pode ser reproduzida por outras
 pessoas de maneira independente, com o objetivo de que todas cheguem ao
 mesmo resultado. Por isso, uma parte fundamental da pesquisa
 reproduzível é tornar disponíveis os **dados** do estudo original, e os
