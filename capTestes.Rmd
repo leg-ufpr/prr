@@ -1,12 +1,245 @@
 ---
 title: "Testes"
+author: "Fernando Mayer & Walmes Zeviani"
+date: 23-05-2016
 output:
-  html_document:
-    toc: true
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
 ---
 
-```{r setup, include=FALSE}
-source("setup_knitr.R")
+```{r, include=FALSE}
+source("_setup.R")
+opts_chunk$set(eval = FALSE)
+# setwd("~/repos/MRDCr/"); devtools::load_all()
+# source("~/Dropbox/labestData/func.R")
 ```
 
 # Introdução
+
+----
+
+A relação entre as funções em um pacote grande
+
+<iframe src="mcglm_network.html" width="100%" height="800px"></iframe>
+
+----
+
+## Testes de Unidade
+
+  - Projeto grande, prolongado
+  - Muitos colaboradores
+  - Evitar quebra acidental do código
+  - Perceber os efeitos colaterais durante as edições e não pelo usuário
+  - Fazer a mesma sequência de testes sempre
+  - Testar funções não exportadas (`core`).
+
+## Vantagens e Desvantagens
+
+# Testes com o `devtools`
+
+## Contruindo a Estrutura para Testes
+
+Após carregar no `devtools`, na raíz do diretório do pacote, faça:
+```{r}
+library(devtools)
+
+use_testthat()
+```
+
+Esse comando resulta na criação de diretório e arquivos.
+```
+|-- tests/
+   |-- testthat/
+   `-- testthat.R
+```
+
+E também acrescenta o `testthat` do `DESCRIPTION`.
+```{r}
+Suggests:
+    testthat
+```
+
+## Organização dos Testes
+
+  - O arquivo `tests/testthat.R` configura o esquema de testes.
+  - Cada arquivo de teste `test_*.R` é um conjunto de testes.
+  - Cada teste `test_that()` é um conjunto de expectativas.
+  - Cada expectativa `expect_*()` avalia uma unidade testável.
+
+---
+
+Conteúdo do `/tests/testthat.R` (*default* feito pelo `devtools`).
+```{r}
+library(testthat)
+library(MRDCr)
+
+test_check("MRDCr")
+```
+
+Os arquidos de teste devem ter nome com prefixo `test_*.R`.
+```{r}
+# Criando dois arquivos.
+file.create("/tests/testthat/test_funprobs.R")
+file.create("/tests/testthat/test_logliks.R")
+```
+```
+|-- tests/
+    |-- testthat/
+    |   |-- test_funprobs.R
+    |   `-- test_logliks.R
+    `-- testthat.R
+```
+
+---
+
+Conteúdo do arquivo `test_funprobs.R`.
+```{r}
+context("Testa as Funções de Probabilidade")
+
+test_that("Iguais a Poisson", {
+    y <- 0:30
+    lambda <- 30 * runif(1)
+    py_pois <- dpois(x = y, lambda = lambda)
+    py_pgnz <- dpgnz(y = y, lambda = lambda, alpha = 0)
+    py_gcnt <- dgcnt(y = y, lambda = lambda, alpha = 1)
+    expect_equal(py_pgnz, py_pois)
+    expect_equal(py_gcnt, py_pois)
+})
+```
+
+---
+
+Conteúdo do arquivo `test_logliks.R`.
+```{r}
+context("Testa as Funções de Log-Verossimilhança")
+
+test_that("Tem os mesmo argumentos", {
+    a_gcnt <- as.list(formals(llgcnt))
+    a_pgnz <- as.list(formals(llpgnz))
+    expect_equal(a_gcnt, a_pgnz)
+})
+
+test_that("São iguais a Poisson", {
+    y <- 0:10
+    X <- cbind(y * 0 + 1)
+    lamb <- 10 * runif(1)
+    ll_pois <- -sum(dpois(x = y, lambda = lamb, log = TRUE))
+    ll_pgnz <- llpgnz(params = c(0, log(lamb)), y = y, X = X)
+    ll_gcnt <- llgcnt(params = c(log(1), log(lamb)), y = y, X = X)
+    expect_equal(ll_pgnz, expected = ll_pois)
+    expect_equal(ll_gcnt, expected = ll_pois)
+})
+
+test_that("Inteiros negativos resultam em Warning", {
+    y <- -4:-1
+    X <- cbind(y * 0 + 1)
+    lamb <- 10 * runif(1)
+    expect_warning(llpgnz(params = c(0, log(lamb)), y = y, X = X))
+    expect_warning(llgcnt(params = c(log(1), log(lamb)), y = y, X = X))
+})
+```
+
+---
+
+```
+|-- tests/
+    |-- testthat/
+    |   |-- test_funprobs.R "Testa as Funções de Probabilidade"
+    |   |   |-- test_that: "Iguais a Poisson"
+    |   |       |-- expect ...
+    |   |       `-- expect ...
+    |   `-- test_logliks.R "Testa as Funções de Log-Verossimilhança"
+    |       |-- test_that: "Tem os mesmos argumentos"
+    |           |-- expect ...
+    |       |-- test_that: "São iguais a Poisson"
+    |           |-- expect ...
+    |           |-- expect ...
+    |       |-- test_that: "Inteiros negativos resultam em Warning"
+    |           |-- expect ...
+    |           |-- expect ...
+    `-- testthat.R
+```
+
+## Correndo os Testes
+
+```{r}
+# Executa os scripts em /tests/testhat/ .
+test()
+```
+```
+Testing MRDCr
+Testa as Funções de Probabilidade: ..
+Testa as Funções de Log-Verossimilhança: .....
+```
+
+```{r}
+check()
+```
+```
+... omitido ...
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ...
+  Running ‘testthat.R’
+ OK
+* DONE
+```
+
+## Quando os Testes Falham
+
+```{r}
+check()
+```
+```
+Testing MRDCr
+Testa as Funções de Probabilidade: ..
+Testa as Funções de Log-Verossimilhança: 12...
+
+Failed -------------------------------------------------------------------------
+1. Failure: Tem os mesmo argumentos (@test_logliks.R#6) ------------------------
+`a_gcnt` not equal to 3.
+Modes: list, numeric
+names for target but not for current
+Length mismatch: comparison on first 1 components
+Component 1: Modes of target, current: name, numeric
+Component 1: target, current do not match when deparsed
+
+2. Failure: São iguais a Poisson (@test_logliks.R#16) --------------------------
+`ll_pgnz` not equal to `ll_pois`.
+1/1 mismatches
+[1] 30.8 - 43 == -12.2
+```
+
+# Pacotes de Referência
+
+##
+
+  - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*, Wagner
+    Hugo Bonat (LEG/UFPR).
+
+  - [`breedR`] - **Statistical Methods for Forest Genetic Resources
+    analysts**, Facundo Muñoz.
+
+  - [`glmtools`] - Tools for Interacting with the General Lake Model
+    (GLM) in R.
+
+  - [`forecast`] - Methods and Tools for Displaying and Analysing
+    Univariate Time Series, Rob J Hyndman.
+
+  - [`lintr`] - Static Code Analysis for R, Jim Hester (RStudio,
+    Bioconductor).
+
+# Resumo
+
+<!------------------------------------------- -->
+
+[`mcglm`]: https://github.com/wbonat/mcglm/tree/master/tests
+[`breedR`]: https://github.com/famuvie/breedR/tree/master/tests
+[`glmtools`]: https://github.com/USGS-R/glmtools/tree/master/tests
+[`forecast`]: https://github.com/robjhyndman/forecast/tree/master/tests
+[`lintr`]: https://github.com/jimhester/lintr/tree/master/tests
