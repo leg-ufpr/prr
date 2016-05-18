@@ -395,6 +395,7 @@ div.tocify {
 
 <div id="o-que-e-markdown" class="section level1">
 <h1>O que é Markdown?</h1>
+<p>Segundo o próprio criador da linguagem:</p>
 <blockquote>
 <p><em>Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</em></p>
 <blockquote>
@@ -404,31 +405,32 @@ div.tocify {
 <ul>
 <li><a href="http://daringfireball.net/projects/markdown">Markdown</a> é uma <a href="https://pt.wikipedia.org/wiki/Linguagem_de_marcação/">linguagem de marcação</a> simples para escrever textos</li>
 <li>O texto pode ser lido sem nenhum processamento, ou seja, da maneira como está escrito</li>
-<li>Outras linguagens de marcação como HTML e <span class="math inline">\(LaTeX\)</span> requerem um grande número de <em>tags</em> para formatar o texto, muitas vezes dificultando a leitura do código-fonte</li>
+<li>Outras linguagens de marcação como HTML e <span class="math inline">\(\LaTeX\)</span> requerem um grande número de <em>tags</em> para formatar o texto, muitas vezes dificultando a leitura do código-fonte</li>
 <li>A proposta do Markdown é que o escritor se concentre no texto e não na formatação</li>
-<li>Pode ser convertido para vários outros formatos além de HTML</li>
+<li>Pode ser convertido para <strong>vários outros formatos</strong> além de HTML</li>
 </ul>
-<div id="sintaxe-do-markdown" class="section level2">
-<h2>Sintaxe do Markdown</h2>
+</div>
+<div id="sintaxe-do-markdown" class="section level1">
+<h1>Sintaxe do Markdown</h1>
 <p>A sintaxe do Markdown é muito simples, e pode ser resumida da seguinte forma:</p>
-<div id="cabecalhos" class="section level3">
-<h3>Cabeçalhos</h3>
+<div id="cabecalhos" class="section level2">
+<h2>Cabeçalhos</h2>
 <pre><code># Título
 ## Sub-título
 ### Sub-sub-título</code></pre>
 </div>
-<div id="italico" class="section level3">
-<h3>Itálico</h3>
+<div id="italico" class="section level2">
+<h2>Itálico</h2>
 <pre><code>*Este texto aparecerá em itálico.*</code></pre>
 <p><em>Este texto aparecerá em itálico.</em></p>
 </div>
-<div id="negrito" class="section level3">
-<h3>Negrito</h3>
+<div id="negrito" class="section level2">
+<h2>Negrito</h2>
 <pre><code>**Este texto aparecerá em negrito.**</code></pre>
 <p><strong>Este texto aparecerá em negrito.</strong></p>
 </div>
-<div id="listas-nao-ordenadas" class="section level3">
-<h3>Listas não-ordenadas</h3>
+<div id="listas-nao-ordenadas" class="section level2">
+<h2>Listas não-ordenadas</h2>
 <pre><code>- Primeiro item
 - Segundo item
 - Terceiro item</code></pre>
@@ -438,8 +440,8 @@ div.tocify {
 <li>Terceiro item</li>
 </ul>
 </div>
-<div id="listas-ordenadas" class="section level3">
-<h3>Listas ordenadas</h3>
+<div id="listas-ordenadas" class="section level2">
+<h2>Listas ordenadas</h2>
 <pre><code>1. Primeiro item
 2. Segundo item
 3. Terceiro item</code></pre>
@@ -449,8 +451,8 @@ div.tocify {
 <li>Terceiro item</li>
 </ol>
 </div>
-<div id="sub-listas" class="section level3">
-<h3>Sub-listas</h3>
+<div id="sub-listas" class="section level2">
+<h2>Sub-listas</h2>
 <p>Utilize 4 espaços para criar uma sub-lista:</p>
 <pre><code>1. Primeiro item
     - Um sub-item
@@ -467,8 +469,8 @@ div.tocify {
 <li>Terceiro item</li>
 </ol>
 </div>
-<div id="links" class="section level3">
-<h3>Links</h3>
+<div id="links" class="section level2">
+<h2>Links</h2>
 <p>Links para endereços Web podem ser inseridos com <code>[texto](link)</code>:</p>
 <pre><code>O criador do conceito de &quot;literate programming&quot; foi
 [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth).</code></pre>
@@ -477,8 +479,8 @@ div.tocify {
 usar o R Markdown.</code></pre>
 <p>Devemos instalar o pacote <a href="http://yihui.name/knitr">knitr</a> para poder usar o R Markdown.</p>
 </div>
-<div id="imagens" class="section level3">
-<h3>Imagens</h3>
+<div id="imagens" class="section level2">
+<h2>Imagens</h2>
 <p>Para inserir uma imagem, a sintaxe é a mesma de inserir um link, mas com uma exclamação (<code>!</code>) na frente: <code>![texto](imagem)</code>.</p>
 <p>O link para a imagem pode ser um enderço Web:</p>
 <pre><code>![Logo do R](http://developer.r-project.org/Logo/Rlogo-5.png)</code></pre>
@@ -493,8 +495,8 @@ usar o R Markdown.</code></pre>
 <p class="caption">Logo do Markdown</p>
 </div>
 </div>
-<div id="paragrafo" class="section level3">
-<h3>Parágrafo</h3>
+<div id="paragrafo" class="section level2">
+<h2>Parágrafo</h2>
 <p>Para criar parágrafos basta pular uma linha:</p>
 <pre><code>O criador do conceito de &quot;literate programming&quot; foi
 [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth).
@@ -504,23 +506,24 @@ usar o R Markdown.</code></pre>
 <p>O criador do conceito de “literate programming” foi <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>.</p>
 <p>Devemos instalar o pacote <a href="http://yihui.name/knitr">knitr</a> para poder usar o R Markdown.</p>
 </div>
-<div id="codigos" class="section level3">
-<h3>Códigos</h3>
+<div id="codigos" class="section level2">
+<h2>Códigos</h2>
 <p>Para apresentar códigos na própria linha, colocamos o texto entre duas crases (<code>`</code>):</p>
 <pre><code>Para gerar números aleatórios de uma distribuição normal no R, use a
 função `rnorm()`.</code></pre>
 <p>Para gerar números aleatórios de uma distribuição normal no R, use a função <code>rnorm()</code>.</p>
-<p>Para apresentar blocos de código, coloque o texto entre três crases seguidas (<code>```</code>) no início e no final:</p>
+<p>Para apresentar blocos de código, coloque o texto entre três crases seguidas (<code>```</code>) no início e no final. O bloco</p>
 <pre><code>```
 x &lt;- rnorm(n = 10, mean = 100, sd = 5)
 hist(x, main = &quot;&quot;)
 ```</code></pre>
+<p>Irá gerar</p>
 <pre><code>x &lt;- rnorm(n = 10, mean = 100, sd = 5)
 hist(x, main = &quot;&quot;)</code></pre>
-<p>Note que esse código não será interpretado, ele apenas será mostrado no texto. Esse será o papel do R aqui!</p>
+<p>Note que esse código não será interpretado, ele apenas será mostrado no texto. Esse será o papel do R aqui mais adiante!</p>
 </div>
-<div id="tabelas" class="section level3">
-<h3>Tabelas</h3>
+<div id="tabelas" class="section level2">
+<h2>Tabelas</h2>
 <p>Tabelas podem ser escritas da seguinte forma:</p>
 <pre><code>    Caracter | Permissão
     ---------|----------
@@ -556,13 +559,13 @@ hist(x, main = &quot;&quot;)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="equacoes-matematicas" class="section level3">
-<h3>Equações matemáticas</h3>
-<p>Equações matemáticas podem ser escritas em formato <span class="math inline">\(LaTeX\)</span>. A página HTML resultante irá remderizar as equações através do <a href="http://www.mathjax.org">MathJax</a>.</p>
+<div id="equacoes-matematicas" class="section level2">
+<h2>Equações matemáticas</h2>
+<p>Equações matemáticas podem ser escritas em formato <span class="math inline">\(\LaTeX\)</span>. A página HTML resultante irá renderizar as equações através do <a href="http://www.mathjax.org">MathJax</a>.</p>
 <p>Equações na própria linha podem ser inseridas entre <code>$</code>:</p>
 <pre><code>Um modelo de regressão linear simples:  $Y = \beta_0 + \beta_1 x + \epsilon$.</code></pre>
 <p>Um modelo de regressão linear simples: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span>.</p>
-<p>Equações podem ser exibidas entre <code>$$</code>:</p>
+<p>Equações podem ser exibidas entre <code>$$</code> para ficarem centralizadas em uma linha própria:</p>
 <pre><code>$$
 f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}
 e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
@@ -573,23 +576,57 @@ e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
 \]</span></p>
 </div>
 </div>
-<div id="escrevendo-um-documento-em-markdown" class="section level2">
-<h2>Escrevendo um documento em Markdown</h2>
+<div id="escrevendo-um-documento-em-markdown" class="section level1">
+<h1>Escrevendo um documento em Markdown</h1>
 <p>Um documento Markdown possui a extensão <code>.md</code> (embora não seja a única possível).</p>
-<p>Veja o arquivo de exemplo <a href="Exemplo1.md" class="uri">Exemplo1.md</a>.</p>
-<p>Para converter um documento Markdown em HTML é necessário um <strong>conversor</strong>.</p>
-<p>O conversor padrão do Markdown é escrito em Perl, e pode ser integrado em diversas ferramentas, mas não é apropriado para usuários comuns.</p>
-<p>Para testar a conversão do documento, copie e cole na página do <a href="http://daringfireball.net/projects/markdown/dingus">Dingus</a>.</p>
-</div>
+<p>Veja o arquivo de exemplo <a href="aux/Exemplo1.md">Exemplo1.md</a>:</p>
+<pre><code># Um documento em Markdown
+
+## Sobre o Markdown
+
+O Markdown é uma linguagem de marcação muito simples, desenvolvida por
+John Gruber.
+
+A ideia básica por trás da linguagem é fazer com que o escritor se
+preocupe mais com o **conteúdo** do texto do que com a *formatação*.
+
+## Mais um título
+
+Aqui vamos tentar descrever uma análise.
+
+## Simulando variáveis aleatórias
+
+No R podemos simular valores de uma distribuição normal padrão através
+da função `rnorm()`.
+
+Seja $X \sim \text{N}(0,1)$, então para gerar 30 valores dessa variável
+aleatório normal, fazemos
+
+```
+(x &lt;- rnorm(30))
+```
+
+Com o resultado dessa simulação, podemos calcular a média e a variância
+dessa VA $X$ para conferir se o resultado fica próximo de 0 e 1,
+respectivamente.
+
+Também podemos fazer um histograma dessa VA $X$ simulada
+
+```
+hist(x)
+```</code></pre>
+<p>Para converter um documento Markdown em HTML (ou outro formato) é necessário um <strong>conversor</strong>. O conversor padrão do Markdown é escrito em Perl, e pode ser integrado em diversas ferramentas, mas não é apropriado para usuários comuns. Para testar a conversão do documento, copie e cole na página do <a href="http://daringfireball.net/projects/markdown/dingus">Dingus</a>.</p>
 </div>
 <div id="pandoc" class="section level1">
 <h1>Pandoc</h1>
 <p>O <a href="http://pandoc.org/">Pandoc</a> é um conversor extremamente versátil, capaz de converter diversos formatos, incluindo Markdown para HTML.</p>
-<p>Se o Pandoc estiver instalado no seu sistema (Linux) é possível converter o documento com</p>
+<p>Se o Pandoc estiver instalado no seu sistema (Unix) é possível converter o documento na linha de comando (shell) com</p>
 <pre class="sh"><code>pandoc -f markdown -t html Exemplo1.md -o Exemplo1.html</code></pre>
 <p>O pacote <code>knitr</code> possui a função <code>pandoc()</code> que é um <em>wrapper</em> para executar o programa <code>pandoc</code> no sistema.</p>
-<pre class="r"><code>pandoc(input = &quot;Exemplo1.md&quot;, format = &quot;html&quot;)</code></pre>
-<p>Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo <a href="Exemplo1.html" class="uri">Exemplo1.html</a> no navegador.</p>
+<pre class="r"><code>pandoc(input = &quot;aux/Exemplo1.md&quot;, format = &quot;html&quot;)</code></pre>
+<pre><code>executing pandoc   -t html -o aux/Exemplo1_utf8.html &#39;aux/Exemplo1_utf8.md&#39;</code></pre>
+<pre><code>[1] &quot;aux/Exemplo1_utf8.html&quot;</code></pre>
+<p>Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo <a href="aux/Exemplo1_utf8.html">Exemplo1_utf8.html</a> no navegador.</p>
 <div id="usando-o-knitr-com-markdown" class="section level2">
 <h2>Usando o knitr com Markdown</h2>
 <p>No exemplo anterior, escrevemos um documento em Markdown (<code>.md</code>) e inserimos códigos do R, que são apenas apresentados no documento final.</p>

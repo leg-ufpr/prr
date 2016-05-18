@@ -12,29 +12,31 @@ source("setup_knitr.R")
 
 # O que é Markdown?
 
+Segundo o próprio criador da linguagem:
+
 > *Markdown is a text-to-HTML conversion tool for web writers. Markdown
 > allows you to write using an easy-to-read, easy-to-write plain text
 > format, then convert it to structurally valid XHTML (or HTML).*
 >
 > > John Gruber
 
-* [Markdown][] é uma [linguagem de marcação][] simples para escrever
+- [Markdown] é uma [linguagem de marcação] simples para escrever
   textos
-* O texto pode ser lido sem nenhum processamento, ou seja, da maneira
+- O texto pode ser lido sem nenhum processamento, ou seja, da maneira
   como está escrito
-* Outras linguagens de marcação como HTML e $LaTeX$ requerem um grande
+- Outras linguagens de marcação como HTML e $\LaTeX$ requerem um grande
   número de *tags* para formatar o texto, muitas vezes dificultando a
   leitura do código-fonte
-* A proposta do Markdown é que o escritor se concentre no texto e não na
+- A proposta do Markdown é que o escritor se concentre no texto e não na
   formatação
-* Pode ser convertido para vários outros formatos além de HTML
+- Pode ser convertido para **vários outros formatos** além de HTML
 
-## Sintaxe do Markdown
+# Sintaxe do Markdown
 
 A sintaxe do Markdown é muito simples, e pode ser resumida da seguinte
 forma:
 
-### Cabeçalhos
+## Cabeçalhos
 
 ```
 # Título
@@ -42,7 +44,7 @@ forma:
 ### Sub-sub-título
 ```
 
-### Itálico
+## Itálico
 
 ```
 *Este texto aparecerá em itálico.*
@@ -50,7 +52,7 @@ forma:
 
 *Este texto aparecerá em itálico.*
 
-### Negrito
+## Negrito
 
 ```
 **Este texto aparecerá em negrito.**
@@ -58,7 +60,7 @@ forma:
 
 **Este texto aparecerá em negrito.**
 
-### Listas não-ordenadas
+## Listas não-ordenadas
 
 ```
 - Primeiro item
@@ -70,7 +72,7 @@ forma:
 - Segundo item
 - Terceiro item
 
-### Listas ordenadas
+## Listas ordenadas
 
 ```
 1. Primeiro item
@@ -82,7 +84,7 @@ forma:
 2. Segundo item
 3. Terceiro item
 
-### Sub-listas
+## Sub-listas
 
 Utilize 4 espaços para criar uma sub-lista:
 
@@ -100,7 +102,7 @@ Utilize 4 espaços para criar uma sub-lista:
 2. Segundo item
 3. Terceiro item
 
-### Links
+## Links
 
 Links para endereços Web podem ser inseridos com `[texto](link)`:
 
@@ -120,7 +122,7 @@ usar o R Markdown.
 Devemos instalar o pacote [knitr](http://yihui.name/knitr) para poder
 usar o R Markdown.
 
-### Imagens
+## Imagens
 
 Para inserir uma imagem, a sintaxe é a mesma de inserir um link, mas com
 uma exclamação (`!`) na frente: `![texto](imagem)`.
@@ -141,7 +143,7 @@ Ou um endereço local:
 
 ![Logo do Markdown](img/markdown.png)
 
-### Parágrafo
+## Parágrafo
 
 Para criar parágrafos basta pular uma linha:
 
@@ -159,7 +161,7 @@ O criador do conceito de "literate programming" foi
 Devemos instalar o pacote [knitr](http://yihui.name/knitr) para poder
 usar o R Markdown.
 
-### Códigos
+## Códigos
 
 Para apresentar códigos na própria linha, colocamos o texto entre duas
 crases (` ` `):
@@ -173,12 +175,14 @@ Para gerar números aleatórios de uma distribuição normal no R, use a
 função `rnorm()`.
 
 Para apresentar blocos de código, coloque o texto entre três crases
-seguidas (` ``` `) no início e no final:
+seguidas (` ``` `) no início e no final. O bloco
 
     ```
 	x <- rnorm(n = 10, mean = 100, sd = 5)
 	hist(x, main = "")
     ```
+
+Irá gerar
 
 ```
 x <- rnorm(n = 10, mean = 100, sd = 5)
@@ -186,9 +190,9 @@ hist(x, main = "")
 ```
 
 Note que esse código não será interpretado, ele apenas será mostrado no
-texto. Esse será o papel do R aqui!
+texto. Esse será o papel do R aqui mais adiante!
 
-### Tabelas
+## Tabelas
 
 Tabelas podem ser escritas da seguinte forma:
 
@@ -210,10 +214,10 @@ Caracter | Permissão
 `x`      | Permissão de execução (*execute*)
 `-`      | Permissão desabilitada
 
-### Equações matemáticas
+## Equações matemáticas
 
-Equações matemáticas podem ser escritas em formato $LaTeX$. A página
-HTML resultante irá remderizar as equações através do [MathJax][].
+Equações matemáticas podem ser escritas em formato $\LaTeX$. A página
+HTML resultante irá renderizar as equações através do [MathJax].
 
 Equações na própria linha podem ser inseridas entre `$`:
 
@@ -224,7 +228,8 @@ Um modelo de regressão linear simples:  $Y = \beta_0 + \beta_1 x + \epsilon$.
 Um modelo de regressão linear simples: $Y = \beta_0 + \beta_1 x +
 \epsilon$.
 
-Equações podem ser exibidas entre `$$`:
+Equações podem ser exibidas entre `$$` para ficarem centralizadas em uma
+linha própria:
 
 ```
 $$
@@ -238,43 +243,44 @@ f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}
 e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
 $$
 
-## Escrevendo um documento em Markdown
+# Escrevendo um documento em Markdown
 
 Um documento Markdown possui a extensão `.md` (embora não seja a única
 possível).
 
-Veja o arquivo de exemplo [Exemplo1.md](Exemplo1.md).
+Veja o arquivo de exemplo [Exemplo1.md](aux/Exemplo1.md):
 
-Para converter um documento Markdown em HTML é necessário um
-**conversor**.
+```{r echo=FALSE}
+cat(system("cat aux/Exemplo1.md", intern = TRUE), sep = "\n")
+```
 
-O conversor padrão do Markdown é escrito em Perl, e pode ser integrado
-em diversas ferramentas, mas não é apropriado para usuários comuns.
-
-Para testar a conversão do documento, copie e cole na página do
-[Dingus][].
+Para converter um documento Markdown em HTML (ou outro formato) é
+necessário um **conversor**. O conversor padrão do Markdown é escrito em
+Perl, e pode ser integrado em diversas ferramentas, mas não é apropriado
+para usuários comuns. Para testar a conversão do documento, copie e cole
+na página do [Dingus].
 
 # Pandoc
 
 O [Pandoc][] é um conversor extremamente versátil, capaz de converter
 diversos formatos, incluindo Markdown para HTML.
 
-Se o Pandoc estiver instalado no seu sistema (Linux) é possível
-converter o documento com
+Se o Pandoc estiver instalado no seu sistema (Unix) é possível
+converter o documento na linha de comando (shell) com
 
-```{sh, eval=FALSE}
+```{sh eval=FALSE}
 pandoc -f markdown -t html Exemplo1.md -o Exemplo1.html
 ```
 
 O pacote `knitr` possui a função `pandoc()` que é um *wrapper* para
 executar o programa `pandoc` no sistema.
 
-```{r, eval=FALSE}
-pandoc(input = "Exemplo1.md", format = "html")
+```{r}
+pandoc(input = "aux/Exemplo1.md", format = "html")
 ```
 
 Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo
-[Exemplo1.html](Exemplo1.html) no navegador.
+[Exemplo1_utf8.html](aux/Exemplo1_utf8.html) no navegador.
 
 ## Usando o knitr com Markdown
 
