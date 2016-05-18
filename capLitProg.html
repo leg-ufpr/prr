@@ -422,34 +422,37 @@ div.tocify {
 </td>
 </tr>
 </table>
-<ul>
-<li>O conceito é o de misturar <strong>literatura</strong> (o texto em uma linguagem humana) com <strong>códigos de programação</strong>, tornando claro cada etapa de um programa e/ou análise</li>
-<li>Com um único código-fonte, podemos
+<p>O objetivo da <em>literate programming</em> é criar um documento que “entrelaça” (mistura) texto e código. O texto é legível para humanos e o código é legível para máquinas. A análise é descrita em uma séria de texto e blocos de código (<em>code chunks</em>). Cada bloco de código irá executar uma etapa da análise, e estará diretamente associado ao texto explicativo acima ou abaixo do bloco.</p>
+<!-- - O conceito é o de misturar **literatura** (o texto em uma -->
+<!--   linguagem humana) com **códigos de programação**, tornando claro cada -->
+<!--   etapa de um programa e/ou análise -->
+<p>O processo de <em>literate programming</em> ocorre em duas vias, chamadas de <em>weaving</em> e <em>tangling</em>. O importante é que, <strong>com um único código-fonte</strong> podemos:</p>
 <ul>
 <li>Produzir documentos para humanos (HTML, PDF, …) ⇒ <em>weave</em></li>
-<li>Produzir documentos para máquinas (código) ⇒ <em>tangle</em></li>
-</ul></li>
-<li>Knuth criou um sistema chamado <strong>WEB</strong> para fazer essa mistura dos seus textos em <span class="math inline">\(TeX\)</span> com a linguagem Pascal</li>
-<li>Atualmente muitos outros sistemas existem para misturar códigos com texto em várias linguagens</li>
+<li>Produzir “documentos” (<em>scripts</em>) para máquinas (código) ⇒ <em>tangle</em></li>
 </ul>
+<p>Para podermos usar um sistema como esse, é necessário então uma linguagem de documentação para humanos (<em>e.g.</em> <span class="math inline">\(\LaTeX\)</span> ou Markdown), e uma linguagem de programação que será compilada com o documento (<em>e.g.</em> R ou Python).</p>
+<p>Knuth criou inicialmente um sistema chamado <strong>WEB</strong> para fazer essa mistura dos seus textos em <span class="math inline">\(TeX\)</span> com a linguagem Pascal. Atualmente muitos outros sistemas existem para misturar códigos com texto em várias linguagens de documentação e de programação.</p>
 </div>
 <div id="literate-programming-no-r" class="section level1">
 <h1>Literate Programming no R</h1>
 <p>Com a ascensão do R no início dos anos 2000, <a href="http://www.statistik.lmu.de/~leisch">Friedrich Leisch</a> criou o <a href="https://www.statistik.lmu.de/~leisch/Sweave">Sweave</a> em 2002</p>
 <ul>
 <li>S + weave</li>
-<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span> com códigos do R</li>
+<li>Permite “entrelaçar” textos do <span class="math inline">\(\LaTeX\)</span> com códigos do R</li>
 <li>Ainda é muito utilizado e já é distribuído como uma função do R dentro do pacote <code>utils</code></li>
 </ul>
-<p>No final de 2011, <a href="http://yihui.name/">Yihui Xie</a> criou o pacote <a href="http://yihui.name/knitr">knitr</a> com a proposta de ser mais flexível, fácil e <strong>preparado para a Web</strong></p>
-<blockquote>
-<p><em>knitr = Sweave + cacheSweave + pgfSweave + weaver + animation::saveLatex + R2HTML::RweaveHTML + highlight::HighlightWeaveLatex + 0.2 </em> brew + 0.1 <em> SweaveListingUtils + more</em></p>
-</blockquote>
+<p>No final de 2011, <a href="http://yihui.name/">Yihui Xie</a> criou o pacote <a href="http://yihui.name/knitr">knitr</a> como uma extensão do Sweave, e com a proposta de ser mais flexível, fácil e <strong>preparado para a Web</strong>. Segundo o próprio autor, o knitr é resultado dessa equação:</p>
+<pre class="r"><code>knitr = Sweave + cacheSweave + pgfSweave + weaver +
+    animation::saveLatex + R2HTML::RweaveHTML +
+    highlight::HighlightWeaveLatex + 0.2 * brew +
+    0.1 * SweaveListingUtils + more</code></pre>
+<p>Resumidamente, o knitr possui as seguintes vantagens sob o Sweave:</p>
 <ul>
 <li>knit + R</li>
 <li>Uma re-implementação mais moderna do Sweave</li>
-<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span>, HTML e <strong>Markdown</strong> com códigos do R</li>
-<li>Também permite misturar texto com códigos de outras linguagens: Python, awk, C++, shell.</li>
+<li>Permite “entrelaçar” textos do <span class="math inline">\(\LaTeX\)</span>, HTML e <strong>Markdown</strong> com códigos do R</li>
+<li>Também permite misturar texto com códigos de <strong>outras linguagens</strong>: Python, awk, C++, shell.</li>
 <li>Adiciona muitas facilidades como
 <ul>
 <li>Cache</li>

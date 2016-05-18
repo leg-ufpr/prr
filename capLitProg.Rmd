@@ -47,42 +47,66 @@ concebido por [Donald Knuth][] em 1984.
 </tr>
 </table>
 
-* O conceito é o de misturar **literatura** (o texto em uma
-  linguagem humana) com **códigos de programação**, tornando claro cada
-  etapa de um programa e/ou análise
-* Com um único código-fonte, podemos
-	- Produzir documentos para humanos (HTML, PDF, ...) &rArr; *weave*
-	- Produzir documentos para máquinas (código) &rArr; *tangle*
-* Knuth criou um sistema chamado **WEB** para fazer essa mistura
-  dos seus textos em $TeX$ com a linguagem Pascal
-* Atualmente muitos outros sistemas existem para misturar códigos
-  com texto em várias linguagens
+O objetivo da *literate programming* é criar um documento que
+"entrelaça" (mistura) texto e código. O texto é legível para humanos e o
+código é legível para máquinas. A análise é descrita em uma séria de
+texto e blocos de código (*code chunks*). Cada bloco de código irá
+executar uma etapa da análise, e estará diretamente associado ao texto
+explicativo acima ou abaixo do bloco.
+
+<!-- - O conceito é o de misturar **literatura** (o texto em uma -->
+<!--   linguagem humana) com **códigos de programação**, tornando claro cada -->
+<!--   etapa de um programa e/ou análise -->
+
+O processo de *literate programming* ocorre em duas vias, chamadas de
+*weaving* e *tangling*. O importante é que, **com um único
+código-fonte** podemos:
+
+- Produzir documentos para humanos (HTML, PDF, ...) &rArr; *weave*
+- Produzir "documentos" (*scripts*) para máquinas (código) &rArr;
+  *tangle*
+
+Para podermos usar um sistema como esse, é necessário então uma
+linguagem de documentação para humanos (*e.g.* $\LaTeX$ ou Markdown), e
+uma linguagem de programação que será compilada com o documento (*e.g.*
+R ou Python).
+
+Knuth criou inicialmente um sistema chamado **WEB** para fazer essa
+mistura dos seus textos em $TeX$ com a linguagem Pascal. Atualmente
+muitos outros sistemas existem para misturar códigos com texto em várias
+linguagens de documentação e de programação.
 
 # Literate Programming no R
 
 Com a ascensão do R no início dos anos 2000, [Friedrich Leisch] criou
 o [Sweave] em 2002
 
-* S + weave
-* Permite "entrelaçar" textos do $LaTeX$ com códigos do R
-* Ainda é muito utilizado e já é distribuído como uma função do R
+- S + weave
+- Permite "entrelaçar" textos do $\LaTeX$ com códigos do R
+- Ainda é muito utilizado e já é distribuído como uma função do R
   dentro do pacote `utils`
 
-No final de 2011, [Yihui Xie][] criou o pacote [knitr][] com
-a proposta de ser mais flexível, fácil e **preparado para a Web**
+No final de 2011, [Yihui Xie] criou o pacote [knitr] como uma extensão
+do Sweave, e com a proposta de ser mais flexível, fácil e **preparado
+para a Web**. Segundo o próprio autor, o knitr é resultado dessa
+equação:
 
-> *knitr = Sweave + cacheSweave + pgfSweave + weaver +
->     animation::saveLatex + R2HTML::RweaveHTML +
->    highlight::HighlightWeaveLatex + 0.2 * brew + 0.1 *
->    SweaveListingUtils + more*
+```{r, eval=FALSE}
+knitr = Sweave + cacheSweave + pgfSweave + weaver +
+    animation::saveLatex + R2HTML::RweaveHTML +
+    highlight::HighlightWeaveLatex + 0.2 * brew +
+    0.1 * SweaveListingUtils + more
+```
 
-* knit + R
-* Uma re-implementação mais moderna do Sweave
-* Permite "entrelaçar" textos do $LaTeX$, HTML e **Markdown** com
+Resumidamente, o knitr possui as seguintes vantagens sob o Sweave:
+
+- knit + R
+- Uma re-implementação mais moderna do Sweave
+- Permite "entrelaçar" textos do $\LaTeX$, HTML e **Markdown** com
   códigos do R
-* Também permite misturar texto com códigos de outras linguagens:
+- Também permite misturar texto com códigos de **outras linguagens**:
   Python, awk, C++, shell.
-* Adiciona muitas facilidades como
+- Adiciona muitas facilidades como
 	- Cache
 	- Decoração e formatação automática de códigos
 	- Geração de gráficos mais direta
