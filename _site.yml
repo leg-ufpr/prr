@@ -23,6 +23,8 @@ navbar:
       href: capPesqRep.html
     - text: Documentos dinâmicos
       menu:
+      - text: "Literate Programming"
+        href: capLitProg.html
       - text: "Markdown com pandoc"
         href: capMarkdown.html
       - text: "Documentos dinâmicos no R"

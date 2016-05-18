@@ -301,6 +301,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="capLitProg.html">Literate Programming</a>
+    </li>
+    <li>
       <a href="capMarkdown.html">Markdown com pandoc</a>
     </li>
     <li>
@@ -569,88 +572,6 @@ Como lição: o processo de revisão por pares de revistas científicas depende 
 <li>A dgdg da pesquisa no formato de pacote garante uma facilidade na <strong>distribuição</strong>, já que o pacote pode ser disponibilizado no CRAN ou em repositórios como o Github</li>
 <li>A compatibilidade das análises com o sistema operacional é aumentada, uma vez que os pacotes podem ser criados (a partir do mesmo código-fonte) para diferentes sistemas operacionais</li>
 </ul>
-</div>
-<div id="pesquisa-reproduzivel" class="section level1">
-<h1>Pesquisa reproduzível</h1>
-<blockquote>
-<p><em>The source code is real</em></p>
-<blockquote>
-<p>ESS Project</p>
-</blockquote>
-</blockquote>
-<p>Pseudo-código para escrever um artigo ou relatório científico:</p>
-<pre class="r"><code>1. Importe uma base de dados para um *software*
-2. Execute um procedimento analítico
-3. Gere tabelas e figuras separadamente
-4. Copie os resultados de análises
-5. Coloque tudo isso em um editor de texto e escreva o documento</code></pre>
-<p>Mudou alguma linha na base de dados? Esqueceu de algo? Volte para o item (1) e repita o processo (e boa sorte)!</p>
-<p>Pseudo-código para escrever um artigo ou relatório científico <strong>reprodutível</strong>:</p>
-<pre class="r"><code>1. Use o R Markdown e realize os 5 passos acima em um único documento</code></pre>
-<p>Mudou alguma linha na base de dados? Esqueceu de algo? Altere o código e gere um novo documento.</p>
-<ul>
-<li>Dessa forma, um documento pode ser gerado dinamicamente a partir de um <strong>código-fonte</strong>.</li>
-<li>Da mesma forma que um <em>software</em> possui seu código-fonte, um documento dinâmico é o código-fonte de um relatório.</li>
-<li>É uma combinação de código de computador e as correspondentes narrativas descrevendo o resultado que o código está gerando (números, tabelas, figuras, …).</li>
-<li>Quando <strong>compilamos</strong> o documento dinâmico, o código de computador é executado, e as saídas são apresentadas. Portanto obtemos um documento final que mistura <strong>código</strong> e <strong>texto</strong>.</li>
-<li>Como gerenciamos apenas o código-fonte do documento, ficamos livres de todas as etapas manuais mencionadas acima.</li>
-</ul>
-</div>
-<div id="literate-programming" class="section level1">
-<h1>Literate Programming</h1>
-<blockquote>
-<p><em>Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to humans what we want the computer to do.</em></p>
-<blockquote>
-<p>Donald Knuth</p>
-</blockquote>
-</blockquote>
-<p>O ideia básica por trás de documentos dinâmicos decorre diretamente do conceito de <em>literate programming</em> (“programação letrada”), um paradigma concebido por <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> em 1984.</p>
-<table>
-<tr>
-<td align="center">
-<img src="img/knuth.jpg" height="50%">
-</td>
-<td align="center">
-<img src="img/Literate_Programming_book_cover.jpg" height="55%">
-</td>
-</tr>
-</table>
-<ul>
-<li>O conceito é o de misturar <strong>literatura</strong> (o texto em uma linguagem humana) com <strong>códigos de programação</strong>, tornando claro cada etapa de um programa e/ou análise</li>
-<li>Com um único código-fonte, podemos
-<ul>
-<li>Produzir documentos para humanos (HTML, PDF, …) ⇒ <em>weave</em></li>
-<li>Produzir documentos para máquinas (código) ⇒ <em>tangle</em></li>
-</ul></li>
-<li>Knuth criou um sistema chamado <strong>WEB</strong> para fazer essa mistura dos seus textos em <span class="math inline">\(TeX\)</span> com a linguagem Pascal</li>
-<li>Atualmente muitos outros sistemas existem para misturar códigos com texto em várias linguagens</li>
-</ul>
-<div id="literate-programming-no-r" class="section level2">
-<h2>Literate Programming no R</h2>
-<p>Com a ascensão do R no início dos anos 2000, <a href="http://www.statistik.lmu.de/~leisch">Friedrich Leisch</a> criou o <a href="https://www.statistik.lmu.de/~leisch/Sweave">Sweave</a> em 2002</p>
-<ul>
-<li>S + weave</li>
-<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span> com códigos do R</li>
-<li>Ainda é muito utilizado e já é distribuído como uma função do R dentro do pacote <code>utils</code></li>
-</ul>
-<p>No final de 2011, <a href="http://yihui.name/">Yihui Xie</a> criou o pacote <a href="http://yihui.name/knitr">knitr</a> com a proposta de ser mais flexível, fácil e <strong>preparado para a Web</strong></p>
-<blockquote>
-<p><em>knitr = Sweave + cacheSweave + pgfSweave + weaver + animation::saveLatex + R2HTML::RweaveHTML + highlight::HighlightWeaveLatex + 0.2 </em> brew + 0.1 <em> SweaveListingUtils + more</em></p>
-</blockquote>
-<ul>
-<li>knit + R</li>
-<li>Uma re-implementação mais moderna do Sweave</li>
-<li>Permite “entrelaçar” textos do <span class="math inline">\(LaTeX\)</span>, HTML e <strong>Markdown</strong> com códigos do R</li>
-<li>Também permite misturar texto com códigos de outras linguagens: Python, awk, C++, shell.</li>
-<li>Adiciona muitas facilidades como
-<ul>
-<li>Cache</li>
-<li>Decoração e formatação automática de códigos</li>
-<li>Geração de gráficos mais direta</li>
-</ul></li>
-</ul>
-<!-- links -->
-</div>
 </div>
 
 <center>
