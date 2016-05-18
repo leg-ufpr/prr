@@ -221,17 +221,13 @@ Component 1: target, current do not match when deparsed
 
   - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*, Wagner
     Hugo Bonat (LEG/UFPR).
-
-  - [`breedR`] - **Statistical Methods for Forest Genetic Resources
-    analysts**, Facundo Muñoz.
-
-  - [`glmtools`] - Tools for Interacting with the General Lake Model
-    (GLM) in R.
-
-  - [`forecast`] - Methods and Tools for Displaying and Analysing
-    Univariate Time Series, Rob J Hyndman.
-
-  - [`lintr`] - Static Code Analysis for R, Jim Hester (RStudio,
+  - [`breedR`] - *Statistical Methods for Forest Genetic Resources
+    analysts*, Facundo Muñoz.
+  - [`glmtools`] - *Tools for Interacting with the General Lake Model
+    (GLM) in R*, USGS-R.
+  - [`forecast`] - *Methods and Tools for Displaying and Analysing
+    Univariate Time Series*, Rob J Hyndman.
+  - [`lintr`] - *Static Code Analysis for R*, Jim Hester (RStudio,
     Bioconductor).
 
 # Resumo
