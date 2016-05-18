@@ -393,31 +393,15 @@ div.tocify {
 </div>
 
 
-<div id="pesquisa-reproduzivel" class="section level1">
-<h1>Pesquisa reproduzível</h1>
-<blockquote>
-<p><em>The source code is real</em></p>
-<blockquote>
-<p>ESS Project</p>
-</blockquote>
-</blockquote>
-<p>Pseudo-código para escrever um artigo ou relatório científico:</p>
-<pre class="r"><code>1. Importe uma base de dados para um *software*
-2. Execute um procedimento analítico
-3. Gere tabelas e figuras separadamente
-4. Copie os resultados de análises
-5. Coloque tudo isso em um editor de texto e escreva o documento</code></pre>
-<p>Mudou alguma linha na base de dados? Esqueceu de algo? Volte para o item (1) e repita o processo (e boa sorte)!</p>
-<p>Pseudo-código para escrever um artigo ou relatório científico <strong>reprodutível</strong>:</p>
-<pre class="r"><code>1. Use o R Markdown e realize os 5 passos acima em um único documento</code></pre>
-<p>Mudou alguma linha na base de dados? Esqueceu de algo? Altere o código e gere um novo documento.</p>
+<div id="documentos-dinamicos" class="section level1">
+<h1>Documentos dinâmicos</h1>
+<p>A ideia geral de um documento dinâmico é a de que ele pode ser gerado a partir de um <strong>código-fonte</strong>:</p>
 <ul>
-<li>Dessa forma, um documento pode ser gerado dinamicamente a partir de um <strong>código-fonte</strong>.</li>
 <li>Da mesma forma que um <em>software</em> possui seu código-fonte, um documento dinâmico é o código-fonte de um relatório.</li>
 <li>É uma combinação de código de computador e as correspondentes narrativas descrevendo o resultado que o código está gerando (números, tabelas, figuras, …).</li>
 <li>Quando <strong>compilamos</strong> o documento dinâmico, o código de computador é executado, e as saídas são apresentadas. Portanto obtemos um documento final que mistura <strong>código</strong> e <strong>texto</strong>.</li>
-<li>Como gerenciamos apenas o código-fonte do documento, ficamos livres de todas as etapas manuais mencionadas acima.</li>
 </ul>
+<p>Como gerenciamos apenas o código-fonte do documento, ficamos livres de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração na análise.</p>
 </div>
 <div id="literate-programming" class="section level1">
 <h1>Literate Programming</h1>
@@ -431,10 +415,10 @@ div.tocify {
 <table>
 <tr>
 <td align="center">
-<img src="img/knuth.jpg" height="50%">
+<img src="img/knuth.jpg" style="float: center; width: 50%; margin-right: 1%; margin-bottom: 0.5em;">
 </td>
 <td align="center">
-<img src="img/Literate_Programming_book_cover.jpg" height="55%">
+<img src="img/Literate_Programming_book_cover.jpg" style="float: center; width: 50%; margin-right: 1%; margin-bottom: 0.5em;">
 </td>
 </tr>
 </table>
@@ -448,8 +432,9 @@ div.tocify {
 <li>Knuth criou um sistema chamado <strong>WEB</strong> para fazer essa mistura dos seus textos em <span class="math inline">\(TeX\)</span> com a linguagem Pascal</li>
 <li>Atualmente muitos outros sistemas existem para misturar códigos com texto em várias linguagens</li>
 </ul>
-<div id="literate-programming-no-r" class="section level2">
-<h2>Literate Programming no R</h2>
+</div>
+<div id="literate-programming-no-r" class="section level1">
+<h1>Literate Programming no R</h1>
 <p>Com a ascensão do R no início dos anos 2000, <a href="http://www.statistik.lmu.de/~leisch">Friedrich Leisch</a> criou o <a href="https://www.statistik.lmu.de/~leisch/Sweave">Sweave</a> em 2002</p>
 <ul>
 <li>S + weave</li>
@@ -473,7 +458,6 @@ div.tocify {
 </ul></li>
 </ul>
 <!-- links -->
-</div>
 </div>
 
 <center>

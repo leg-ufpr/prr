@@ -10,47 +10,23 @@ output:
 source("setup_knitr.R")
 ```
 
-# Pesquisa reproduzível
+# Documentos dinâmicos
 
-> *The source code is real*
->
-> > ESS Project
+A ideia geral de um documento dinâmico é a de que ele pode ser gerado a
+partir de um **código-fonte**:
 
-Pseudo-código para escrever um artigo ou relatório científico:
-
-```{r, results="asis", eval=FALSE}
-1. Importe uma base de dados para um *software*
-2. Execute um procedimento analítico
-3. Gere tabelas e figuras separadamente
-4. Copie os resultados de análises
-5. Coloque tudo isso em um editor de texto e escreva o documento
-```
-
-Mudou alguma linha na base de dados? Esqueceu de algo? Volte para o item
-(1) e repita o processo (e boa sorte)!
-
-Pseudo-código para escrever um artigo ou relatório científico
-**reprodutível**:
-
-```{r, results="asis", eval=FALSE}
-1. Use o R Markdown e realize os 5 passos acima em um único documento
-```
-
-Mudou alguma linha na base de dados? Esqueceu de algo? Altere o código e
-gere um novo documento.
-
-* Dessa forma, um documento pode ser gerado dinamicamente a partir de um
-  **código-fonte**.
-* Da mesma forma que um *software* possui seu código-fonte, um documento
+- Da mesma forma que um *software* possui seu código-fonte, um documento
   dinâmico é o código-fonte de um relatório.
-* É uma combinação de código de computador e as correspondentes
+- É uma combinação de código de computador e as correspondentes
   narrativas descrevendo o resultado que o código está gerando (números,
   tabelas, figuras, ...).
-* Quando **compilamos** o documento dinâmico, o código de computador é
+- Quando **compilamos** o documento dinâmico, o código de computador é
   executado, e as saídas são apresentadas. Portanto obtemos um documento
   final que mistura **código** e **texto**.
-* Como gerenciamos apenas o código-fonte do documento, ficamos livres de
-  todas as etapas manuais mencionadas acima.
+
+Como gerenciamos apenas o código-fonte do documento, ficamos livres de
+etapas manuais como ter que refazer um gráfico ou uma tabela após
+qualquer alteração na análise.
 
 # Literate Programming
 
@@ -66,8 +42,8 @@ concebido por [Donald Knuth][] em 1984.
 
 <table>
 <tr>
-<td align="center"><img src="img/knuth.jpg" height="50%"></td>
-<td align="center"><img src="img/Literate_Programming_book_cover.jpg" height="55%"></td>
+<td align="center"><img src="img/knuth.jpg" style="float: center; width: 50%; margin-right: 1%; margin-bottom: 0.5em;"></td>
+<td align="center"><img src="img/Literate_Programming_book_cover.jpg" style="float: center; width: 50%; margin-right: 1%; margin-bottom: 0.5em;"></td>
 </tr>
 </table>
 
@@ -82,7 +58,7 @@ concebido por [Donald Knuth][] em 1984.
 * Atualmente muitos outros sistemas existem para misturar códigos
   com texto em várias linguagens
 
-## Literate Programming no R
+# Literate Programming no R
 
 Com a ascensão do R no início dos anos 2000, [Friedrich Leisch] criou
 o [Sweave] em 2002
