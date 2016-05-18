@@ -524,24 +524,51 @@ Como lição: o processo de revisão por pares de revistas científicas depende 
 </div>
 <div id="boas-praticas-para-a-computacao-cientifica" class="section level1">
 <h1>Boas práticas para a computação científica</h1>
-<p>Para promover, encorajar, e padronizar a reproducibilidade de investigações científicas, algumas práticas podem ser adotadas. De maneira geral, as peças chave de pesquisa reproduzível são:</p>
-<ul>
-<li>Disponibilização de dados e metadados</li>
-<li>Disponibilização do código computacional que gerou a análise, que deve ser completamente especificado</li>
-<li>Todos os passos da análise devem ser descritas, incluindo o pré-processamento de dados quando houver, para que as pessoas possam estudá-la e reproduzi-la</li>
-</ul>
-<p>De maneira mais específica, podemos listar oito práticas consideradas essenciais para que a reproducibilidade seja eficiente:</p>
+<p>Cientistas passam cada vez mais tempo construindo e utilizando <em>software</em>. No entanto, a maioria nunca foi ensinada como fazer isso de maneira eficiente. Como resultado, muitos desconhecem as ferramentas e práticas que os fariam escrever códigos mais consistentes e fáceis de manter, com menor esforço.</p>
+<p>Estudos recentes tem mostrado que cientistas passam cerca de 30% de seu tempo escrevendo códigos. No entanto, mais de 90% deles são primariamente auto-didatas, e portanto carecem de exposição à boas práticas de desenvolvimento de <em>software</em> como: escrever códigos de fácil manutenção, usar um <em>sistema de controle de versões</em>, rastreadores de <em>bugs</em>, testes unitários, e automação de tarefas.</p>
+<p>Para promover, encorajar, e padronizar a reproducibilidade de investigações científicas, algumas práticas podem ser adotadas. De maneira específica, podemos listar oito práticas consideradas essenciais para que a reproducibilidade seja eficiente:</p>
 <ol style="list-style-type: decimal">
-<li>Escreva programas para humanos, não para computadores</li>
-<li>Deixe o computador fazer o trabalho</li>
-<li>Faça alterações incrementais</li>
-<li>Não repita você mesmo (ou outros)</li>
-<li>Prepare para erros</li>
-<li>Otimize código apenas depois que ele funcionar</li>
-<li>Documente a ideia e o propósito, não a mecânica do programa</li>
-<li>Colabore</li>
+<li>Escreva programas para humanos, não para computadores
+<ol style="list-style-type: lower-alpha">
+<li>Crie nomes consistentes, distintos e que possuam significado</li>
+<li>A formatação e estilo de código deve ser consistente</li>
+</ol></li>
+<li>Deixe o computador fazer o trabalho
+<ol style="list-style-type: lower-alpha">
+<li>Crie funções para fazer tarefas repetitivas</li>
+<li>Use uma ferramenta de “construção” (<code>make</code> ou <code>rmarkdown::render()</code>) para automatizar <em>workflows</em></li>
+</ol></li>
+<li>Faça alterações incrementais
+<ol style="list-style-type: lower-alpha">
+<li>Trabalhe em pequenos passos e frequentemente revise o que foi feito b, Use um sistema controlador de versões</li>
+</ol></li>
+<li>Não repita você mesmo (ou outros)
+<ol style="list-style-type: lower-alpha">
+<li>Faça o código modulável ao invés de copiar e colar</li>
+<li>Re-utilize código ao invés de reescrevê-lo</li>
+</ol></li>
+<li>Prepare-se para erros
+<ol style="list-style-type: lower-alpha">
+<li>Use uma plataforma de testes independente</li>
+<li>Transforme <em>bugs</em> (ou <strong>resultados negativos</strong>) em estudos de caso</li>
+</ol></li>
+<li>Otimize código apenas depois que ele funcionar
+<ol style="list-style-type: lower-alpha">
+<li>Primeiro a ideia, depois a otimização</li>
+<li>Escreva de maneira mais simples possível desde que não perca a eficiência</li>
+</ol></li>
+<li>Documente a ideia e o propósito, não a mecânica
+<ol style="list-style-type: lower-alpha">
+<li>Descreva motivos e razões, não implementações</li>
+<li>De preferência, documente o processo com códigos <em>embutidos</em> em texto</li>
+</ol></li>
+<li>Colabore
+<ol style="list-style-type: lower-alpha">
+<li>Use “programação em pares”</li>
+<li>Use um sistema de rastreamento de <em>bugs</em> e <em>issues</em></li>
+</ol></li>
 </ol>
-<p>(<em>Expandir essa parte baseada em Wilson et al, 2014</em>).</p>
+<p>(<em>Baseada em Wilson et al, 2014</em>).</p>
 </div>
 <div id="pesquisa-reproduzivel" class="section level1">
 <h1>Pesquisa reproduzível</h1>

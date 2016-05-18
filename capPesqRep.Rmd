@@ -411,30 +411,55 @@ garantir uma série de benefícios para autores e leitores:
 
 # Boas práticas para a computação científica
 
+Cientistas passam cada vez mais tempo construindo e utilizando
+*software*. No entanto, a maioria nunca foi ensinada como fazer isso de
+maneira eficiente. Como resultado, muitos desconhecem as ferramentas e
+práticas que os fariam escrever códigos mais consistentes e fáceis de
+manter, com menor esforço.
+
+Estudos recentes tem mostrado que cientistas passam cerca de 30% de seu
+tempo escrevendo códigos. No entanto, mais de 90% deles são
+primariamente auto-didatas, e portanto carecem de exposição à boas
+práticas de desenvolvimento de *software* como: escrever códigos de
+fácil manutenção, usar um *sistema de controle de versões*, rastreadores
+de *bugs*, testes unitários, e automação de tarefas.
+
 Para promover, encorajar, e padronizar a reproducibilidade de
 investigações científicas, algumas práticas podem ser adotadas. De
-maneira geral, as peças chave de pesquisa reproduzível são:
-
-- Disponibilização de dados e metadados
-- Disponibilização do código computacional que gerou a análise, que deve
-  ser completamente especificado
-- Todos os passos da análise devem ser descritas, incluindo o
-  pré-processamento de dados quando houver, para que as pessoas possam
-  estudá-la e reproduzi-la
-
-De maneira mais específica, podemos listar oito práticas consideradas
-essenciais para que a reproducibilidade seja eficiente:
+maneira específica, podemos listar oito práticas consideradas essenciais
+para que a reproducibilidade seja eficiente:
 
 1. Escreva programas para humanos, não para computadores
+    a. Crie nomes consistentes, distintos e que possuam significado
+    b. A formatação e estilo de código deve ser consistente
 2. Deixe o computador fazer o trabalho
+    a. Crie funções para fazer tarefas repetitivas
+    b. Use uma ferramenta de "construção" (`make` ou
+    `rmarkdown::render()`) para automatizar *workflows*
 3. Faça alterações incrementais
+    a. Trabalhe em pequenos passos e frequentemente revise o que foi
+    feito
+    b, Use um sistema controlador de versões
 4. Não repita você mesmo (ou outros)
-5. Prepare para erros
+    a. Faça o código modulável ao invés de copiar e colar
+    b. Re-utilize código ao invés de reescrevê-lo
+5. Prepare-se para erros
+    a. Use uma plataforma de testes independente
+    b. Transforme *bugs* (ou **resultados negativos**) em estudos de
+    caso
 6. Otimize código apenas depois que ele funcionar
-7. Documente a ideia e o propósito, não a mecânica do programa
+    a. Primeiro a ideia, depois a otimização
+    b. Escreva de maneira mais simples possível desde que não perca a
+    eficiência
+7. Documente a ideia e o propósito, não a mecânica
+    a. Descreva motivos e razões, não implementações
+    b. De preferência, documente o processo com códigos *embutidos* em
+    texto
 8. Colabore
+    a. Use "programação em pares"
+    b. Use um sistema de rastreamento de *bugs* e *issues*
 
-(*Expandir essa parte baseada em Wilson et al, 2014*).
+(*Baseada em Wilson et al, 2014*).
 
 # Pesquisa reproduzível
 
