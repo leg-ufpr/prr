@@ -98,6 +98,35 @@ pelas pessoas.
   </div>
 </div>
 
+# Análise de dados como arte
+
+Em 1974, Donald Knuth descreveu a diferença entre arte e ciência da
+seguinte forma:
+
+> Ciência é conhecimento que entendemos tão bem que podemos ensiná-la
+> para um computador. Todo o resto é arte.
+
+Imagine um compositor escrevendo a letra de uma música. Certamente
+existem regras gerais de como uma boa música deve ser estruturada: qual a
+duração, número de versos, etc. Em outras palavras, existe um estrutura
+geral (mesmo que abstrata) para músicas em geral. No entanto, o
+conhecimento dessa estrutura e de teoria musical sozinhas não fazem uma
+boa música. É necessário algo mais. Em algum momento, o compositor deve
+injetar algo mais, alguma coisa que faça com que sua música seja
+diferente das outras e que as pessoas queiram ouvir. Esta parte criativa
+é difícil de explicar, mas é essencial para o processo de composição. Se
+não fosse assim, bastaria programarmos um computador para compor
+músicas, o que (para o bem ou para o mal) ainda não aconteceu.
+
+Assim como a composição de uma música, o processo de analisar dados
+também é uma arte. Não é uma coisa que podemos ensinar para um
+computador. Análise de dados também possui uma estrutura geral e teorias
+envolvidas como regressão linear, árvores de classificação, etc., e
+todas estas teorias já foram ensinadas para os computadores. No entanto,
+cabe ao analista de dados saber como juntar todas estas ferramentas e
+aplicá-las para responder questões relevantes para a ciência e para as
+pessoas. (Peng e Matsui, 2015).
+
 # Como a ciência funciona
 
 A Ciência é um processo de aprendizado da natureza, onde ideias
@@ -406,36 +435,6 @@ essenciais para que a reproducibilidade seja eficiente:
 8. Colabore
 
 (*Expandir essa parte baseada em Wilson et al, 2014*).
-
-
-# Análise de dados como arte
-
-Em 1974, Donald Knuth descreveu a diferença entre arte e ciência da
-seguinte forma:
-
-> Ciência é conhecimento que entendemos tão bem que podemos ensiná-la
-> para um computador. Todo o resto é arte.
-
-Imagine um compositor escrevendo a letra de uma música. Certamente
-existem regras gerais de como uma boa música deve ser estruturada: qual a
-duração, número de versos, etc. Em outras palavras, existe um estrutura
-geral (mesmo que abstrata) para músicas em geral. No entanto, o
-conhecimento dessa estrutura e de teoria musical sozinhas não fazem uma
-boa música. É necessário algo mais. Em algum momento, o compositor deve
-injetar algo mais, alguma coisa que faça com que sua música seja
-diferente das outras e que as pessoas queiram ouvir. Esta parte criativa
-é difícil de explicar, mas é essencial para o processo de composição. Se
-não fosse assim, bastaria programarmos um computador para compor
-músicas, o que (para o bem ou para o mal) ainda não aconteceu.
-
-Assim como a composição de uma música, o processo de analisar dados
-também é uma arte. Não é uma coisa que podemos ensinar para um
-computador. Análise de dados também possui uma estrutura geral e teorias
-envolvidas como regressão linear, árvores de classificação, etc., e
-todas estas teorias já foram ensinadas para os computadores. No entanto,
-cabe ao analista de dados saber como juntar todas estas ferramentas e
-aplicá-las para responder questões relevantes para a ciência e para as
-pessoas. (Peng e Matsui, 2015).
 
 # Pesquisa reproduzível
 
