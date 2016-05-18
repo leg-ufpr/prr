@@ -35,7 +35,7 @@ pre code {
     font-size: 14px;
 }
 
-/*------------------------------------------- */
+/*-------------------------------------------*/
 
 .reveal h1 {
     font-size: 1.5em;
@@ -84,4 +84,25 @@ h3.date {
 
 code {
 	overflow: hidden !important;
+}
+
+/*
+https://css-tricks.com/snippets/css/triangular-list-bullets/
+*/
+ul {
+    margin: 0.95em 0;
+    padding: 0 1em;
+    list-style: none !important;
+}
+li:before { 
+    content: "";
+    border-color: transparent #111;
+    border-style: solid;
+    border-width: 0.25em 0 0.25em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 1em;
+    position: relative;
 }
