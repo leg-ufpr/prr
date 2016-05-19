@@ -81,7 +81,7 @@ Agora temos um documento em Markdown com os códigos do R avaliados. Mas
 ainda precisamos processar esse arquivo para gerar o arquivo `.html`
 através do Pandoc
 
-```{r pandoc1, eval=FALSE}
+```{r pandoc1}
 pandoc(input = "exemplos/Exemplo1-knitr.md", format = "html")
 ```
 

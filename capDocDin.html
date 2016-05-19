@@ -507,6 +507,8 @@ hist(x)
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)</code></pre>
 <p>Agora temos um documento em Markdown com os códigos do R avaliados. Mas ainda precisamos processar esse arquivo para gerar o arquivo <code>.html</code> através do Pandoc</p>
 <pre class="r"><code>pandoc(input = &quot;exemplos/Exemplo1-knitr.md&quot;, format = &quot;html&quot;)</code></pre>
+<pre><code>executing pandoc   -t html -o exemplos/Exemplo1-knitr.html &#39;exemplos/Exemplo1-knitr_utf8.md&#39;</code></pre>
+<pre><code>[1] &quot;exemplos/Exemplo1-knitr.html&quot;</code></pre>
 <p>que gera o arquivo <a href="exemplos/Exemplo1-knitr.html">Exemplo1-knitr.html</a> que pode ser visualizado no navegador.</p>
 </div>
 <div id="r-markdown-e-knitr" class="section level1">
@@ -552,7 +554,7 @@ label: unnamed-chunk-2</code></pre>
   |.................................................................| 100%
   ordinary text without R code</code></pre>
 <pre><code>output file: Exemplo2-knitr.knit.md</code></pre>
-<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo2-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo2-knitr.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str21986069b20e.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
+<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo2-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo2-knitr.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str219822e3eb13.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
 <pre><code>
 Output created: Exemplo2-knitr.html</code></pre>
 <table>
@@ -602,7 +604,7 @@ label: unnamed-chunk-1
   |.................................................................| 100%
 label: unnamed-chunk-2</code></pre>
 <pre><code>output file: Exemplo1-yaml.knit.md</code></pre>
-<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-yaml.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-yaml.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str21984a3a99a3.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
+<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-yaml.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-yaml.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str219849bdd81a.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
 <pre><code>
 Output created: Exemplo1-yaml.html</code></pre>
 <p>O resultado final pode ser visto no arquivo <a href="exemplos/Exemplo1-yaml.html">Exemplo1-yaml.html</a>.</p>
@@ -698,7 +700,7 @@ label: unnamed-chunk-2</code></pre>
   ordinary text without R code</code></pre>
 <pre><code>output file: Exemplo1-knitr.knit.md</code></pre>
 <pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-knitr-ioslides.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/ioslides/default.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --variable ioslides-url=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/Rtmpe9imum/ioslides-output21984dba5027.html --slide-level 2 </code></pre>
+/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/Rtmpe9imum/ioslides-output21984c2e69a7.html --slide-level 2 </code></pre>
 <pre><code>
 Output created: Exemplo1-knitr-ioslides.html</code></pre>
 <p>Veja o resultado em <a href="exemplos/Exemplo1-knitr-ioslides.html">Exemplo1-knitr-ioslides.html</a>.</p>
