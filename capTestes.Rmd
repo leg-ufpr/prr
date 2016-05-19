@@ -19,13 +19,9 @@ opts_chunk$set(eval = FALSE)
 # source("~/Dropbox/labestData/func.R")
 ```
 
-# Introdução
-
-----
+## As interdependências
 
 <iframe src="mcglm_network.html" width="100%" height="800px"></iframe>
-
-----
 
 ## testthat: Get Started with Testing
 
@@ -83,9 +79,7 @@ Código robusto
   - Criar os testes demanda tempo.
   - TODO
 
-# Testes em Pacotes R
-
----
+## Testes em Pacotes R
 
   * [RUnit](http://cran-r.c3sl.ufpr.br/web/packages/RUnit/index.html),
     Roman Zenka e colaboradores.
@@ -274,9 +268,7 @@ Component 1: target, current do not match when deparsed
 [1] 30.8 - 43 == -12.2
 ```
 
-# Recomendações
-
----
+## Recomendações
 
   * Concentre testes na interface externa das funções.
   * Teste um componente do código apenas em um lugar, evite duplicar.
