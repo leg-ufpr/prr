@@ -229,6 +229,8 @@ Component 1: target, current do not match when deparsed
     Univariate Time Series*, Rob J Hyndman.
   - [`lintr`] - *Static Code Analysis for R*, Jim Hester (RStudio,
     Bioconductor).
+  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*, 
+    Ben Bolker.
 
 # Resumo
 
@@ -239,3 +241,4 @@ Component 1: target, current do not match when deparsed
 [`glmtools`]: https://github.com/USGS-R/glmtools/tree/master/tests
 [`forecast`]: https://github.com/robjhyndman/forecast/tree/master/tests
 [`lintr`]: https://github.com/jimhester/lintr/tree/master/tests
+[`bbmle`]: https://github.com/cran/bbmle/tree/master/tests
