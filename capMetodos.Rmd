@@ -1,0 +1,232 @@
+---
+title: "Métodos S3 e S4"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+# opts_chunk$set(eval = FALSE)
+# setwd("~/repos/MRDCr/"); devtools::load_all()
+# setwd("~/repos/labestData/"); devtools::load_all()
+# source("~/Dropbox/labestData/func.R")
+```
+
+## Definições
+
+Função genérica
+: Funções cujo comportamento depende da classe do objeto recebido.
+  Ex: `print`, `summary`, `plot`, `anova`.
+
+Classe
+: Atributo de um objeto que permite associar funções a ele devido ...
+  Ex: `numeric`, `factor`, `data.frame`, `lm`, `glm`, `anova`.
+
+Método
+: Função que aplicada a um objeto uma classe quando usada uma função
+  genérica. Ex: `summary.lm`, `summary.glm`, `plot.lm`.
+
+## Exemplos
+
+```{r}
+# Métodos disponíveis para a classe aov.
+methods(class = "aov")
+
+# Classes com métodos disponíveis para a função genérica anova().
+methods(generic.function = "anova")
+```
+```{r, eval=FALSE}
+# Exibe a definição da função.
+getS3method(f = "anova", class = "lm")
+getAnywhere("anova.lm")
+```
+
+## Criando Métodos em S3
+
+Função para fazer o teste t para a média de uma população
+
+```{r}
+testTs3 <- function(x, mu0) {
+    m <- mean(x)
+    s <- sd(x)
+    n <- length(x)
+    tstat <- sqrt(n) * abs(m - mu0)/s
+    pval <- 2 * pt(tstat, df = n - 1, lower.tail = FALSE)
+    L <- list(smp_mean = m, smp_sd = s, smp_size = n,
+              pop_mean = mu0, tstat = tstat, pval = pval)
+    class(L) <- "testT_S3"
+    return(L)
+}
+```
+
+---
+
+Método `print` para a classe `testT_S3`
+
+```{r}
+print.testT_S3 <- function(x, ...) {
+    cat("\n    Test t para a média de uma população\n\n")
+    cat("Hipótese H0: a verdadeira média é igual a", x$pop_mean, "\n")
+    cat("Tamanho da amostra:", x$smp_size, "\n")
+    cat("Média da amostra:", x$smp_mean, "\n")
+    cat("Desvio-padrão da amostra:", x$smp_sd, "\n")
+    cat("Estatística do teste:", x$tstat, "\n")
+    cat("P-valor do teste:", x$tstat, "\n\n")
+    invisible()
+}
+```
+
+---
+
+Método `plot` para a classe `testT_S3`
+
+```{r}
+plot.testT_S3 <- function(x, ...) {
+    xlim <- range(c(-5, 5, x$tstat))
+    curve(dt(t, df = x$smp_size - 1),
+          from = xlim[1], to = xlim[2], xname = "t",
+          xlab = "t", ylab = "f(t)")
+    abline(v = x$tstat, col = 2)
+    abline(v = qt(c(0.025, 0.975), df = x$smp_size - 1),
+           lty = 2)
+    invisible()
+}
+```
+
+---
+
+Usando a função
+
+```{r}
+methods(class = "testT_S3")
+
+x <- rnorm(10, 0, 1)
+a <- testTs3(x = x, mu0 = 0)
+a
+```
+
+---
+
+```{r}
+plot(a)
+```
+
+## Criando Métodos em S4
+
+Função para fazer o teste t para a média de uma população
+
+```{r}
+library(methods)
+
+setClass(Class = "testT_S4",
+         slots = c(smp_mean = "numeric",
+                   smp_sd = "numeric",
+                   smp_size = "integer",
+                   pop_mean = "numeric",
+                   tstat = "numeric",
+                   pval = "numeric"))
+
+testTs4 <- function(x, mu0) {
+    m <- mean(x)
+    s <- sd(x)
+    n <- length(x)
+    tstat <- sqrt(n) * abs(m - mu0)/s
+    pval <- 2 * pt(tstat, df = n - 1, lower.tail = FALSE)
+    L <- new(Class = "testT_S4",
+             smp_mean = m, smp_sd = s, smp_size = n,
+             pop_mean = mu0, tstat = tstat, pval = pval)
+    return(L)
+}
+```
+
+---
+
+Método `print` para a classe `testT_S4`
+
+```{r}
+# setGeneric("print", function(x, ...) standardGeneric("print"));
+
+setMethod(f = "print",
+          signature = "testT_S4",
+          definition = function(x, ...) {
+              cat("\n    Test t para a média de uma população\n\n")
+              cat("Hipótese H0: a verdadeira média é igual a",
+                  x@pop_mean, "\n")
+              cat("Tamanho da amostra:", x@smp_size, "\n")
+              cat("Média da amostra:", x@smp_mean, "\n")
+              cat("Desvio-padrão da amostra:", x@smp_sd, "\n")
+              cat("Estatística do teste:", x@tstat, "\n")
+              cat("P-valor do teste:", x@tstat, "\n\n")
+              invisible()
+          })
+```
+
+---
+
+Método `plot` para a classe `testT_S4`
+
+```{r}
+setGeneric("plot", function(object, ...) standardGeneric("plot"));
+
+setMethod(f = "plot",
+          signature = "testT_S4",
+          definition = function(object, ...) {
+              xlim <- range(c(-5, 5, object@tstat))
+              curve(dt(t, df = object@smp_size - 1),
+                    from = xlim[1], to = xlim[2], xname = "t",
+                    xlab = "t", ylab = "f(t)")
+              abline(v = object@tstat, col = 2)
+              abline(v = qt(c(0.025, 0.975), df = object@smp_size - 1),
+                     lty = 2)
+              invisible()
+          })
+```
+
+---
+
+Usando a função
+
+```{r}
+x <- rnorm(10, 0, 1)
+a <- testTs4(x = x, mu0 = 0)
+print(a)
+```
+
+---
+
+```{r}
+plot(a)
+```
+
+## Documentando os Métodos
+
+```{r}
+foobar <- function(x) UseMethod("foobar")
+```
+
+
+## Considerações Finais
+
+## Além disso
+
+  * Use um Sistema de Controle de Versão (e.g. Git).
+  * Disponibilize seu código (e.g. GitHub ou GitLab).
+  * Disponibilize suas vinhetas no GitHub com `gh-pages`.
+
+<!------------------------------------------- -->
+
+[`MRDCr`]: https://github.com/leg/MRDCr/
+[`labestData`]: https://github.com/pet-estatistica/labestData
+[`mcglm`]: https://github.com/wbonat/mcglm/
+[`breedR`]: https://github.com/famuvie/breedR/
+[`bbmle`]: https://github.com/cran/bbmle/
+[Yihui Xie]: yihui.name/knitr/demo/vignette/
+[`knitr`]: https://github.com/yihui/knitr
