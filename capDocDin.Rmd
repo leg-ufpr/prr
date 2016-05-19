@@ -6,7 +6,7 @@ output:
     toc: true
 ---
 
-```{r setup, include=FALSE}
+```{r setup, cache=FALSE, include=FALSE}
 source("setup_knitr.R")
 ```
 
@@ -48,19 +48,19 @@ Usando o mesmo exemplo anterior, vamos renomear o arquivo `Exemplo1.md`
 para `Exemplo1-knitr.Rmd` e incluir a marção `{r}` nos blocos de código.
 
 Também é possível colocar códigos do R para serem renderizados na
-própria linha de texto com `` `r '\x60r \x60'` ``. Por exemplo,
-`` `r '\x60r 2+2\x60'` `` gera o resultado `r 2+2` no documento.
+própria linha de texto com `` `r inline_expr('')` ``. Por exemplo,
+`` `r inline_expr('2+2')` `` gera o resultado `r 2+2` no documento.
 
 Veja o arquivo [Exemplo1-knitr.Rmd](exemplos/Exemplo1-knitr.Rmd).
 
-```{r, echo=FALSE}
+```{r sys1, echo=FALSE}
 cat(system("cat exemplos/Exemplo1-knitr.Rmd", intern = TRUE), sep = "\n")
 ```
 
 Agora usamos o knitr, através da função `knit()` para compilar o
 documento `.Rmd` em um documento com sintaxe Markdown `.md`
 
-```{r, eval=FALSE}
+```{r sys2, eval=FALSE}
 knit("exemplos/Exemplo1-knitr.Rmd", output = "exemplos/Exemplo1-knitr.md")
 ```
 
@@ -73,7 +73,7 @@ knit("exemplos/Exemplo1-knitr.Rmd", output = "exemplos/Exemplo1-knitr.md")
 O resultado da compilação pode ser vista no arquivo
 [Exemplo1-knitr.md](exemplos/Exemplo1-knitr.md).
 
-```{r echo=FALSE}
+```{r sys3, echo=FALSE}
 cat(system("cat exemplos/Exemplo1-knitr.md", intern = TRUE), sep = "\n")
 ```
 
@@ -81,12 +81,12 @@ Agora temos um documento em Markdown com os códigos do R avaliados. Mas
 ainda precisamos processar esse arquivo para gerar o arquivo `.html`
 através do Pandoc
 
-```{r, eval=FALSE}
+```{r pandoc1, eval=FALSE}
 pandoc(input = "exemplos/Exemplo1-knitr.md", format = "html")
 ```
 
 que gera o arquivo
-[Exemplo1-knitr_utf8.html](exemplos/Exemplo1-knitr_utf8.html) que pode
+[Exemplo1-knitr.html](exemplos/Exemplo1-knitr.html) que pode
 ser visualizado no navegador.
 
 # R Markdown e knitr
@@ -134,13 +134,13 @@ No RStudio, esse pacote já vem instalado, assim como uma versão embutida
 do Pandoc.
 
 Usando o exemplo anterior, vamos compilar o arquivo
-[Exemplo1-knitr.Rmd](exemplos/Exemplo1-knitr.Rmd). O primeiro argumento
+[Exemplo2-knitr.Rmd](exemplos/Exemplo2-knitr.Rmd). O primeiro argumento
 da função é o nome (e local) do arquivo, e o segundo argumento é o
 formato de saída, que por padrão é HTML.
 
-```{r}
+```{r rendex2}
 library(rmarkdown)
-render("exemplos/Exemplo1-knitr.Rmd",  output_format = "html_document")
+render("exemplos/Exemplo2-knitr.Rmd",  output_format = "html_document")
 ```
 
 <table>
@@ -150,7 +150,7 @@ render("exemplos/Exemplo1-knitr.Rmd",  output_format = "html_document")
 </table>
 
 E o resultado pode ser visto no arquivo
-[Exemplo1-knitr.html](exemplos/Exemplo1-knitr.html).
+[Exemplo2-knitr.html](exemplos/Exemplo2-knitr.html).
 
 No RStudio, esse processo todo pode ser feito pelo botão
 <kbd>Knit<kbd>.
@@ -169,14 +169,14 @@ argumento `output_format =` da função `render()`.
 Os metadados em YAML são colocados sempre no **início** de um documento,
 e são delimitados por `---`. Um exemplo típico seria:
 
-```
----
-title: "Meu primeiro documento em R Markdown"
-author: "Fernando Mayer & Walmes Zeviani"
-date: Maio, 2016
-output: html_document
----
-```
+
+    ---
+    title: "Meu primeiro documento em R Markdown"
+    author: "Fernando Mayer & Walmes Zeviani"
+    date: Maio, 2016
+    output: html_document
+    ---
+
 
 Com isso, não é mais necessário especificar o argumento `output_format
 =` na chamada da função `render()`.
@@ -184,7 +184,7 @@ Com isso, não é mais necessário especificar o argumento `output_format
 Veja o arquivo [Exemplo1-yaml.Rmd](exemplos/Exemplo1-yaml.Rmd). Para
 renderizar esse aquivo, usamos:
 
-```{r}
+```{r rendex1y}
 render("exemplos/Exemplo1-yaml.Rmd")
 ```
 
@@ -211,7 +211,7 @@ apresentações (slides). Alguns deles:
 
 Podemos converter um documento em R Markdown para PDF com
 
-```{r, eval=FALSE}
+```{r rendex1kp, eval=FALSE}
 render("exemplos/Exemplo1-knitr.Rmd", output_format = "pdf_document")
 ```
 
@@ -221,7 +221,7 @@ usa o Pandoc para converter Markdown para $\LaTeX$, e depois para PDF.
 
 Um documento do Word pode ser gerado com
 
-```{r}
+```{r rendex1kw}
 render("exemplos/Exemplo1-knitr.Rmd", output_format = "word_document")
 ```
 
@@ -230,7 +230,7 @@ Para gerar [Exemplo1-knitr.docx](exemplos/Exemplo1-knitr.docx).
 Apresentações em slides HTML podem ser geradas em diversos formatos, um
 deles é o `ioslides`
 
-```{r}
+```{r rendex1ki}
 render("exemplos/Exemplo1-knitr.Rmd",
        output_format = "ioslides_presentation",
        output_file = "Exemplo1-knitr-ioslides.html")
@@ -241,7 +241,7 @@ Veja o resultado em
 
 Apresentações em Beamer também podem ser geradas com
 
-```{r, eval=FALSE}
+```{r rendex1kb, eval=FALSE}
 render("exemplos/Exemplo1-knitr.Rmd",
        output_format = "beamer_presentation",
        output_file = "Exemplo1-knitr-beamer.pdf")
@@ -295,7 +295,7 @@ seja tratado como texto  literal em Markdown.
 kable(head(iris))
 ```</code></pre>
 
-```{r, results="asis", echo=FALSE}
+```{r tab, results="asis", echo=FALSE}
 kable(head(iris))
 ```
 
@@ -306,21 +306,21 @@ um formato para ser **gerado ao mesmo tempo** pelo rmarkdown. Por
 exemplo, para gerar documentos de saída em HTML e PDF, podemos
 especificar
 
-```
----
-title: "Meu primeiro documento em R Markdown"
-author: "Fernando Mayer & Walmes Zeviani"
-date: Maio, 2016
-output: html_document
-output:
-  html_document: default
-  pdf_document: default
----
-```
+
+    ---
+    title: "Meu primeiro documento em R Markdown"
+    author: "Fernando Mayer & Walmes Zeviani"
+    date: Maio, 2016
+    output: html_document
+    output:
+      html_document: default
+      pdf_document: default
+    ---
+
 
 E compilar todos eles ao mesmo tempo com
 
-```{r, eval=FALSE}
+```{r rendex1y2, eval=FALSE}
 render("exemplos/Exemplo1-yaml2.Rmd", output_format = "all")
 ```
 

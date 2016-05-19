@@ -215,8 +215,8 @@ de preencher a lacuna de informação entre replicação e nada.
 A diferença entre replicação e reprodução está esquematizada na figura
 abaixo.
 
-```
-Figura com esquema de replicação e reprodução
+```{r, eval=FALSE}
+## Figura com esquema de replicação e reprodução
 
 ##------------------------------------------------------------------------
 ## Replicação

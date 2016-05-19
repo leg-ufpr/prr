@@ -155,7 +155,7 @@ $(document).ready(function () {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -163,7 +163,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script src="site_libs/navigation-1.0/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script>
 $(document).ready(function () {
   window.initializeCodeFolding("show" === "show");
@@ -381,10 +381,11 @@ div.tocify {
 <div class="btn-group pull-right">
 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
 </div>
+
 
 
 <h1 class="title toc-ignore">Pesquisa Reproduzível</h1>
@@ -441,7 +442,7 @@ Como lição: o processo de revisão por pares de revistas científicas depende 
 <p>A replicação na ciência têm sido praticada há muitos anos. No entanto, hojem em dia esta prática tem se tornado cada vez mais desafiadora, uma vez que os estudos estão se tornando cada vez maiores e mais caros, e a disponibilidade de recursos financeiros para pesquisas cada vez mais escassa. Além disso, existem estudos que dificilmente podem ser replicados, como por exemplo, a avaliação do impacto de um terremoto em um determinado local, a evolução do crescimento de uma floresta, ou um estudo clínico que acompanhou as reações de pacientes à um medicamento durante 20 anos.</p>
 <p>Existem muitas boas razões pelas quais não podemos replicar um estudo. Se replicar não é possível, então a opção seria não fazer nada, e ter como informação apenas o resultado de <em>um</em> estudo. No entanto, não fazer nada não é (e não pode ser) uma opção para cientistas. É nesse ponto que entra o conceito de <strong>pesquisa reproduzível</strong>. A ideia é criar uma espécie de “padrão mínimo”, ou um “meio-termo” entre replicar um estudo e não fazer nada, ou seja, fazer algo no meio. O problema básico é que temos o padrão ideal, que é a replicação, e o padrão nulo, que é não fazer nada. O que pode ser feito entre o melhor (que não é possível) e o pior (que não é desejável), é a reprodução dos resultados. É uma forma de preencher a lacuna de informação entre replicação e nada.</p>
 <p>A diferença entre replicação e reprodução está esquematizada na figura abaixo.</p>
-<pre><code>Figura com esquema de replicação e reprodução
+<pre class="r"><code>## Figura com esquema de replicação e reprodução
 
 ##------------------------------------------------------------------------
 ## Replicação

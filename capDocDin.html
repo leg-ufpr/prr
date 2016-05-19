@@ -155,7 +155,7 @@ $(document).ready(function () {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -163,7 +163,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script src="site_libs/navigation-1.0/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script>
 $(document).ready(function () {
   window.initializeCodeFolding("show" === "show");
@@ -381,10 +381,11 @@ div.tocify {
 <div class="btn-group pull-right">
 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
 </div>
+
 
 
 <h1 class="title toc-ignore">Documentos dinâmicos no R</h1>
@@ -506,7 +507,7 @@ hist(x)
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)</code></pre>
 <p>Agora temos um documento em Markdown com os códigos do R avaliados. Mas ainda precisamos processar esse arquivo para gerar o arquivo <code>.html</code> através do Pandoc</p>
 <pre class="r"><code>pandoc(input = &quot;exemplos/Exemplo1-knitr.md&quot;, format = &quot;html&quot;)</code></pre>
-<p>que gera o arquivo <a href="exemplos/Exemplo1-knitr_utf8.html">Exemplo1-knitr_utf8.html</a> que pode ser visualizado no navegador.</p>
+<p>que gera o arquivo <a href="exemplos/Exemplo1-knitr.html">Exemplo1-knitr.html</a> que pode ser visualizado no navegador.</p>
 </div>
 <div id="r-markdown-e-knitr" class="section level1">
 <h1>R Markdown e knitr</h1>
@@ -520,12 +521,12 @@ hist(x)
 <li>Instalar o Pandoc no seu sistema</li>
 </ol>
 <p>No RStudio, esse pacote já vem instalado, assim como uma versão embutida do Pandoc.</p>
-<p>Usando o exemplo anterior, vamos compilar o arquivo <a href="exemplos/Exemplo1-knitr.Rmd">Exemplo1-knitr.Rmd</a>. O primeiro argumento da função é o nome (e local) do arquivo, e o segundo argumento é o formato de saída, que por padrão é HTML.</p>
+<p>Usando o exemplo anterior, vamos compilar o arquivo <a href="exemplos/Exemplo2-knitr.Rmd">Exemplo2-knitr.Rmd</a>. O primeiro argumento da função é o nome (e local) do arquivo, e o segundo argumento é o formato de saída, que por padrão é HTML.</p>
 <pre class="r"><code>library(rmarkdown)
-render(&quot;exemplos/Exemplo1-knitr.Rmd&quot;,  output_format = &quot;html_document&quot;)</code></pre>
+render(&quot;exemplos/Exemplo2-knitr.Rmd&quot;,  output_format = &quot;html_document&quot;)</code></pre>
 <pre><code>
 
-processing file: Exemplo1-knitr.Rmd</code></pre>
+processing file: Exemplo2-knitr.Rmd</code></pre>
 <pre><code>
   |                                                                       
   |                                                                 |   0%
@@ -536,7 +537,7 @@ processing file: Exemplo1-knitr.Rmd</code></pre>
 
   |                                                                       
   |..........................                                       |  40%
-label: unnamed-chunk-13
+label: unnamed-chunk-1
 
   |                                                                       
   |.......................................                          |  60%
@@ -545,15 +546,15 @@ label: unnamed-chunk-13
 
   |                                                                       
   |....................................................             |  80%
-label: unnamed-chunk-14</code></pre>
+label: unnamed-chunk-2</code></pre>
 <pre><code>
   |                                                                       
   |.................................................................| 100%
   ordinary text without R code</code></pre>
-<pre><code>output file: Exemplo1-knitr.knit.md</code></pre>
-<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-knitr.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpl0ngXP/rmarkdown-str11a77fa78751.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.0 </code></pre>
+<pre><code>output file: Exemplo2-knitr.knit.md</code></pre>
+<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo2-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo2-knitr.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str21986069b20e.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
 <pre><code>
-Output created: Exemplo1-knitr.html</code></pre>
+Output created: Exemplo2-knitr.html</code></pre>
 <table>
 <tr>
 <td align="center">
@@ -561,7 +562,7 @@ Output created: Exemplo1-knitr.html</code></pre>
 </td>
 </tr>
 </table>
-<p>E o resultado pode ser visto no arquivo <a href="exemplos/Exemplo1-knitr.html">Exemplo1-knitr.html</a>.</p>
+<p>E o resultado pode ser visto no arquivo <a href="exemplos/Exemplo2-knitr.html">Exemplo2-knitr.html</a>.</p>
 <p>No RStudio, esse processo todo pode ser feito pelo botão <kbd>Knit<kbd>.</p>
 <div id="metadados" class="section level2">
 <h2>Metadados</h2>
@@ -590,7 +591,7 @@ processing file: Exemplo1-yaml.Rmd</code></pre>
 
   |                                                                       
   |................................                                 |  50%
-label: unnamed-chunk-13
+label: unnamed-chunk-1
 
   |                                                                       
   |.................................................                |  75%
@@ -599,9 +600,9 @@ label: unnamed-chunk-13
 
   |                                                                       
   |.................................................................| 100%
-label: unnamed-chunk-14</code></pre>
+label: unnamed-chunk-2</code></pre>
 <pre><code>output file: Exemplo1-yaml.knit.md</code></pre>
-<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-yaml.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-yaml.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpl0ngXP/rmarkdown-str11a7fb260dc.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.0 </code></pre>
+<pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-yaml.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-yaml.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/default.html --variable &#39;theme:bootstrap&#39; --include-in-header /tmp/Rtmpe9imum/rmarkdown-str21984a3a99a3.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --no-highlight --variable highlightjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/highlight --variable navigationjs=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/h/navigation-1.1 </code></pre>
 <pre><code>
 Output created: Exemplo1-yaml.html</code></pre>
 <p>O resultado final pode ser visto no arquivo <a href="exemplos/Exemplo1-yaml.html">Exemplo1-yaml.html</a>.</p>
@@ -642,7 +643,7 @@ processing file: Exemplo1-knitr.Rmd</code></pre>
 
   |                                                                       
   |..........................                                       |  40%
-label: unnamed-chunk-13
+label: unnamed-chunk-1
 
   |                                                                       
   |.......................................                          |  60%
@@ -651,7 +652,7 @@ label: unnamed-chunk-13
 
   |                                                                       
   |....................................................             |  80%
-label: unnamed-chunk-14</code></pre>
+label: unnamed-chunk-2</code></pre>
 <pre><code>Warning in (knit_hooks$get(&quot;plot&quot;))(file, reduce_plot_opts(options)): Chunk
 options fig.align, out.width, out.height, out.extra are not supported for
 Word output</code></pre>
@@ -681,7 +682,7 @@ processing file: Exemplo1-knitr.Rmd</code></pre>
 
   |                                                                       
   |..........................                                       |  40%
-label: unnamed-chunk-13
+label: unnamed-chunk-1
 
   |                                                                       
   |.......................................                          |  60%
@@ -690,14 +691,14 @@ label: unnamed-chunk-13
 
   |                                                                       
   |....................................................             |  80%
-label: unnamed-chunk-14</code></pre>
+label: unnamed-chunk-2</code></pre>
 <pre><code>
   |                                                                       
   |.................................................................| 100%
   ordinary text without R code</code></pre>
 <pre><code>output file: Exemplo1-knitr.knit.md</code></pre>
 <pre><code>/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output Exemplo1-knitr-ioslides.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --template /home/fpmayer/R_environment/my_library/rmarkdown/rmd/ioslides/default.html --mathjax --variable &#39;mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#39; --variable ioslides-url=/home/fpmayer/R_environment/my_library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/Rtmpl0ngXP/ioslides-output11a7437c3ca7.html </code></pre>
+/usr/bin/pandoc +RTS -K512m -RTS Exemplo1-knitr.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output /tmp/Rtmpe9imum/ioslides-output21984dba5027.html --slide-level 2 </code></pre>
 <pre><code>
 Output created: Exemplo1-knitr-ioslides.html</code></pre>
 <p>Veja o resultado em <a href="exemplos/Exemplo1-knitr-ioslides.html">Exemplo1-knitr-ioslides.html</a>.</p>

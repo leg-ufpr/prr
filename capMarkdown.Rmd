@@ -250,7 +250,7 @@ possível).
 
 Veja o arquivo de exemplo [Exemplo1.md](exemplos/Exemplo1.md):
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 cat(system("cat exemplos/Exemplo1.md", intern = TRUE), sep = "\n")
 ```
 
@@ -268,7 +268,7 @@ diversos formatos, incluindo Markdown para HTML.
 Se o Pandoc estiver instalado no seu sistema (Unix) é possível
 converter o documento na linha de comando (shell) com
 
-```{sh eval=FALSE}
+```{sh, eval=FALSE}
 pandoc -f markdown -t html Exemplo1.md -o Exemplo1.html
 ```
 
@@ -280,7 +280,7 @@ pandoc(input = "exemplos/Exemplo1.md", format = "html")
 ```
 
 Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo
-[Exemplo1_utf8.html](exemplos/Exemplo1_utf8.html) no navegador.
+[Exemplo1.html](exemplos/Exemplo1.html) no navegador.
 
 
 <!-- links -->
