@@ -1,7 +1,7 @@
 ---
 title: "Testes"
 author: "Fernando Mayer & Walmes Zeviani"
-date: 23-05-2016
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
 output:
   revealjs::revealjs_presentation:
     theme: serif
@@ -23,35 +23,87 @@ opts_chunk$set(eval = FALSE)
 
 ----
 
-A relação entre as funções em um pacote grande
-
 <iframe src="mcglm_network.html" width="100%" height="800px"></iframe>
 
 ----
 
+## testthat: Get Started with Testing
+
+Wickham, Hadley. testthat: Get Started with Testing. *The R Journal*,
+v.3/1, June 2011.
+
+  * Testes garantem que o código faça o que devem fazer.
+  * Testes informais são sempre feitos ao escrever código.
+  * Depois de certo tempo se esquece de aplicar os mesmos testes.
+  * Os bugs se tornam recorrentes e corrigí-los demanda tempo.
+  * O problema não é não testar, é não fazer de forma automática.
+
+---
+
+Menos *bugs*
+
+  * Filosofia da contabilidade de dupla entrada.
+  * Código escrito com teste associado.
+  * Código e testes verificam um ao outro.
+  * Bugs corrigidos jamais voltarão.
+
+---
+
+Melhor estrutura de código
+
+  * Códigos fáceis de testar são melhor desenhados.
+  * Reduz duplicação de código.
+  * Favorece o fatoramento do código.
+
+---
+
+Retomadas mais fáceis
+
+  * Termine a sessão criando um teste.
+  * Recomeçe fazendo o código atender o teste.
+
+---
+
+Código robusto
+
+  * Código coberto por testes está seguro contra acidentes.
+  * Reduz efeitos colaterais ao adicionar funcionalidades.
+
 ## Testes de Unidade
 
-  - Projeto grande, prolongado
-  - Muitos colaboradores
-  - Evitar quebra acidental do código
-  - Perceber os efeitos colaterais durante as edições e não pelo usuário
-  - Fazer a mesma sequência de testes sempre
-  - Testar funções não exportadas (`core`).
+  - Projeto grande, prolongado, com muitos colaboradores.
+  - Evitar quebra acidental do código.
+  - Perceber os efeitos colaterais dos aprimoramentos.
+  - Repetir sempre os mesmos testes e acrescentar novos.
+  - Testar partes menos ou não usadas pelos usuários.
+  - Testar partes internas e indivisíveis do código.
 
-## Vantagens e Desvantagens
+## Custo
 
-# Testes com o `devtools`
+  - Criar os testes demanda tempo.
+  - TODO
+
+# Testes em Pacotes R
+
+---
+
+  * [RUnit](http://cran-r.c3sl.ufpr.br/web/packages/RUnit/index.html),
+    Roman Zenka e colaboradores.
+  * [svUnit](http://cran-r.c3sl.ufpr.br/web/packages/svUnit/index.html),
+    Philippe Grosjean.
+  * [testthat](http://cran-r.c3sl.ufpr.br/web/packages/testthat/index.html),
+    Hadley Wickham.
 
 ## Contruindo a Estrutura para Testes
 
-Após carregar no `devtools`, na raíz do diretório do pacote, faça:
+Na raíz do diretório do pacote
 ```{r}
 library(devtools)
 
 use_testthat()
 ```
 
-Esse comando resulta na criação de diretório e arquivos.
+Cria de diretório e arquivos
 ```
 .
 `-- tests/
@@ -59,7 +111,7 @@ Esse comando resulta na criação de diretório e arquivos.
    `-- testthat.R
 ```
 
-E também acrescenta o `testthat` do `DESCRIPTION`.
+Acrescenta o `testthat` no `DESCRIPTION`
 ```{r}
 Suggests:
     testthat
@@ -67,14 +119,15 @@ Suggests:
 
 ## Organização dos Testes
 
-  - O arquivo `tests/testthat.R` configura o esquema de testes.
+  - O `tests/testthat.R` configura o esquema de testes.
+  - O `tests/testthat` é um conjunto de arquivos de teste.
   - Cada arquivo de teste `test_*.R` é um conjunto de testes.
   - Cada teste `test_that()` é um conjunto de expectativas.
   - Cada expectativa `expect_*()` avalia uma unidade testável.
 
 ---
 
-Conteúdo do `/tests/testthat.R` (*default* feito pelo `devtools`).
+Conteúdo *default* `/tests/testthat.R`
 ```{r}
 library(testthat)
 library(MRDCr)
@@ -82,7 +135,7 @@ library(MRDCr)
 test_check("MRDCr")
 ```
 
-Os arquidos de teste devem ter nome com prefixo `test_*.R`.
+Os arquivos de teste devem ser `test_<.*>.R`
 ```{r}
 # Criando dois arquivos.
 file.create("/tests/testthat/test_funprobs.R")
@@ -99,7 +152,7 @@ file.create("/tests/testthat/test_logliks.R")
 
 ---
 
-Conteúdo do arquivo `test_funprobs.R`.
+Conteúdo do arquivo `test_funprobs.R`
 ```{r}
 context("Testa as Funções de Probabilidade")
 
@@ -116,7 +169,7 @@ test_that("Iguais a Poisson", {
 
 ---
 
-Conteúdo do arquivo `test_logliks.R`.
+Conteúdo do arquivo `test_logliks.R`
 ```{r}
 context("Testa as Funções de Log-Verossimilhança")
 
@@ -148,6 +201,7 @@ test_that("Inteiros negativos resultam em Warning", {
 
 ---
 
+Estrutura completa
 ```
 .
 `-- tests/
@@ -168,8 +222,9 @@ test_that("Inteiros negativos resultam em Warning", {
     `-- testthat.R
 ```
 
-## Correndo os Testes
+## Executando os Testes
 
+Executa apenas os Testes
 ```{r}
 # Executa os scripts em /tests/testhat/ .
 test()
@@ -180,6 +235,7 @@ Testa as Funções de Probabilidade: ..
 Testa as Funções de Log-Verossimilhança: .....
 ```
 
+Verifica o pacote
 ```{r}
 check()
 ```
@@ -196,7 +252,7 @@ check()
 ## Quando os Testes Falham
 
 ```{r}
-check()
+test()
 ```
 ```
 Testing MRDCr
@@ -218,12 +274,23 @@ Component 1: target, current do not match when deparsed
 [1] 30.8 - 43 == -12.2
 ```
 
-# Pacotes de Referência
+# Recomendações
 
-##
+---
 
-  - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*, Wagner
-    Hugo Bonat (LEG/UFPR).
+  * Concentre testes na interface externa das funções.
+  * Teste um componente do código apenas em um lugar, evite duplicar.
+  * Concentre testes no código frágil, imaturo e cheio de
+    interdependências.
+  * Sempre escreva um teste ao encontrar um bug, adote a *test-first
+    philosophy*.
+
+## Pacotes para Consulta
+
+  - [`MRDCr`] - *Modelos de Regressão para Dados de Contagem com o R*,
+    Walmes Zeviani, Eduardo Jr e Cesar Taconeli (LEG/UFPR).
+  - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*,
+    Wagner Hugo Bonat e colaboradores (LEG/UFPR).
   - [`breedR`] - *Statistical Methods for Forest Genetic Resources
     analysts*, Facundo Muñoz.
   - [`glmtools`] - *Tools for Interacting with the General Lake Model
@@ -232,13 +299,25 @@ Component 1: target, current do not match when deparsed
     Univariate Time Series*, Rob J Hyndman.
   - [`lintr`] - *Static Code Analysis for R*, Jim Hester (RStudio,
     Bioconductor).
-  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*, 
+  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*,
     Ben Bolker.
 
-# Resumo
+## Considerações Finais
+
+  * Testes garatem que o código faça o deve fazer.
+  * Exigem em uma camada extra de dedicação.
+  * São fundamentais em projetos colborativos, grande e longos.
+  * O `devtools + testthat` simplificam o processo para desenvolvimentos
+    de pacotes R.
+
+## Além disso
+
+  * Use um Sistema de Controle de Versão (e.g. Git).
+  * Disponibilize seu código (e.g. GitHub ou GitLab).
 
 <!------------------------------------------- -->
 
+[`MRDCr`]: https://github.com/leg/MRDCr/tree/master/tests
 [`mcglm`]: https://github.com/wbonat/mcglm/tree/master/tests
 [`breedR`]: https://github.com/famuvie/breedR/tree/master/tests
 [`glmtools`]: https://github.com/USGS-R/glmtools/tree/master/tests
