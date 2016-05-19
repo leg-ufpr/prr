@@ -53,7 +53,8 @@ use_testthat()
 
 Esse comando resulta na criação de diretório e arquivos.
 ```
-|-- tests/
+.
+`-- tests/
    |-- testthat/
    `-- testthat.R
 ```
@@ -88,7 +89,8 @@ file.create("/tests/testthat/test_funprobs.R")
 file.create("/tests/testthat/test_logliks.R")
 ```
 ```
-|-- tests/
+.
+`-- tests/
     |-- testthat/
     |   |-- test_funprobs.R
     |   `-- test_logliks.R
@@ -147,21 +149,22 @@ test_that("Inteiros negativos resultam em Warning", {
 ---
 
 ```
-|-- tests/
+.
+`-- tests/
     |-- testthat/
     |   |-- test_funprobs.R "Testa as Funções de Probabilidade"
-    |   |   |-- test_that: "Iguais a Poisson"
+    |   |   `-- test_that: "Iguais a Poisson"
     |   |       |-- expect ...
     |   |       `-- expect ...
     |   `-- test_logliks.R "Testa as Funções de Log-Verossimilhança"
     |       |-- test_that: "Tem os mesmos argumentos"
-    |           |-- expect ...
+    |       |   `-- expect ...
     |       |-- test_that: "São iguais a Poisson"
+    |       |   |-- expect ...
+    |       |   `-- expect ...
+    |       `-- test_that: "Inteiros negativos resultam em Warning"
     |           |-- expect ...
-    |           |-- expect ...
-    |       |-- test_that: "Inteiros negativos resultam em Warning"
-    |           |-- expect ...
-    |           |-- expect ...
+    |           `-- expect ...
     `-- testthat.R
 ```
 
