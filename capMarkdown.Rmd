@@ -248,10 +248,10 @@ $$
 Um documento Markdown possui a extensão `.md` (embora não seja a única
 possível).
 
-Veja o arquivo de exemplo [Exemplo1.md](aux/Exemplo1.md):
+Veja o arquivo de exemplo [Exemplo1.md](exemplos/Exemplo1.md):
 
 ```{r echo=FALSE}
-cat(system("cat aux/Exemplo1.md", intern = TRUE), sep = "\n")
+cat(system("cat exemplos/Exemplo1.md", intern = TRUE), sep = "\n")
 ```
 
 Para converter um documento Markdown em HTML (ou outro formato) é
@@ -276,116 +276,11 @@ O pacote `knitr` possui a função `pandoc()` que é um *wrapper* para
 executar o programa `pandoc` no sistema.
 
 ```{r}
-pandoc(input = "aux/Exemplo1.md", format = "html")
+pandoc(input = "exemplos/Exemplo1.md", format = "html")
 ```
 
 Em ambos os casos, o resultado pode ser visualizado ao abrir o arquivo
-[Exemplo1_utf8.html](aux/Exemplo1_utf8.html) no navegador.
-
-## Usando o knitr com Markdown
-
-No exemplo anterior, escrevemos um documento em Markdown (`.md`) e
-inserimos códigos do R, que são apenas apresentados no documento final.
-
-Agora vamos usar o knitr a nosso favor, fazedo com que ele interprete e
-retorne resultados dos códigos que inserimos.
-
-Para isso renomeie a extensão do arquivo de `.md` para `.Rmd`.
-
-Os blocos de códigos (ou *chunks*) agora devem conter uma marcação
-especial para indicar que devem ser interpretados pelo R. Para isso,
-colocamos `{r}` no início de cada bloco, que agora ficam
-
-    ```{r}`r ''`
-    x <- rnorm(n = 10, mean = 100, sd = 5)
-    hist(x, main = "")
-    ```
-
-Usando o mesmo exemplo anterior, vamos renomear o arquivo `Exemplo1.md`
-para `Exemplo1-knitr.Rmd` e incluir a marção `{r}`.
-
-Também é possível colocar códigos do R para serem renderizados na
-própria linha com `` `r '\x60r \x60'` ``, por exemplo, `` `r '\x60r
-2+2\x60'` `` gera o resultado `r 2+2` no documento.
-
-Veja o arquivo [Exemplo1-knitr.Rmd](Exemplo1-knitr.Rmd). Agora usamos o
-knitr, através da função `knit()` para compilar o documento `.Rmd` em um
-documento com sintaxe Markdown `.md`
-
-```{r, eval=FALSE}
-knit("Exemplo1-knitr.Rmd")
-```
-<table>
-<tr>
-<td align="center"><img src="img/knit.svg" height="50%"></td>
-</tr>
-</table>
-
-O resultado da compilação pode ser vista no arquivo
-[Exemplo1-knitr.md](Exemplo1-knitr.md).
-
-Agora temos um documento em Markdown com os códigos do R avaliados. Mas
-ainda precisamos processar esse arquivo para gerar o arquivo `.html`
-através do Pandoc
-
-```{r, eval=FALSE}
-pandoc(input = "Exemplo1-knitr.md", format = "html")
-```
-
-que gera o arquivo [Exemplo1-knitr.html](Exemplo1-knitr.html) que pode
-ser visualizado no navegador.
-
-## Metadados
-
-Uma opção interessante ao utilizar o Pandoc é incluir metados no formato
-[YAML][].
-
-Os metadados em YAML são escritos em formato de lista aninhada, e o
-Pandoc usa essas informações para incluir, por exemplo, título, autor, e
-data em um documento.
-
-A opção mais importante para o `rmarkdown` é o campo `output`, que
-permite especificar o formato desejado de saída, o mesmo especificado no
-argumento `output_format =` da função `render()`.
-
-Os metadados em YAML são colocados sempre no **início** de um documento,
-e são delimitados por `---`. Exemplo típico:
-
-```
----
-title: "Meu documento em R Markdown"
-author: "Fernando Mayer"
-date: 18 de setembro, 2015
-output: html_document
----
-```
-
-Veja o arquivo [Exemplo1-yaml.Rmd](Exemplo1-yaml.Rmd).
-
-Com isso, não é mais necessário especificar o argumento `output_format
-=` na chamada da função `render()`.
-
-Também é possível incluir vários formatos ao mesmo tempo, por exemplo
-
-```
----
-title: "Meu documento em R Markdown"
-author: "Fernando Mayer"
-date: 18 de setembro, 2015
-output:
-  html_document: default
-  pdf_document: default
----
-```
-
-E compilar todos eles ao mesmo tempo com
-
-```{r, eval=FALSE}
-render("Exemplo1-yaml.Rmd", output_format = "all")
-```
-
-Veja [Exemplo1-yaml.html](Exemplo1-yaml.html), e
-[Exemplo1-yaml.pdf](Exemplo1-yaml.pdf).
+[Exemplo1_utf8.html](exemplos/Exemplo1_utf8.html) no navegador.
 
 
 <!-- links -->
