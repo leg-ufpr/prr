@@ -6,7 +6,7 @@ output:
     toc: true
 ---
 
-```{r setup, include=FALSE}
+```{r setup, cache=FALSE, include=FALSE}
 source("setup_knitr.R")
 ```
 

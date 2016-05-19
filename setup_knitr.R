@@ -1,17 +1,17 @@
 library(knitr)
 ## knitr options
 opts_chunk$set(
-    ## cache = TRUE,
+    cache = TRUE,
     tidy = FALSE,
-    comment = NA
+    comment = NA,
     ## collapse = TRUE, ## colapsa chunks em R Markdown
     ## fig.width = 10,
     ## fig.height = 8,
-    ## fig.align = "center"
+    fig.align = "center",
     ## dpi = 80, ## aumentar o dpi para exibir maior.
     ## dev = "png",
-    ## fig.path = "figures/",
-    ## cache.path = "cache/"
+    fig.path = "figures/",
+    cache.path = "cache/"
     )
 
 ## Set a common seed for all files
