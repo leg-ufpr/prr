@@ -19,14 +19,13 @@ opts_chunk$set(eval = FALSE)
 # source("~/Dropbox/labestData/func.R")
 ```
 
-## As interdependências
+---
 
+<center>
 <iframe src="mcglm_network.html" width="100%" height="800px"></iframe>
+</center>
 
-## testthat: Get Started with Testing
-
-Wickham, Hadley. testthat: Get Started with Testing. *The R Journal*,
-v.3/1, June 2011.
+## Por que fazer testes?
 
   * Testes garantem que o código faça o que devem fazer.
   * Testes informais são sempre feitos ao escrever código.
@@ -85,8 +84,11 @@ Código robusto
     Roman Zenka e colaboradores.
   * [svUnit](http://cran-r.c3sl.ufpr.br/web/packages/svUnit/index.html),
     Philippe Grosjean.
-  * [testthat](http://cran-r.c3sl.ufpr.br/web/packages/testthat/index.html),
-    Hadley Wickham.
+
+<br><br><br>
+
+Wickham, Hadley. [testthat]: Get Started with Testing. *The R Journal*,
+v.3/1, June 2011.
 
 ## Contruindo a Estrutura para Testes
 
@@ -277,7 +279,7 @@ Component 1: target, current do not match when deparsed
   * Sempre escreva um teste ao encontrar um bug, adote a *test-first
     philosophy*.
 
-## Pacotes para Consulta
+## Pacotes para Fazer Consulta
 
   - [`MRDCr`] - *Modelos de Regressão para Dados de Contagem com o R*,
     Walmes Zeviani, Eduardo Jr e Cesar Taconeli (LEG/UFPR).
@@ -285,14 +287,17 @@ Component 1: target, current do not match when deparsed
     Wagner Hugo Bonat e colaboradores (LEG/UFPR).
   - [`breedR`] - *Statistical Methods for Forest Genetic Resources
     analysts*, Facundo Muñoz.
+  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*,
+    Ben Bolker.
+
+---
+
   - [`glmtools`] - *Tools for Interacting with the General Lake Model
     (GLM) in R*, USGS-R.
   - [`forecast`] - *Methods and Tools for Displaying and Analysing
     Univariate Time Series*, Rob J Hyndman.
   - [`lintr`] - *Static Code Analysis for R*, Jim Hester (RStudio,
     Bioconductor).
-  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*,
-    Ben Bolker.
 
 ## Considerações Finais
 
@@ -316,3 +321,4 @@ Component 1: target, current do not match when deparsed
 [`forecast`]: https://github.com/robjhyndman/forecast/tree/master/tests
 [`lintr`]: https://github.com/jimhester/lintr/tree/master/tests
 [`bbmle`]: https://github.com/cran/bbmle/tree/master/tests
+[testthat]: http://cran-r.c3sl.ufpr.br/web/packages/testthat/index.html

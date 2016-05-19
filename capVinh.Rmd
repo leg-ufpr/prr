@@ -12,22 +12,6 @@ output:
       in_header: _MathJax.html
 ---
 
-<!--
-theme:
-solarized
-simple
-serif
-default
-beige
-blood
-moon
-night
-black
-white
-!league
-!sky
--->
-
 ```{r, include=FALSE}
 source("_setup.R")
 opts_chunk$set(eval = FALSE)
@@ -38,32 +22,70 @@ opts_chunk$set(eval = FALSE)
 
 ## Por que Fazer Vinhetas?
 
-  * Vinheta: episódio.
-  * Utilizadas para ilustrar o uso coordenado de funções
-  * Não tem restrição de tamanho
-  * Um pacote pode ter várias
-  * Vinhetas são as melhor forma de divulgar o pacote
-  * Permitem tabelas, gráficos, equações e referências
+  * *Vignette*: vinheta, esboço, epsódio, jingle ...
+  * A documentação do pacote é longa e individualizada.
+  * A vinheta é uma visão geral.
+  * Ilustrar o uso coordenado de funções para um propósito.
+  * Não tem restrição de tamanho, forma ou quantidade.
+  * Vinhetas são a melhor forma de divulgar o pacote.
+  * Permitem tabelas, gráficos, equações e referências bibliográficas.
 
 ---
 
-A partir da versão 3.? do R
+```{r, eval=TRUE, echo=FALSE, results="hide", fig.width = 6, fig.height= 4, out.width = "1200px"}
+tb <- structure(
+    c(0.774686165394073, 0.171735473016695, 0.0535783615892326),
+    class = "table",
+    .Dim = 3L,
+    .Dimnames = structure(list(y = c("0", "1", ">1")),
+                          .Names = "y"))
 
-  * Vinhetas não Sweave foram permitidas
-  * Rmd
-  * Rnw knitr
+tbl <- structure(
+    list(px = c(5986L, 1327L, 235L, 85L, 34L, 29L, 11L, 4L, 3L, 4L, 2L,
+                1L, 0L, 1L, 0L, 0L, 0L, 1L, 0L, 1L, 1L, 0L, 1L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 1L),
+         x = 0:45),
+    .Names = c("px", "x"),
+    row.names = c(NA, -46L),
+    class = "data.frame")
+
+totPack <- sum(tbl$px)
+totVin <- sum(tbl$px * tbl$x)
+m <- totVin / totPack
+
+par(mar = c(5, 5, 2, 2))
+plot(px ~ x, data = tbl, type = "h", lwd = 4,
+     xlab = "Número de vinhetas no pacote no CRAN",
+     ylab = "Número no pacotes")
+par(fig = c(0.15, 0.95, 0.15, 1), new = TRUE)
+pie(tb,
+    col = c("red", "orange", "yellow"),
+    labels = sprintf(fmt = "%s (%0.1f%s)",
+                     c(0, 1, ">1"), 100*tb, "%"))
+text(x = 0, y = 0.9, labels = "Frequência relativa", cex = 1.2)
+```
 
 ---
 
-As vinhetas podem ser
+Desde a versão 3.0.0 do R...
+
+  * Vinhetas não Sweave são permitidas.
+  * Rmd - RMarkDown: prosa em MarkDown + código R = {html, pdf}.
+  * Rnw-knitr - prosa em LaTex + código R = pdf.
+  * Vinhetas em Rnw-Sweave permanecem válidas.
+
+---
+
+As vinhetas podem ser...
 
   * Artigos completos em PDF, com texto, equações, tabelas, gráficos e
     referências.
-  * Usadas como páginas HTML disponíveis na web como tutoriais, material
+  * Usadas como páginas HTML na web como tutoriais, material
     de ensino ou matérias de blog.
   * Material de Curso contidas em um pacote com dados e funções
     disponibilizado aos participantes.
-  * O TCC/Dissertação/Tese e o pacote disponibilizado o produto final.
+  * O TCC/Dissertação/Tese e o pacote disponibilizado é o produto final.
 
 ## Consultando as Vinhetas Disponíveis
 
@@ -111,7 +133,7 @@ VignetteBuilder: knitr
 
 ## Vinheta em RMarkDown para documento HTML
 
-Criado por padrão pela `use_vignettes()`
+Metadados criados por padrão pela `use_vignettes()`
 ```
 ---
 title: "Vignette Title"
@@ -125,7 +147,7 @@ vignette: >
 ---
 ```
 
-`rmarkdown::html_document` pode ser usado também, além de outros.
+Também pode ser usado `rmarkdown::html_document`, além de outros.
 
 ## Vinheta em RMarkDown para documento PDF
 
@@ -192,7 +214,7 @@ Rnw -> PDF
       VignetteBuilder: knitr
 ```
 
-## Construindo as Vinhetas
+## Compilando as Vinhetas
 
 Gera o documento final e move arquivos
 ```{r}
@@ -224,9 +246,10 @@ check()
 
 ## Gerando as Vinhetas Individualmente
 
-  1. Útil quando a vinheta está sendo desenvolvida
+  * Útil quando a vinheta está sendo desenvolvida.
+  * `build_vignettes()` demora porque compila todas as vinhetas.
 
-<br>
+<br><br><br><br>
 
 ```{r}
 rmarkdown::render("vignettes/AnaExpDIC.Rmd")
@@ -240,7 +263,16 @@ rmarkdown::render("vignettes/AnaExpDIC.Rmd")
 Na `vignettes/` ficam os fontes e arquivos auxiliares, na `inst/doc`
 apenas os *outputs* finais.
 
-## MarkDown
+## MarkDown vs LaTeX
+
+  * Markdown é mais vantajoso.
+  * Menor distração, foco no conteúdo.
+  * Tem os ambinentes mais importantes.
+  * É facilmente convertido para outros formatos de saída.
+  * Converte bem para LaTeX.
+  * Aceita código LaTeX e HTML no meio do MarkDown.
+
+---
 
 Existe bastante recurso no MarkDown-Pandoc.
 
@@ -283,20 +315,22 @@ Visite <http://rmarkdown.rstudio.com/index.html>.
 
 ## Considerações Finais
 
+  * A documentação é especifica e individualizada, as vinhetas são 
+    gerais e coordenadas.
   * As vinhetas são a representação mais fiel de Pesquisa Reproduzível
     com o R.
   * Os pacotes `devtools` tem recursos que facilitam a criação e
     manutenção de vinhetas no pacote.
   * O `knitr` junto com o PanDoc facilitam a elaboração de vinhetas em
     RMarkDown.
-  * Vinhetas em PDF também são permitidas...
-  * Vinhetas em HTML ...
+  * Vinhetas em HTML tem sido utilizadas com frequência pois permitem
+    animações em Gif, videos, JavaScript e Shiny.
 
 ## Além disso
 
   * Use um Sistema de Controle de Versão (e.g. Git).
   * Disponibilize seu código (e.g. GitHub ou GitLab).
-  * Disponibilize suas vinhetas como `gh-pages`.
+  * Disponibilize suas vinhetas no GitHub com `gh-pages`.
 
 <!------------------------------------------- -->
 
