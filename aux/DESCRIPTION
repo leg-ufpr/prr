@@ -4,11 +4,8 @@ Version: 0.0.1
 Authors@R: c(person("Fernando", "Mayer", email = "fernando.mayer@ufpr.br", role = c("aut", "cre")),
              person("Walmes", "Zeviani", email = "walmes@ufpr.br", role = "ctb"))
 Description: Pacote de exemplo para pesquisa reproduzivel com R. Para
-    mais informacoes consulte o material.
-Depends:
-    R (>= 3.3.0)
+             mais informacoes consulte o material.
+Depends: R (>= 3.3.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
-Imports: lattice

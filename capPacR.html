@@ -423,6 +423,380 @@ LazyData: true</code></pre>
 drwxr-xr-x R</code></pre>
 <p>Note que na mensagem de criação acima, o arquivo <code>DESCRIPTION</code> já é preenchido com alguns campos padrão, sendo necessário apenas alterá-los com as informações do seu pacote.</p>
 <p>Abaixo serão especificados os detalhes para a criação de cada um dos componentes obrigatórios criados acima.</p>
+<div id="description-caracterizacao-do-pacote" class="section level2">
+<h2><code>DESCRIPTION</code>: Caracterização do pacote</h2>
+<p>O arquivo <code>DESCRIPTION</code> é quem caracteriza o seu pacote: que é (são) o(s) autor(es), uma breve descrição do que ele faz, qual o tipo de licença, quais pacotes são necessários para que o seu funcione, e mais alguns detalhes.</p>
+<p>Seguindo os campos do <code>DESCRIPTION</code> criados anteriormente com a função <code>create()</code>, temos alguns detalhes:</p>
+<pre><code>Package: prrpac</code></pre>
+<p>É simplesmente o nome do seu pacote.</p>
+<pre><code>Title: What the Package Does (one line, title case)</code></pre>
+<p>Uma breve descrição (de uma linha) sobre o que o seu pacote faz.</p>
+<pre><code>Version: 0.0.0.9000</code></pre>
+<p>A versão inicia (ou atual do pacote). O versionamento de qualquer pedaço de software é uma coisa muito importante e não há um consenso de que exista um padrão para todos os casos. No entanto, nos pacotes do R, recomenda-se que as versões sejam do tipo <code>x.y-z</code> ou <code>x.y.z</code> onde <code>x</code> seria a versão “maior”, <code>y</code> a versão “menor”, e <code>z</code> os “patches” (alterações menores no código, como correção de bugs por exemplo).</p>
+<pre><code>Authors@R: person(&quot;First&quot;, &quot;Last&quot;, email = &quot;first.last@example.com&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;))</code></pre>
+<p>O autor, ou os autores e contribuidores do pacote. Este campo pode ser preenchido com a função <code>person()</code> do R, no formato que está apresentada. Se tiver mais de um autor, eles podem ser concatenados com a função <code>c()</code>, por exemplo, <code>c(person(...), person(...))</code>. O argumento <code>role</code> é importante pois é ele que identifica o papel de cada autor no desenvolvimento do pacote. Por padrão, é necessário ter um (e somente um) autor <code>&quot;aut&quot;</code> e um mantenedor <code>&quot;cre&quot;</code>, que pode ou não ser a mesma pessoa. Outros papéis, como por exemplo o de um contribuidor (<code>&quot;ctb&quot;</code>), e outros detalhes dessa função estão em <code>?person</code>.</p>
+<pre><code>Description: What the package does (one paragraph)</code></pre>
+<p>Uma descrição um pouco mais detalhada sobre o que o seu pacote faz. É preciso ter pelo menos duas frases completas (sim, o R confere isso), mas não muito maior do que um parágrafo.</p>
+<pre><code>Depends: R (&gt;= 3.3.0)</code></pre>
+<p>Qual a versão do R que o seu pacote depende. É sempre prudente colocar uma versão que seja maior ou igual a versão que você está desevolvendo o pacote.</p>
+<pre><code>License: What license is it under?</code></pre>
+<p>A licença é fundamental se você pretende compartilhar o seu pacote. Algumas opções comuns são: <code>CC0</code> (nenhum tipo de restrição), <code>MIT</code> (prevê atribuição mas é bastante permissiva), e <code>GPL-3</code> (a mais utilizada, requer que qualquer trabalho derivado do seu seja distribuido com a mesma licença). Para mais opções e detalhes sobre licenças de software livre, consulte <a href="http://choosealicense.com">choosealicense.com</a>.</p>
+<pre><code>LazyData: true</code></pre>
+<p>Essa opção somente é importante se você pretende distribuir algum conjunto de dados com o seu pacote (arquivos <code>.rda</code> no diretório <code>data/</code>). Com a opção acima, os dados só serão carregados se realmente forem chamados (com a função <code>data()</code>), e não carregados na inicialização do pacote. Isso garante mais agilidade para carregar o pacote e economiza memória caso os dados não sejam utilizados (especialmente se as bases de dadpos forem gandes).</p>
+<p>Outros campos do arquivo <code>DESCRIPTION</code> que serão necessários caso seu pacote possua dependências:</p>
+<ul>
+<li><code>Imports:</code> uma lista, separada por vígulas, dos pacotes dos quais o seu pacote precisa para funcionar. Estes são os pacotes que o seu depende, portanto eles também serão instalados (se já não estiverem), quando o seu for instalado. Colocar um pacote nesse campo garante que o pacote estará <strong>instalado</strong>, mas não que ele será carregado toda que vez que o seu pacote for carregado. Para utilizar funções de outros pacotes corretamente é necessário especifições da forma <code>pacote::funcao()</code> ou então utilizar o arquivo <code>NAMESPACE</code> conforme veremos abaixo.</li>
+<li><code>Suggests:</code> os pacotes listados aqui não serão instalados junto com o seu. Eles podem ser usados, mas não são necessários. Por exemplo, você pode usar um pacote apenas para usar alguma base de dados ou apenas uma função. Use esse campo apenas se o seu pacote puder funcionar mesmo sem os pacotes especificados.</li>
+</ul>
+<p>Para podermos utilizar esse arquivo para de fato gerarmos um pacote de exemplo ao final deste tutorial, vamos modificar alguns campos e utilizar o seguinte arquivo <code>DESCRIPTION</code>:</p>
+<pre><code>Package: prrpac
+Title: Pacote Para Pesquisa Reproduzivel
+Version: 0.0.1
+Authors@R: c(person(&quot;Fernando&quot;, &quot;Mayer&quot;, email = &quot;fernando.mayer@ufpr.br&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;)),
+             person(&quot;Walmes&quot;, &quot;Zeviani&quot;, email = &quot;walmes@ufpr.br&quot;, role = &quot;ctb&quot;))
+Description: Pacote de exemplo para pesquisa reproduzivel com R. Para
+             mais informacoes consulte o material.
+Depends: R (&gt;= 3.3.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true</code></pre>
+</div>
+<div id="r-funcoes" class="section level2">
+<h2><code>R/</code>: Funções</h2>
+<p>O diretório <code>R/</code> irá conter apenas as funções (arquivos <code>.R</code>) do seu pacote. As funções podem estar em vários arquivos <code>.R</code> separados (um para cada função) ou em um (ou alguns) arquivo único. A escolha é mais uma questão de preferência pessoal, mas como veremos mais adiante, utilizar arquivos separados para as funções torna o processo de documentação um pouco mais ágil, além de facilitar a manutenção do pacote com o tempo.</p>
+<p>Para exemplificar, vamos criar uma função simples para fazer a soma de dois números, e colocá-la dentro do diretório <code>R/</code> com o nome <code>soma.R</code></p>
+<pre class="r"><code>soma &lt;- function(x, y){
+    x + y
+}</code></pre>
+<p>Com a função pronta, possivelmente iremos testá-la, e para isso vamos utilizar a função <code>load_all()</code> do pacote <code>devtools</code>. Portanto, de dentro de uma seção do R:</p>
+<pre class="r"><code>load_all()</code></pre>
+<pre><code>Loading prrpac</code></pre>
+<p>irá carregar todas as funções que estiverem dentro do diretório <code>R/</code>, tornado-as disponíveis para uso. Note que seria o mesmo resultado se utilizassemos a função <code>source(&quot;soma.R&quot;)</code> para carregar a função, no entanto, se tivermos várias funções, e/ou estivermos testando alterações em muitas delas, a função <code>load_all()</code> é bem mais conveniente. Basta fazer as alterações nas funções <code>.R</code>, carregá-las com <code>load_all()</code>e testar novamente. Esse processo geralmente se repete muitas vezes durante o desenvolvimento de um pacote.</p>
+</div>
+<div id="man-documentacao" class="section level2">
+<h2><code>man/</code>: Documentação</h2>
+<p>Você deve ter notado que o diretório <code>man/</code> não é criado da mesma forma que os demais quando utilizamos a função <code>create()</code> acima. Isso porque esse diretório depende das funções que serão criadas dentro do diretório <code>R/</code>. No entanto, ele é também é obrigatório para podermos criar um pacote mínimo.</p>
+<p>Como mencionado anteriormente, a documentação de funções do R segue um formato muito parecido com o LaTeX (mas com alguns comandos próprios). Cada função criada dentro do diretório <code>R/</code>, independente de estar em um arquivo separado ou único (com várias funções), deve <strong>obrigatoriamente</strong> ter um arquivo correspondente dentro do diretório <code>man/</code>, com a extensão <code>.Rd</code>. No caso da nossa função de exemplo acima, que está em um arquivo chamado <code>soma.R</code>, precisaremos então de um arquivo <code>soma.Rd</code> dentro do <code>man/</code>.</p>
+<p>Existem duas formas de documentar uma função com os arquivos <code>.Rd</code>: uma é da maneira tradicional, escrevendo manualmente a documentação utilizando a linguagem específica e colocando os campos necessários. Os detalhes de como fazer isso manualmente estão em <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Writing-R-documentation-files">Writing R documentation files</a>. Outra forma de escrever a documentação de uma função é utilizando o pacote <code>roxygen2</code>, que utiliza algumas tags simples e permite que você escreva a documentação dentro do próprio arquivo <code>.R</code>. Dessa forma fica muito mais simples alterar ou atualizar a documentação de uma função, pois tudo se concentra dentro de um único arquivo.</p>
+<p>Neste texto vamos utilizar o pacote <code>roxygen2</code> para gerar a documentação das funções. O primeiro passo é escrever a documentação dentro do arquivo <code>.R</code>. A documentação usando o <code>roxygen2</code> segue o seguinte formato:</p>
+<ul>
+<li>Toda documentação começa com um comentário especial, do tipo <code>#'</code> (note o <code>'</code> depois do <code>#</code>).</li>
+<li>Os campos de documentação são criados a parir de tags que iniciam com <code>@</code>, colocados logo após um comentário especial <code>#'</code>.</li>
+<li>Toda a documentação deve ficar diretamente acima do início da função.</li>
+</ul>
+<p>Usando como exemplo a função <code>soma()</code> criada acima dentro do arquivo <code>soma.R</code>, podemos documentá-la com o <code>roxygen2</code> da seguinte forma:</p>
+<pre><code>#&#39; @title Faz a Soma de Dois Numeros
+#&#39; @name soma
+#&#39;
+#&#39; @description Uma (incrivel) funcao que pega dois numeros e faz a
+#&#39;     soma. Utilize este campo para descrever melhor o proposito de
+#&#39;     sua funcao e o que ela e capaz de fazer.
+#&#39;
+#&#39; @param x Um numero
+#&#39; @param y Outro numero
+#&#39;
+#&#39; @details Utilize este campo para escrever detalhes mais tecnicos da
+#&#39;     sua funcao (se necessario), ou para detalhar melhor como
+#&#39;     utilizar determinados argumentos.
+#&#39;
+#&#39; @return A soma dos numeros \code{x} e \code{y}.
+#&#39;
+#&#39; @author Fernando Mayer
+#&#39;
+#&#39; @seealso \code{\link[base]{sum}}, \code{\link[base]{+}}
+#&#39;
+#&#39; @examples
+#&#39; soma(2, 2)
+#&#39;
+#&#39; x &lt;- 3
+#&#39; y &lt;- 4
+#&#39; soma(x = x, y = y)
+#&#39;
+#&#39; @export
+soma &lt;- function(x, y){
+    x + y
+}</code></pre>
+<p>Para gerar a documentação agora basta utilizar a função <code>document()</code> do pacote <code>devtools</code>:</p>
+<pre class="r"><code>document()</code></pre>
+<pre><code>Updating prrpac documentation</code></pre>
+<pre><code>Loading prrpac</code></pre>
+<pre><code>Updating roxygen version in  /home/fernando/GitHub/prr/prrpac/DESCRIPTION 
+Writing NAMESPACE
+Writing soma.Rd</code></pre>
+<blockquote>
+<p>Observação: o comando <code>document()</code> do pacote <code>devtools</code> é de fato um “wrapper” para a função <code>roxygenize()</code> do pacote <code>roxygen2</code>.</p>
+</blockquote>
+<p>O resultado da chamada dessa função é:</p>
+<ul>
+<li>Criar o diretório <code>man/</code> se ele ainda não existir, ou se for a primeira vez que estiver criando a documentação com a função <code>document()</code>.</li>
+<li>Gerar os arquivos <code>.Rd</code> dentro de <code>man/</code> (se ainda não existirem) correspondentes às funções no diretório <code>.R</code>.</li>
+<li>Se os arquivos <code>.Rd</code> já existirem, a chamada da função <code>document()</code> irá apenas atualizar os arquivos que foram modificados.</li>
+<li>Escrever no arquivo <code>NAMESPACE</code> as funções a serem exportadas ou importadas. Veremos mais detalhes abaixo na seção NAMESPACE.</li>
+</ul>
+<p>No nosso exemplo, a chamada da função <code>document()</code> criou o diretório <code>man/</code> e gerou o arquivo <code>soma.Rd</code> com o seguinte conteúdo</p>
+<pre><code>% Generated by roxygen2: do not edit by hand
+% Please edit documentation in R/soma.R
+\name{soma}
+\alias{soma}
+\title{Faz a Soma de Dois Numeros}
+\usage{
+soma(x, y)
+}
+\arguments{
+\item{x}{Um numero}
+
+\item{y}{Outro numero}
+}
+\value{
+A soma dos numeros \code{x} e \code{y}.
+}
+\description{
+Uma (incrivel) funcao que pega dois numeros e faz a
+    soma. Utilize este campo para descrever melhor o proposito de
+    sua funcao e o que ela e capaz de fazer.
+}
+\details{
+Utilize este campo para escrever detalhes mais tecnicos da
+    sua funcao (se necessario), ou para detalhar melhor como
+    utilizar determinados argumentos.
+}
+\examples{
+soma(2, 2)
+
+x &lt;- 3
+y &lt;- 4
+soma(x = x, y = y)
+
+}
+\author{
+Fernando Mayer
+}
+\seealso{
+\code{\link[base]{sum}}, \code{\link[base]{+}}
+}</code></pre>
+<p>Note que é muito mais simples ecrever com o <code>roxygen2</code> do que ter que editar esse arquivo todo a mão. Note também o comentário no início desse arquivo:</p>
+<pre><code>% Generated by roxygen2: do not edit by hand
+% Please edit documentation in R/soma.R</code></pre>
+<p>O <code>roxygen2</code> deixa claro que você não deve (e não precisa) modificar esse arquivo <code>soma.Rd</code> para atualizar a documentação. Sempre que alterar alguma coisa faça no próprio arquivo <code>.R</code>, e a função <code>document()</code> irá atualizar a documentação no arquivo <code>.Rd</code>.</p>
+<p>Para conferir se a documentação está de acordo com o que você espera, você pode conferir a qualquer momento, por exemplo, com <code>?soma</code> ou <code>help(soma)</code>, após rodar a função <code>load_all()</code> para carregar a documentação atualizada depois de <code>document()</code>.</p>
+<p>Uma outra forma mais automática de conferir se a documentação está escrita de maneira correta, é utilizando a função <code>check_man()</code> do pacote <code>devtools</code>:</p>
+<pre class="r"><code>check_man()</code></pre>
+<pre><code>Updating prrpac documentation</code></pre>
+<pre><code>Loading prrpac</code></pre>
+<pre><code>Checking documentation</code></pre>
+<p>Se nenhuma mensagem de aviso ou erro apareceu acima, então a documentação está de acordo com o esperado.</p>
+<p>Alguns detalhes das tags utilizadas nesse exemplo do <code>roxygen2</code>:</p>
+<ul>
+<li><code>@title</code>: um título curto da função (deve ser capitalizado).</li>
+<li><code>@name</code>: o nome da função.</li>
+<li><code>@description</code>: descreve o que a função faz e pra que ela serve, de maneira geral.</li>
+<li><code>@param</code>: descreve o que cada argumento da função faz. Deve ser sempre no formato: <code>@param</code> <kbd>SPC</kbd> <code>argumento</code> <kbd>SPC</kbd> <code>descrição do argumento</code>.</li>
+<li><code>@details</code>: espaço para escrever mais detalhes, geralmente mais técnicos, sobre a sua função, e/ou para detalhar alguma coisa específica de algum argumento.</li>
+<li><code>@return</code>: especifica o que a sua função retorna (um gráfico, uma lista, um número, …)</li>
+<li><code>@author</code>: autr(es) da função.</li>
+<li><code>@seealso</code>: outras funções que podem ser úteis para quem está usando a sua função, ou funções similares. No exemplo acima temos duas marcações que são específicas da documentação do R: <code>\code{}</code> para que o texto dentro das chaves saia com fonte fixa (<code>como esta</code>), geralmente para especificar nomes de funções, etc.; <code>\link[&lt;pacote&gt;]{&lt;função&gt;}</code> faz o link para a página de ajuda de alguma <code>&lt;função&gt;</code> dentro de algum <code>&lt;pacote&gt;</code>. Mais marcações do formato <code>.Rd</code> podem ser encontradas no manual de documentação do R (seção <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Rd-format">Rd format</a>), e podem ser utilizadas dentro na documentação com <code>roxygen2</code>.</li>
+<li><code>@example</code>: exemplos de uso da sua função.</li>
+<li><code>@export</code>: esta tag é a responsável por sua função ficar disponível para os usuários, e é o que faz a função ser incluida no <code>NAMESPACE</code> (mais detalhes serão vistos na seção NAMESPACE abaixo). Se você não quer que a função seja disponibilizada para os usuários quando carregarem o seu pacote (em funções internas ou auxiliares por exemplo), simplesmente não inclua esta tag na documentação.</li>
+</ul>
+</div>
+<div id="namespace-organizacao" class="section level2">
+<h2><code>NAMESPACE</code>: Organização</h2>
+<p>O <code>NAMESPACE</code> é um arquivo que ajuda a organizar as funções exportadas e importadas pelo seu pacote. Ele ajuda um pacote a ser auto contido, no sentido de que ele não vai interferir no funcionamento de outros pacotes, e que também os outros pacotes não irão interferir no funcionamento do seu.</p>
+<p>Normalmente, a especificação do <code>NAMESPACE</code> é a parte mais difícil da criação de um pacote, mas com o uso do <code>devtools</code> como estamos fazendo, normalmente não será necessário se preocupar com todos os detalhes que envolvem esse arquivo. O mais importante é saber quais funções serão exportadas do seu pacote, quais serão importadas, e de que maneira podemos especificar essas funções.</p>
+<div id="exportando-funcoes" class="section level3">
+<h3>Exportando funções</h3>
+<p>O conceito de exportar uma ou mais funções de um pacote, é o de tornar estas funções disponíveis para o usuário. No desenvolvimento de um pacote, normalmente são criadas algumas funções internas ou auxiliares, que são utilizadas por uma ou mais funções principais. Se em nenhum momento estas funções precisarem ser utilizadas pelo usuário do pacote, então elas não precisam (e não devem) ser exportadas, para minimizar a possibilidade de conflito com outros pacotes.</p>
+<p>Quando um pacote é carregado com <code>library()</code> ou <code>require()</code>, ele é “anexado” (<em>attached</em>) ao workspace do usuário, tornando assim as funções exportadas disponíveis para serem utilizadas. Você pode conferir a lista de pacotes anexados em seu workspace com <code>search()</code>.</p>
+<p>Por padrão, quando iniciamos um pacote com a função <code>create()</code> do pacote <code>devtools</code>, é criado um arquivo <code>NAMESPACE</code> que exporta automaticamente <strong>todas</strong> as funções que forem criadas, e que não começem com um ponto <code>.</code>. O arquivo <code>NAMESPACE</code> inicial possui essa especificação:</p>
+<pre><code># Generated by roxygen2: fake comment so roxygen2 overwrites silently.
+exportPattern(&quot;^[^\\.]&quot;)</code></pre>
+<p>No entanto, se você não quiser exportar todas as funções de dentro do diretório <code>R/</code>, será necessário especificar quais funções deseja exportar. Para isso, basta usar a tag <code>@export</code> na documentação da função com o <code>roxygen2</code> (assim como usamos na documentação da função <code>soma.R</code> acima). A função <code>document()</code> é a responsável por verificar as funções que possuem <code>@export</code> e colocá-las adequadamente no arquivo <code>NAMESPACE</code>. Dessa forma, usando o nosso exemplo, após escrever a função <code>soma.R</code> com <code>@export</code> e rodar <code>document()</code>, o arquivo <code>NAMESPACE</code> agora será:</p>
+<pre><code># Generated by roxygen2: do not edit by hand
+
+export(meuxy)
+export(soma)
+importFrom(lattice,xyplot)</code></pre>
+<p>Se houverem mais funções exportadas, elas aparecerão nesse arquivo, uma em cada linha. Caso existam funções que você não queira exportar, basta não colocar a tag <code>@export</code> na documentação da função. (Na verdade, as funções não exportadas não precisam nem ser documentadas, mas é sempre uma boa prática escrever a documentação até mesmo para você no futuro).</p>
+</div>
+<div id="importando-funcoes" class="section level3">
+<h3>Importando funções</h3>
+<p>Normalmente as funções que estamos criando para um pacote utilizam funções de outros pacotes. Todas as funções dos pacotes que são distribuídos e automaticamente carregados quando você inicia uma sessão do R, são disponíveis para serem utilizadas em qualquer outra função, sem a necessidade de qualquer especificação adicional. Estes pacotes básicos do R são: <code>base</code>, <code>utils</code>, <code>datasets</code>, <code>grDevices</code>, <code>graphics</code>, <code>stats</code>, e <code>methods</code>. Esse conjunto de pacotes já garante uma grande quantidade de funções, no entanto, algumas vezes podem ser necessárias funções específicas de outros pacotes.</p>
+<p>Existem três formas básicas de importar, ou seja, utilizar funções de outros pacotes dentro do seu pacote:</p>
+<ol style="list-style-type: decimal">
+<li><code>pacote::funcao()</code>: chamar uma função utilizando o operador <code>::</code> é recomendado quando o função for utilizada poucas vezes. Dessa forma fica claro no seu pacote aonde uma função externa está sendo utilizada.</li>
+<li><code>@importFrom pacote funcao</code>: se uma funcao for utilizada váras vezes dentro de um pacote, ou se mais de uma função do mesmo pacote for utilizada, recomenda-se especifica-las com a tag <code>@importFrom</code> na documentação <code>roxygen2</code>. Dessa forma não é necessário utilizar o operador <code>::</code> na chamada das funções, o que torna o código um pouco mais legível se muitas funções externas forem utilizadas.</li>
+<li><code>@import pacote</code>: se o seu pacote depende de muitas funções de outro(s) pacote(s), então o mais razoável é importar todas as funções do pacote. Isso é feito utilizando a tag <code>@import</code> na documentação do <code>roxygen2</code> da função. Dessa forma, todas as funções do pacote estarão disponíveis para serem utilizadas no seu pacote.</li>
+</ol>
+<p>Já vimos anteriromemte na seção DESCRIPTION que existe um campo <code>Imports</code> que serve para especificar quais pacotes o seu depende. Se você utilizou qualquer um dos três métodos acima para importar uma ou várias funções, então <strong>obrigatoriamente</strong> o pacote que contém estas funções deve ser listado no campo <code>Imports</code> do arquivo <code>DESCRIPTION</code>.</p>
+<p>Uma distinção importante é que listar os pacotes no campo <code>Imports</code> do arquivo <code>DESCRIPTION</code>, garante que o usuário terá instalado os pacotes necessários para que o seu funcione, mas ele não é o responsável por carregar e tornar as funções desse pacote disponível. Esse papel é feito por algum dos três métodos citados acima, que por consequência irão atualizar o arquivo <code>NAMESPACE</code>, que é o verdadeiro responsável por carregar os pacotes e funções necessárias para o uso do seu pacote.</p>
+<p>Por exemplo, vamos criar uma função personalizada para fazer um gráfico de pontos utilizando a função <code>xyplot()</code> do pacote <code>lattice</code>. Vamos supor que esse gráfico personalizado usa um <code>x</code> no lugar do ponto (<code>pch = 4</code>), e de cor preto (<code>col = 1</code>), já que o padrão do <code>lattice</code> é azul claro. Vamos chamar essa função de <code>meuxy()</code> e colocá-la no arquivo <code>meuxy.R</code> do diretório <code>R/</code>. O conteúdo desse arquivo é:</p>
+<pre><code>#&#39; @title Faz um Grafico Personalizado
+#&#39; @name meuxy
+#&#39;
+#&#39; @description Uma (incrivel) funcao para fazer um xyplot
+#&#39;     personalizado. Usando o pacote lattice.
+#&#39;
+#&#39; @param x Uma formula do lattice
+#&#39; @param ... Outros argumentos passados para a funcao
+#&#39;     \code{\link[lattice]{xyplot}}
+#&#39;
+#&#39; @details Utilize este campo para escrever detalhes mais tecnicos da
+#&#39;     sua funcao (se necessario), ou para detalhar melhor como
+#&#39;     utilizar determinados argumentos.
+#&#39;
+#&#39; @return Um grafico xyplot do lattice com \code{pch = 4} e \code{col =
+#&#39;     1}.
+#&#39;
+#&#39; @author Fernando Mayer
+#&#39;
+#&#39; @seealso \code{\link[lattice]{xyplot}}
+#&#39;
+#&#39; @examples
+#&#39; meuxy(1:10 ~ 1:10)
+#&#39;
+#&#39; @importFrom lattice xyplot
+#&#39;
+#&#39; @export
+meuxy &lt;- function(x, ...){
+    xyplot(x, pch = 4, col = 1, ...)
+}</code></pre>
+<p>Agora é necessário rodar a função <code>document()</code> para gerar o arquivo <code>man/meuxy.Rd</code> e atualizar o arquivo <code>NAMESPACE</code>, com a exportação da função <code>meuxy()</code>, e a importação da função <code>xyplot()</code> do pacote <code>lattice</code>.</p>
+<pre class="r"><code>document()</code></pre>
+<pre><code>Updating prrpac documentation</code></pre>
+<pre><code>Loading prrpac</code></pre>
+<pre><code>Writing NAMESPACE
+Writing meuxy.Rd</code></pre>
+<p>Note que, na mensagem acima, além de criar o arquivo <code>meuxy.Rd</code>, houve uma atualização do arquivo <code>NAMESPACE</code>, que agora irá conter:</p>
+<pre><code># Generated by roxygen2: do not edit by hand
+
+export(meuxy)
+export(soma)
+importFrom(lattice,xyplot)</code></pre>
+<p>Ou seja, já estamos exportando a função <code>meuxy()</code>, e importando a função <code>xyplot()</code> do pacote <code>lattice</code>, através da função <code>importFrom()</code>, colocada no <code>NAMESPACE</code></p>
+<pre><code>importFrom(lattice,xyplot)</code></pre>
+<p>Note que, neste exemplo, utilizamos a tag</p>
+<pre class="r"><code>#&#39; @importFrom lattice xyplot</code></pre>
+<p>Mas poderíamos também ter utilizado o operador <code>::</code> diretamente na função, por exemplo</p>
+<pre class="r"><code>meuxy &lt;- function(x, ...){
+    lattice::xyplot(x, pch = 4, col = 1, ...)
+}</code></pre>
+<p>E, nesse caso, não precisariamos usar a tag <code>@importFrom</code>. O resultado no <code>NAMESPACE</code> seria o mesmo. A tag <code>@import</code> também poderia ter sido utilizada, por exemplo,</p>
+<pre class="r"><code>#&#39; @import lattice</code></pre>
+<p>No entanto, nesse caso não há vantagem em importar todo o pacote pois estamos utilizando apenas uma função.</p>
+<p>Como mencionameos anteriormente, a importação de funções realizadas até aqui, cria as entradas necessárias no arquivo <code>NAMESPACE</code> e torna as funções disponíveis para o pacote. Sempre que importarmos qualquer função, será necessário acresentar o nome do pacote à que a função pertence no arquivo <code>DESCRIPTION</code>, mais especificamente no campo <code>Imports</code>. Isso garante que o usuário que instalar o seu pacote também terá instalado o pacote necessário para que o seu funcione. Esta inserção deve ser feita manualmente, e dessa forma, o arquivo <code>DESCRIPTION</code> ficaria atualizado com o seguinte conteúdo (repare a última linha):</p>
+<pre><code>Package: prrpac
+Title: Pacote Para Pesquisa Reproduzivel
+Version: 0.0.1
+Authors@R: c(person(&quot;Fernando&quot;, &quot;Mayer&quot;, email = &quot;fernando.mayer@ufpr.br&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;)),
+             person(&quot;Walmes&quot;, &quot;Zeviani&quot;, email = &quot;walmes@ufpr.br&quot;, role = &quot;ctb&quot;))
+Description: Pacote de exemplo para pesquisa reproduzivel com R. Para
+    mais informacoes consulte o material.
+Depends:
+    R (&gt;= 3.3.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
+Imports: lattice</code></pre>
+</div>
+</div>
+</div>
+<div id="construindo-o-pacote" class="section level1">
+<h1>Construindo o pacote</h1>
+<p>A última etapa é finalmente construir o pacote, ou seja, gerar um arquivo fonte (ou binário) que pode ser distribuído para os usuários instalarem.</p>
+<p>Antes de construir o pacote, podemos rodar uma série de checagens para conferir se todos os componentes do pacote estão funcionando como seria o esperado. Essa checagem é feita com o comando <code>R CMD check</code> depois de construir o pacote. No entanto, como estamos usando o <code>devtools</code>, podemos simplificar e utilizar a função <code>check()</code> para realizar a mesma checagem automaticamente, de dentro de uma sessão do R, e deixar para construir o pacote só no final quando tudo estiver funcionando.</p>
+<p>Rodando a função <code>check()</code>:</p>
+<pre class="r"><code>check()</code></pre>
+<pre><code>Updating prrpac documentation</code></pre>
+<pre><code>Loading prrpac</code></pre>
+<pre><code>Setting env vars ----------------------------------------------------------</code></pre>
+<pre><code>CFLAGS  : -Wall -pedantic
+CXXFLAGS: -Wall -pedantic</code></pre>
+<pre><code>Building prrpac -----------------------------------------------------------</code></pre>
+<pre><code>&#39;/usr/local/lib64/R/bin/R&#39; --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD build &#39;/home/fernando/GitHub/prr/prrpac&#39;  \
+  --no-resave-data --no-manual </code></pre>
+<pre><code></code></pre>
+<pre><code>Setting env vars ----------------------------------------------------------</code></pre>
+<pre><code>_R_CHECK_CRAN_INCOMING_USE_ASPELL_: TRUE
+_R_CHECK_CRAN_INCOMING_           : FALSE
+_R_CHECK_FORCE_SUGGESTS_          : FALSE</code></pre>
+<pre><code>Checking prrpac -----------------------------------------------------------</code></pre>
+<pre><code>&#39;/usr/local/lib64/R/bin/R&#39; --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD check  \
+  &#39;/var/tmp/RtmpvqCXIK/prrpac_0.0.1.tar.gz&#39; --as-cran --timings  \
+  --no-manual </code></pre>
+<pre><code></code></pre>
+<pre><code>R CMD check results</code></pre>
+<pre><code>0 errors | 0 warnings | 0 notes</code></pre>
+<pre><code>Warning: running command &#39;Rscript -e &#39;check(&quot;prrpac/&quot;)&#39;&#39; had status 1</code></pre>
+<p>Note que esta checagem é bem completa, e se o status final for <code>OK</code>, então o pacote está funcionando e pronto para ser instalado. Se nesta checagem aparecer no final algum <code>NOTE</code>, significa que o pacote funciona mas algumas coisas precisam ser arrumadas. Se houverem <code>ERROR</code>s, o processo de checagem é parado e não é possível instalar o seu pacote até que no seja arrumado.</p>
+<p>Finalmente para construir o pacote, usaremos a função <code>build()</code> do pacote <code>devtools</code>:</p>
+<pre class="r"><code>build()</code></pre>
+<pre><code>&#39;/usr/local/lib64/R/bin/R&#39; --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD build &#39;/home/fernando/GitHub/prr/prrpac&#39;  \
+  --no-resave-data --no-manual </code></pre>
+<pre><code></code></pre>
+<pre><code>Warning: running command &#39;Rscript -e &#39;build(&quot;prrpac/&quot;)&#39;&#39; had status 1</code></pre>
+<p>O resultado da chamada dessa função é o arquivo <code>prrpac_0.0.1.tar.gz</code> que contém o código-fonte do seu pacote e está pronto para ser distribuído e instalado no Linux e Mac.</p>
+<blockquote>
+<p>NOTA: no mesmo diretório onde você está desenvolvendo o pacote, você pode ter outros arquivos e diretórios. Por exemplo, algumas pessoas preferem ter um diretório que não irá fazer parte do pacote, mas que serve para guardar scripts de teste, bases de dados, material em desenvolvimento, etc. Nestes casos é necessário especificar que estes arquivos e diretórios devem ser ignorados no processo de checagem (<code>check()</code>) e construção do pacote (<code>build()</code>). Caso algum arquivo ou diretório que não seja comum ao pacote do R, esses comandos retornarão com um erro, e não será possível construir o pacote. Para evitar estes erros e ao mesmo tempo manter esses arquivos e diretórios, liste-os pelo nome no arquivo <code>.Rbuildignore</code> na raíz do pacote. Por exemplo, se você tiver o diretório <code>playground/</code> e um arquivo chamdo <code>teste.R</code>, coloque no arquivo <code>.Rbuildignore</code>:</p>
+<pre><code>teste.R
+playground/</code></pre>
+</blockquote>
+<p>Para gerar um arquivo binário (<code>.zip</code>) para instalar no Windows, o processo é mais complicado (como tudo no Windows). Esse arquivo binário só é possível ser gerado de dentro do Windows, o que, em muitos casos, ão está disponível para uso. Uma opção então é utilizar o <a href="http://win-builder.r-project.org/">win-builder</a>, um servidor Windows disponibilizado pelos mantenedores do R para que pessoas sem acesso ao Windows possam gerar arquivos binários de pacotes. O processo consiste em entrar na página e enviar o código-fonte (<code>.tar.gz</code>) por upload. Em alguns minutos você recebe um email com o link para baixar a versão binária do seu pacote para Windows.</p>
+<p>Como estamos usando o <code>devtools</code>, podemos apenas utilizar a função <code>build_win()</code>, que irá fazer todo esse processo automaticamente. O link com a versão binária do arquivo será enviado para o email colocado no campo <code>Maintainer</code> no arquivo <code>DESCRIPTION</code>, por isso é importante que seja um email válido.</p>
+<pre class="r"><code>build_win()</code></pre>
+<p>Uma vantagem dessa função é que ela também roda uma checagem para ver se o pacote funcionará adequadamente no Windows.</p>
+</div>
+<div id="workflow" class="section level1">
+<h1>Workflow</h1>
+<p>Um workflow típico para a construção de um pacote utilizando <code>devtools</code> e <code>roxygen2</code> seria:</p>
+<pre class="r"><code>##======================================================================
+## Criando pacote com devtools e roxygen2
+##======================================================================
+
+##----------------------------------------------------------------------
+## Pacotes necessarios
+library(devtools)
+library(roxygen2)
+
+##----------------------------------------------------------------------
+## 1) Criando a estrutura (esqueleto) do pacote
+create(&quot;meupacote&quot;, rstudio = FALSE)
+# irá criar o diretório &#39;meupacote&#39; com man/, R/ e DESCRIPTION
+# Edite o arquivo DESCRIPTION com as informações do seu pacote
+
+##----------------------------------------------------------------------
+## 2) Crie funções e carregue com
+load_all()
+# cada vez que criar ou alterar uma função, use esse comando para
+# carregá-las no seu workspace e testá-las. Crie funções em arquivos com
+# extensão .R dentro do diretório R/
+
+##----------------------------------------------------------------------
+## 3) Documente as funções usando as tags do roxygen2 e use a função
+document()
+# para gerar os arquivos com extensão .Rd correspondentes no diretório
+# man/. Use também a função
+check_man()
+# para conferir a documentação
+
+##----------------------------------------------------------------------
+## 4) Certifique-se de que o arquivo NAMESPACE esteja contendo todas as
+## funções do seu pacote a serem exportadas, e todas as funções (ou
+## pacotes inteiros) a serem importadas para o seu pacote. Use as tags
+## @export para exportar e @import ou @importFrom para importar (na
+## documentação roxygen2 de cada função). Rode
+document()
+# sempre que exportar ou importar uma função, para que o arquivo
+# NAMESPACE seja atualizado.
+
+##----------------------------------------------------------------------
+## 5) Confira o pacote com
+check()
+# e construa o pacote final com
+build()</code></pre>
 </div>
 <div id="referencias" class="section level1">
 <h1>Referências</h1>
