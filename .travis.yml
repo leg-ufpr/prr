@@ -31,6 +31,7 @@ install:
 
 before_script:
   - rm -rf figures
+  - rm -rf prrpac
 
 script:
   - Rscript -e 'rmarkdown::render_site()'
