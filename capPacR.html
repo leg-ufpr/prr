@@ -9,9 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Fernando Mayer &amp; Walmes Zeviani" />
 
 
-<title></title>
+<title>Pacotes R</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
@@ -357,51 +358,90 @@ div.tocify {
 
 
 
+<h1 class="title toc-ignore">Pacotes R</h1>
+<h4 class="author"><em>Fernando Mayer &amp; Walmes Zeviani</em></h4>
 
 </div>
 
 
+<div id="motivacao" class="section level1">
+<h1>Motivação</h1>
+<p>Como já dizia <a href="http://statweb.stanford.edu/~jmc4/">John M. Chambers</a> quando criou a linguagem S (predecessora do R), o objetivo da linguagem é</p>
+<blockquote>
+<p>“… to turn ideas into software, quickly and faithfully.”</p>
+</blockquote>
+<p>e transformar usuários em programadores de maneira rápida e conveniente.</p>
+<p>Se você já explorou um pouco mais do que o potencial básico do R, certamente já criou sua própria função (ou várias funções) para fazer alguma tarefa específica. A ideia é que se você tiver que realizar uma tarefa muitas vezes, então deve criar uma função para fazer isso.</p>
+<p>A criação de um pacote do R pode ter duas motivações principais:</p>
 <ul>
-<li>Parte 1</li>
-<li>Capitulo 1 - Ciência reproduzível
-<ul>
-<li>Introdução</li>
-<li>Literate programming</li>
-<li>Documentos dinâmicos</li>
-</ul></li>
-<li>Capitulo 2 - Markdown com pandoc
-<ul>
-<li>Markdown</li>
-<li>Pandoc</li>
-</ul></li>
-<li>Capitulo 3 - Documentos dinâmicos no R
-<ul>
-<li>knitr</li>
-<li>rmarkdown</li>
-<li>knitr + latex</li>
-<li>org + odfweave?</li>
-</ul></li>
-<li>Parte 2</li>
-<li>Capitulo 4 - Pacotes R
-<ul>
-<li>Introdução</li>
-<li>Estrutura de um pacote</li>
-<li>Disponibilização</li>
-</ul></li>
-<li>Capitulo 5 - Criando um pacote
-<ul>
-<li>devtools e roxygen</li>
-</ul></li>
-<li>Capitulo 6 - Adicionando dados</li>
-<li>Capitulo 7 - Métodos</li>
-<li>Capitulo 8 - Vinheta</li>
-<li>Capitulo 9 - Testes</li>
-<li>Capitulo 10 - Funções externas</li>
-<li><p>Capitulo 11 - Disponibilização</p></li>
-<li>Parte 3 - Compartilhando pacotes (?)</li>
-<li>github e gitlab</li>
-<li><p>CRAN</p></li>
+<li>Agrupar e manter uma série de funções criadas por você e que são basicamente de uso próprio ou rotineiro.</li>
+<li>Compartilhar funções de novos métodos e/ou implementações que você tenha criado e queira disponibilizar para outras pessoas usarem.</li>
 </ul>
+<p>Não raramente, um pacote de uso pessoal acaba se tornando útil para outras pessoas e o autor disponibiliza para uso geral. O importante é então saber como transformar suas funções em um pacote. E mais importante ainda é saber como fazer isso se preocupando apenas com as funções, ao invés de se preocupar com todo o processo de criação do pacote.</p>
+<p>A criação de um pacote no R pode ser feita de duas formas:</p>
+<ul>
+<li>Tradicional: usando os comandos padrões do R para criação de pacotes, como <code>R CMD build</code> para criar e <code>R CMD check</code> para conferir o pacote, ambos executados através de um terminal e não de uma sessão do R.</li>
+<li>Moderna: usando o pacote <code>devtools</code>, que possui funções para criar e conferir o pacote (inclusive para testar e documentar as funções) de dentro de uma sessão do R.</li>
+</ul>
+<p>A maneira tradicional de criar pacotes no R é um pouco mais trabalhosa, pois cada vez que você quiser checar se seu pacote está funcionando, é necessário ir para um terminal e rodar os comandos por fora do R. Além disso, se você quiser testar seu pacote após a instalação, será necessário instalar de fato o pacote e carregá-lo com <code>library()</code>. O grande problema é que durante o desenvolvimento de um pacote, esses passos geralmente são repetidos muitas vezes, o que torna todo o processo muito demorado.</p>
+<p>O pacote <code>devtools</code> facilita todo esse processo, pois você pode construir, checar, documentar (e conferir a documentação) de dentro da própria sessão do R que você está desenvolvendo o pacote. Além disso esse pacote também permite que, com uma função, você simule a instalação do seu pacote na mesma sessão R, evitando ter que instalar e desinstalar para testes todas as vezes.</p>
+<p>Um outro aspecto fundamental de todo pacote é a sua documentação. Da maneira tradicional, é necessário criar os arquivos <code>.Rd</code> e escrever usando uma linguagem muito parecida com o LaTeX. Toda vez que você quiser editar a documentação é necessário abrir esses arquivos e modificá-los nesse formato. Para facilitar ainda mais a vida dos programadores, existe o pacote <code>roxygen2</code>, que possibilita escrever a documentação dentro da própria função <code>.R</code>, integrando código e documentação em um único arquivo, e facilitando a edição das páginas de ajuda.</p>
+<p>O pacote <code>roxygen2</code> pode ser utilizado também na abordagem tradicional de criação de pacotes, eliminando uma etapa trabalhosa que é a de criar os arquivos de documentação. No entanto, podemos usar todo o potencial do <code>devtools</code> e do <code>roxygen2</code> juntos, e nos preocuparmos apenas com o design das funções e não com todo o processo de criação do pacote em si.</p>
+</div>
+<div id="estrutura-de-um-pacote" class="section level1">
+<h1>Estrutura de um pacote</h1>
+<p>Basicamente um pacote do R é uma convenção para organizar e padronizar a distribuição de funções extras do R. Todo pacote é composto <em>obrigatoriamente</em> por apenas dois diretórios e dois arquivos de meta dados:</p>
+<ul>
+<li><code>R/</code>: um diretório contendo as funções em arquivos <code>*.R</code> (ex.: <code>foo.R</code>).</li>
+<li><code>man/</code>: um diretório contendo a documentação (páginas de ajuda) de cada função do diretório acima. Os arquivos de documentação do R terminam com a extensão <code>.Rd</code> (ex.: <code>foo.Rd</code>).</li>
+<li><code>DESCRIPTION</code>: um arquivo texto contendo as informações sobre o seu pacote: autor, licença, outros pacotes dependentes, …</li>
+<li><code>NAMESPACE</code>: um arquivo texto que informa quais funções do seu pacote serão exportadas, ou seja, aquelas que estarão disponíveis para o usuário, e quais funções são importadas de outros pacotes dos quais o seu depende.</li>
+</ul>
+<p>Outros componentes que não são obrigatórios, mas podem estar presentes no pacote são:</p>
+<ul>
+<li><code>tests/</code>: um diretório contendo scripts com testes unitários, rodados durante a criação do pacote, para testar se existe algum resultado não esperado sendo retornado por alguma de suas funções.</li>
+<li><code>vignettes/</code>: um diretório que contém uma ou mais <em>vignettes</em>, que traduzidas literalmente são como “vinhetas”, pequenos (ou mesmo grandes) textos que explicam com mais detalhes como os usuários podem usar as funções de seu pacote.</li>
+<li><code>data/</code>: um diretório contendo arquivos de dados (normalmente em formato binário e comprimido do R, <code>.rda</code>), que podem ser usados como exemplos para aplicação das funções do pacote.</li>
+</ul>
+<p>Caso você queira começar um pacote do início, as opções são: 1) criar todos os componentes (diretórios e arquivos) manualmente e ir alimentando com conteúdo, ou 2) usar a função <code>create()</code> do pacote <code>devtools</code> para criar um “esqueleto” inicial com os arquivos e diretórios fundamentais de um pacote. Portanto:</p>
+<pre class="r"><code>library(devtools)
+create(&quot;prrpac&quot;, rstudio = FALSE)</code></pre>
+<pre><code>Creating package &#39;prrpac&#39; in &#39;/home/fernando/GitHub/prr&#39;</code></pre>
+<pre><code>No DESCRIPTION found. Creating with values:</code></pre>
+<pre><code>Package: prrpac
+Title: What the Package Does (one line, title case)
+Version: 0.0.0.9000
+Authors@R: person(&quot;First&quot;, &quot;Last&quot;, email = &quot;first.last@example.com&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;))
+Description: What the package does (one paragraph).
+Depends: R (&gt;= 3.3.0)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true</code></pre>
+<p>Como pode ser observado na saída acima, esse comando cria um diretório chamado <code>meupacote</code>, contendo dois arquivos: <code>DESCRIPTION</code> e <code>NAMESPACE</code>, e um diretório: <code>R/</code></p>
+<pre><code>-rw-r--r-- DESCRIPTION
+-rw-r--r-- NAMESPACE
+drwxr-xr-x R</code></pre>
+<p>Note que na mensagem de criação acima, o arquivo <code>DESCRIPTION</code> já é preenchido com alguns campos padrão, sendo necessário apenas alterá-los com as informações do seu pacote.</p>
+<p>Abaixo serão especificados os detalhes para a criação de cada um dos componentes obrigatórios criados acima.</p>
+</div>
+<div id="referencias" class="section level1">
+<h1>Referências</h1>
+<ul>
+<li>Estas notas são altamente baseadas em:
+<ul>
+<li><a href="http://r-pkgs.had.co.nz/">R packages by Hadley Wickham</a></li>
+<li><a href="http://www.rstudio.com/resources/cheatsheets/">Package Development Cheat Sheet</a></li>
+<li><a href="http://cran-r.c3sl.ufpr.br/web/packages/roxygen2/vignettes/roxygen2.html">Introduction to roxygen2</a></li>
+</ul></li>
+<li>O material mais completo e definitivo sobre o desenvolvimento de pacotes no R é o <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html">Writing R extensions</a></li>
+<li>Outras fontes de informação importantes:
+<ul>
+<li><a href="https://github.com/jtleek/rpackages">Developing R packages by JT Leek</a></li>
+<li><a href="http://jtleek.com/protocols/travis_bioc_devel/">Routinely testing your R package with Travis</a></li>
+</ul></li>
+</ul>
+<!-- links -->
+</div>
 
 <center>
   <hr width="100%" size="3px">

@@ -30,23 +30,7 @@ navbar:
       - text: "Documentos dinâmicos no R"
         href: capDocDin.html
     - text: "Pacotes R"
-      menu:
-      - text: "Introdução"
-        href: capIntroPac.html
-      - text: "Estrutura de um pacote"
-        href: capPacEstrut.html
-      - text: "Criando um pacote"
-        href: capCriaPac.html
-      - text: "Adicionando dados"
-        href: capAdiDados.html
-      - text: "Métodos e funções genéricas"
-        href: capFunMet.html
-      - text: "Vinhetas"
-        href: capVinheta.html
-      - text: "Testes"
-        href: capTestes.html
-      - text: "Funções externas"
-        href: capFunExt.html
+      href: capPacR.html
     - text: "Compartilhamento"
       menu:
       - text: "Pacotes"
