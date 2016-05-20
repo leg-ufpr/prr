@@ -130,7 +130,7 @@ chamado `meupacote`, contendo dois arquivos: `DESCRIPTION` e
 `NAMESPACE`, e um diretório: `R/`
 
 ```{r estrut, echo=FALSE}
-cat(system("cd prrpac && stat -c '%A %n' *", intern = TRUE),
+cat(system("cd prrpac && tree", intern = TRUE),
     sep = "\n")
 ## Armazena o arquivo NAMESPACE original para mostrar o conteudo na
 ## secao NAMESPACE abaixo
@@ -349,6 +349,8 @@ document()
 ```
 ```{r doctrue, echo=FALSE, eval=TRUE, dependson="cpsoma", cache=TRUE}
 document("prrpac/")
+## Armazena o NAMESPACE atual para mostrar depois
+namespace2 <- readLines("prrpac/NAMESPACE")
 ```
 
 > Observação: o comando `document()` do pacote `devtools` é de fato um
@@ -489,8 +491,8 @@ funções que possuem `@export` e colocá-las adequadamente no arquivo
 `soma.R` com `@export` e rodar `document()`, o arquivo `NAMESPACE` agora
 será:
 
-```{r echo=FALSE, comment=NA, cache=TRUE}
-cat(system("cat prrpac/NAMESPACE", intern = TRUE), sep = "\n")
+```{r catnam1, echo=FALSE, comment=NA, cache=TRUE}
+cat(namespace2, sep = "\n")
 ```
 
 Se houverem mais funções exportadas, elas aparecerão nesse arquivo, uma
@@ -618,13 +620,22 @@ função, será necessário acresentar o nome do pacote à que a função
 pertence no arquivo `DESCRIPTION`, mais especificamente no campo
 `Imports`. Isso garante que o usuário que instalar o seu pacote também
 terá instalado o pacote necessário para que o seu funcione. Esta
-inserção deve ser feita manualmente, e dessa forma,
-o arquivo `DESCRIPTION` ficaria atualizado com o seguinte conteúdo
-(repare a última linha):
+inserção deve ser feita manualmente, ou utilizando a função
+`use_package()` do `devtools`. Por exemplo, o comando abaixo irá inserir
+automaticamente o pacote `lattice` no campo `Imports` do arquivo
+`DESCRIPTION`.
 
-```{r escreve, echo=FALSE, comment=NA, cache=TRUE}
-write("Imports: lattice",
-      file = "prrpac/DESCRIPTION", append = TRUE)
+```{r usefalse1, echo=TRUE, eval=FALSE}
+use_package("lattice")
+```
+```{r usetrue1, echo=FALSE, eval=TRUE, dependson="meuxy", cache=TRUE}
+use_package("lattice", pkg = "prrpac/")
+```
+
+Dessa forma, o arquivo `DESCRIPTION` ficaria atualizado com o seguinte
+conteúdo (repare a última linha):
+
+```{r catdescr1, echo=FALSE, comment=NA, cache=TRUE}
 cat(system("cat prrpac/DESCRIPTION", intern = TRUE), sep = "\n")
 ```
 
@@ -651,10 +662,10 @@ check()
 ## Essa chamada so mostra a parte inicial do output
 check("prrpac/")
 ```
-```{r checktrue2, echo=FALSE, eval=TRUE, cache=TRUE}
+```{r checktrue2, echo=FALSE, eval=TRUE, cache=TRUE, collapse=TRUE}
 ## Para mostrar o output da chamada da funcao foi necessario chamar o
 ## Rscript dentro do system
-cat(system("Rscript -e 'check(\"prrpac/\")'", intern = TRUE),
+cat(system("Rscript -e 'devtools::check(\"prrpac/\")'", intern = TRUE),
     sep = "\n")
 ```
 
@@ -675,10 +686,10 @@ build()
 ## Essa chamada so mostra a parte inicial do output
 build("prrpac/")
 ```
-```{r buildtrue2, echo=FALSE, eval=TRUE, cache=TRUE}
+```{r buildtrue2, echo=FALSE, eval=TRUE, cache=TRUE, collapse=TRUE}
 ## Para mostrar o output da chamada da funcao foi necessario chamar o
 ## Rscript dentro do system
-cat(system("Rscript -e 'build(\"prrpac/\")'", intern = TRUE),
+cat(system("Rscript -e 'devtools::build(\"prrpac/\")'", intern = TRUE),
     sep = "\n")
 ```
 
@@ -745,7 +756,7 @@ library(roxygen2)
 
 ##----------------------------------------------------------------------
 ## 1) Criando a estrutura (esqueleto) do pacote
-create("meupacote", rstudio = FALSE)
+create("prrpac", rstudio = FALSE)
 # irá criar o diretório 'meupacote' com man/, R/ e DESCRIPTION
 # Edite o arquivo DESCRIPTION com as informações do seu pacote
 
