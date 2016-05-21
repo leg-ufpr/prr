@@ -1,0 +1,65 @@
+%\VignetteIndexEntry{Vinheta Rnw para documento PDF}
+%\VignetteEngine{knitr::knitr}
+%\VignetteEncoding{UTF-8}
+
+\documentclass{article}
+\usepackage{graphicx}
+
+\title{Vinheta Rnw para documento PDF}
+\author{Ferando Mayer \& Walmes Zeviani}
+\date{\Sexpr{Sys.time()}}
+
+\begin{document}
+
+\maketitle
+
+<<include=FALSE>>=
+# Se não encontrar o pacote instalado, tenta dar um load_all.
+getwd()
+if (!require(meupacote)) {
+    try(eval(parse(text = 'devtools::load_all("../")')))
+    try(eval(parse(text = 'devtools::load_all("../meupacote/")')))
+}
+@
+
+\section{O teorema de Pitágoras}
+
+O teorema de Pitágoras estabelece que o comprimento da hipetenusa ao
+quadrado é igual a soma do quadrado dos catetos, ou seja 
+\[
+  h^2 = a^2 + b^2.
+\]
+
+A função \texttt{pitagoras()} calcula a hipótenusa $h$ a partir do
+comprimento dos catetos fornecido.
+
+<<eval=FALSE>>=
+# Carrega o pacote instalado.
+library(meupacote)
+@
+<<>>=
+# Conteúdo disponível do pacote.
+ls("package:meupacote")
+
+h <- pitagoras(a = 3, b = 4)
+h
+@
+
+\section{Um conjunto de dados}
+
+Para produzir tabelas em documentos latex, use a função
+\texttt{xtable::xtable()}.
+
+<<results="asis">>=
+xtable::xtable(CostaEx5.7.2)
+@
+
+\section{Gráfico}
+
+<<cap="Legenda do gráfico.">>=
+plot(dens ~ prof, data = CostaEx5.7.2,
+     xlab = "Profundidade do solo (cm)",
+     ylab = expression("Densidade do solo"~(g~cm^{-3})))
+@
+
+\end{document}
