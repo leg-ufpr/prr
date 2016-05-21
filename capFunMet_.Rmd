@@ -222,4 +222,8 @@ plot.testT_S3 <- function(x, ...) {
   * Em S4 não é. Não existem tantos exemplos combinando `devtools +
     roxygen2 + S4`.
 
+## Mais
+
+[Testes](./capTestes_.html)
+
 <!------------------------------------------- -->

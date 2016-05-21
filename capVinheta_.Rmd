@@ -332,6 +332,10 @@ Visite <http://rmarkdown.rstudio.com/index.html>.
   * Disponibilize seu código (e.g. GitHub ou GitLab).
   * Disponibilize suas vinhetas no GitHub com `gh-pages`.
 
+## Mais
+
+[Classes, Genéricas e Métodos em S3](./capFunMet_.html)
+
 <!------------------------------------------- -->
 
 [`MRDCr`]: https://github.com/leg/MRDCr/
