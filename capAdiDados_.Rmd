@@ -1,0 +1,164 @@
+---
+title: "Adicionar Conjuntos de Dados"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+```
+
+## Criar e Documentar Conjuntos de Dados
+
+  1. **Incluir** conjuntos de dados no pacote
+  2. **Documentar** os conjuntos de dados
+
+```{r, include=FALSE}
+# file.copy(from = "aux/dpqr-pgnz.R", to = "meupacote/R/")
+# file.remove("meupacote/R/designs.R", "meupacote/R/Hist.R")
+file.remove("meupacote/R/CostaEx5.7.2.R",
+            "meupacote/man/CostaEx5.7.2.Rd")
+file.remove("meupacote/NAMESPACE")
+# file.copy(from = "./aux/designs.R", to = "meupacote/R/")
+# file.copy(from = "./aux/pitagoras.R", to = "./meupacote/R/")
+# file.copy(from = "./aux/Hist.R", to = "./meupacote/R/")
+# file.copy(from = "./aux/dpqr-pgnz.R", to = "./meupacote/R/")
+```
+
+## Manter o fonte em texto
+
+É recomendado manter os dados em formato texto.
+
+```{r, include=FALSE}
+unlink("meupacote/data", recursive = TRUE)
+unlink("meupacote/data-raw", recursive = TRUE)
+```
+```{r, eval=FALSE}
+library(devtools)
+
+# Um diretório para manter os fontes (opicional)
+use_data_raw()
+```
+```{r, include=FALSE}
+library(devtools)
+use_data_raw("./meupacote")
+```
+
+A `use_data_raw()` cria o diretório `data-raw/` e o inclui no
+`.Rbuildignore`.
+
+## Adicionar gerar o binário
+
+```{r, include=FALSE}
+file.copy(from = "./aux/CostaEx5.7.2.txt", to = "./meupacote/data-raw/CostaEx5.7.2.txt")
+```
+```{r, eval=FALSE}
+# Le o arquivo do diretório data-raw/.
+loc <- "data-raw/CostaEx5.7.2.txt"
+CostaEx5.7.2 <- read.table(loc, header = TRUE)
+str(CostaEx5.7.2)
+```
+```{r, echo=FALSE}
+loc <- "./meupacote/data-raw/CostaEx5.7.2.txt"
+CostaEx5.7.2 <- read.table(loc, header = TRUE)
+str(CostaEx5.7.2)
+```
+```{r, eval=FALSE}
+# Cria o binário dentro da data/.
+use_data(CostaEx7.5.2)
+```
+```{r, include=FALSE}
+use_data(CostaEx5.7.2, pkg = "./meupacote/", overwrite = TRUE)
+```
+
+As extensões `.rda` e `RData` podem ser usadas.
+
+---
+
+```{r, echo=FALSE, results="markup", comment=NA}
+cat(system("tree -F --charset=ascii meupacote/", intern = TRUE),
+    sep = "\n")
+```
+
+## Documentar
+
+```{r, include=FALSE}
+file.remove("./meupacote/R/CostaEx5.7.2.R")
+file.copy(from = "./aux/CostaEx5.7.2.R", to = "./meupacote/R/")
+```
+
+A documentação em `R/CostaEx5.7.2.R`
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/R/CostaEx5.7.2.R"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+Gerar e verificar a documentação
+```{r, eval=FALSE}
+document()
+```
+```{r, echo=FALSE}
+document("./meupacote")
+```
+```{r, eval=FALSE}
+check_man()
+```
+```{r, echo=FALSE}
+check_man("./meupacote")
+```
+
+---
+
+Verificar o pacote
+```{r, eval=FALSE}
+check()
+```
+```{r, include=FALSE, eval=FALSE}
+check("meupacote")
+```
+
+Erro de verificação
+```
+... omitido ...
+* checking examples ... ERROR
+Running examples in ‘meupacote-Ex.R’ failed
+Error in library(lattice) : there is no package called ‘lattice’
+Execution halted
+```
+
+Adicionar `lattice` ao `Suggests`
+```{r, eval=FALSE}
+use_package(package = "lattice", type = "Suggests")
+```
+```{r, include=FALSE}
+use_package(package = "lattice", pkg = "./meupacote", type = "Suggests")
+```
+
+```
+Imports:
+    RColorBrewer
+Suggests:
+    lattice
+```
+
+---
+
+```{r, echo=FALSE, results="markup", comment=NA}
+cat(system("tree -F --charset=ascii meupacote/", intern = TRUE),
+    sep = "\n")
+```
+
+## Mais
+
+[Vinhetas](./capVinheta_.html)

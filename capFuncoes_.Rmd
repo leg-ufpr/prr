@@ -1,0 +1,144 @@
+---
+title: "Adicionar Funções e Documentar"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+```
+
+## Criar e Documentar Funções
+
+  1. **Exportar** apenas o necessário para o usuário
+  2. **Importar** o que for necessário para o pacote
+  4. **Documentar** funções relacionadas na mesma página `.Rd`
+
+```{r, include=FALSE}
+# file.copy(from = "aux/dpqr-pgnz.R", to = "meupacote/R/")
+file.remove("meupacote/R/designs.R", "meupacote/R/Hist.R")
+file.remove("meupacote/NAMESPACE")
+file.copy(from = "aux/designs.R", to = "meupacote/R/")
+```
+
+## Exportar ou não exportar
+
+A função `design()` gera delineamentos
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/R/designs.R"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+Gerar a documentação `.Rd` e escrever o `NAMESPACE`
+```{r, eval=FALSE}
+library(devtools)
+
+document()
+check_man()
+```
+```{r, include=FALSE}
+library(devtools)
+document("./meupacote")
+check_man("./meupacote")
+```
+
+`NAMESPACE`
+```{r, echo=FALSE, comment=NA}
+cat(readLines("meupacote/NAMESPACE"), sep = "\n")
+```
+
+  - As funções `dic` e `dbc` existem dentro do pacote.
+  - Não foram documentadas e nem exportadas.
+  - O usuário não usará diretamente.
+
+---
+
+A documentação gerada em `man/design.Rd`
+```{r, echo=FALSE, comment=NA}
+cat(readLines("meupacote/man/design.Rd"), sep = "\n")
+```
+
+## Importar o que for necessário
+
+```{r, include=FALSE}
+# file.copy(from = "aux/dpqr-pgnz.R", to = "meupacote/R/")
+file.remove("meupacote/R/Hist.R")
+file.copy(from = "aux/Hist.R", to = "meupacote/R/")
+```
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/R/Hist.R"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+Incluir o pacote no `DESCRIPTION`, em `Imports`
+```
+Imports:
+    RColorBrewer
+```
+
+Não precisa abrir, pode incluir com
+```{r, eval=FALSE}
+use_package(package = "RColorBrewer", type = "Imports")
+# use_package(package = "RColorBrewer", type = "Suggests")
+```
+```{r, include=FALSE}
+use_package("./meupacote", package = "RColorBrewer", type = "Imports")
+```
+
+Notificação do `check()` sem o `@importFrom`
+```
+Hist: no visible global function definition for ‘brewer.pal’
+```
+
+Notificação do `check()` sem escrever no `Imports`
+```
+Namespace dependency not required: ‘RColorBrewer’
+```
+
+## Manter Funções Relacionadas Junto
+
+```{r, include=FALSE}
+file.remove("meupacote/R/dpqr-pgnz.R")
+file.copy(from = "aux/dpqr-pgnz.R", to = "meupacote/R/")
+```
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/R/dpqr-pgnz.R"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+A estrutura do pacote
+```{r, include=FALSE}
+document("./meupacote")
+```
+```{r, echo=FALSE, results="markup", comment=NA}
+cat(system("tree -F --charset=ascii meupacote/", intern = TRUE),
+    sep = "\n")
+```
+
+---
+
+A documentação gerada em `man/dpqr-dpgnz.Rd`
+```{r, echo=FALSE, comment=NA}
+cat(readLines("meupacote/man/dpqr-dpgnz.Rd"), sep = "\n")
+```
+
+## Mais
+
+[Adicionar Conjuntos de Dados](./capAdiDados_.html)
