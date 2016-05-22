@@ -18,17 +18,17 @@ dpgnz <- function(x, lambda, alpha) {
 #' @rdname dpqr-dpgnz
 #' @aliases ppgnz
 ppgnz <- function(x, lambda, alpha) {
-    cat("ppgnz ainda nao implementada")
+    message("ppgnz ainda nao implementada")
 }
 
 #' @rdname dpqr-dpgnz
 #' @aliases qpgnz
 qpgnz <- function(q, lambda, alpha) {
-    cat("qpgnz ainda nao implementada")
+    warning("qpgnz ainda nao implementada")
 }
 
 #' @rdname dpqr-dpgnz
 #' @aliases rpgnz
 rpgnz <- function(n, lambda, alpha) {
-    cat("rpgnz ainda nao implementada")
+    stop("rpgnz ainda nao implementada")
 }
