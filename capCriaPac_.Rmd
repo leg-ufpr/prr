@@ -151,6 +151,10 @@ cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
   * `Suggests`: Pacotes que o seu usa sem importar (ex: chama nas
      vinhetas ou testes).
 
+<br><br><br><br>
+
+[Imports v Depends](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/)
+
 ---
 
   * `License`: tipo de licensa.
