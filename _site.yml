@@ -13,6 +13,7 @@ output:
       collapsed: false
       smooth_scroll: false
     includes:
+      in_header: analytics.html
       after_body: footer.html
 navbar:
   title: "PRR"
