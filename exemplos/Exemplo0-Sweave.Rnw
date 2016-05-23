@@ -2,6 +2,7 @@
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{Sweave} % O arquivo Sweave.sty deve estar presente
 
 \begin{document}
 
@@ -42,8 +43,11 @@ respectivamente.
 
 Também podemos fazer um histograma dessa VA $X$ simulada
 
-<<>>=
+\begin{figure}
+<<histm,fig=TRUE>>=
 hist(x)
 @
+\end{figure}
+
 
 \end{document}

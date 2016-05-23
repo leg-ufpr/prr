@@ -111,6 +111,29 @@ Resumidamente, o knitr possui as seguintes vantagens sob o Sweave:
 	- Decoração e formatação automática de códigos
 	- Geração de gráficos mais direta
 
+Podemos fazer uma comparação entre arquivos $\LaTeX$ escritos em Sweave
+e knitr. Exemplos simples podem ser vistos nos arquivos
+[Exemplo0-Sweave.Rnw](exemplos/Exemplo0-Sweave.Rnw) escrito com Sweave e
+[Exemplo0-knitr.Rnw](exemplos/Exemplo0-knitr.Rnw) escrito com a sintaxe
+do knitr. Para compilar estes documentos, usamos
+
+```{r comp, eval=FALSE}
+Sweave("exemplos/Exemplo0-Sweave.Rnw")
+library(knitr)
+knit("exemplos/Exemplo0-knitr.Rnw", output = "exemplos/Exemplo0-knitr.tex")
+```
+
+Posteriormente, os arquivos `.tex` gerados podem ser compilados com
+qualquer distribuição $\LaTeX$, (*e.g* TeXLive, MikTeX), por exemplo
+
+```{sh latex, eval=FALSE}
+pdflatex exemplos/Exemplo0-Sweave.Rnw
+pdflatex exemplos/Exemplo0-knitr.Rnw
+```
+
+Os resultados podem ser vistos nos respectivos arquivos:
+[Exemplo0-Sweave.pdf](exemplos/Exemplo0-Sweave.pdf) e
+[Exemplo0-knitr.pdf](exemplos/Exemplo0-knitr.pdf)
 
 <!-- links -->
 

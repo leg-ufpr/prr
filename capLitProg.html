@@ -440,6 +440,14 @@ div.tocify {
 <li>Geração de gráficos mais direta</li>
 </ul></li>
 </ul>
+<p>Podemos fazer uma comparação entre arquivos <span class="math inline">\(\LaTeX\)</span> escritos em Sweave e knitr. Exemplos simples podem ser vistos nos arquivos <a href="exemplos/Exemplo0-Sweave.Rnw">Exemplo0-Sweave.Rnw</a> escrito com Sweave e <a href="exemplos/Exemplo0-knitr.Rnw">Exemplo0-knitr.Rnw</a> escrito com a sintaxe do knitr. Para compilar estes documentos, usamos</p>
+<pre class="r"><code>Sweave(&quot;exemplos/Exemplo0-Sweave.Rnw&quot;)
+library(knitr)
+knit(&quot;exemplos/Exemplo0-knitr.Rnw&quot;, output = &quot;exemplos/Exemplo0-knitr.tex&quot;)</code></pre>
+<p>Posteriormente, os arquivos <code>.tex</code> gerados podem ser compilados com qualquer distribuição <span class="math inline">\(\LaTeX\)</span>, (<em>e.g</em> TeXLive, MikTeX), por exemplo</p>
+<pre class="sh"><code>pdflatex exemplos/Exemplo0-Sweave.Rnw
+pdflatex exemplos/Exemplo0-knitr.Rnw</code></pre>
+<p>Os resultados podem ser vistos nos respectivos arquivos: <a href="exemplos/Exemplo0-Sweave.pdf">Exemplo0-Sweave.pdf</a> e <a href="exemplos/Exemplo0-knitr.pdf">Exemplo0-knitr.pdf</a></p>
 <!-- links -->
 </div>
 
