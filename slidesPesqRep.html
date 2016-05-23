@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pesquisa Reproduzível</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="site_libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="site_libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="site_libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Pesquisa Reproduzível',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Fernando Mayer &amp; Walmes Zeviani' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides>
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Introdução</h2></hgroup><article  id="introducao">
+
+</article></slide><slide class=''><hgroup><h2>Introdução</h2></hgroup><article  id="introducao-1">
+
+<ul>
+<li>Evolução da tecnologia: coleta, processamento e análise com bases de dados de alta dimensão</li>
+<li>Rotinas de análise mais sofisicadas e complexas</li>
+<li>Como garantir que toda essa informação, e todo esse resultado que vem sendo gerado pode ser confiável?</li>
+<li>As análises, os modelos e os algoritmos que usamos atualmente são bastante complexos. Por isso é quase impossível descrever todos os detalhes em palavras apenas.</li>
+<li>Entender o que alguém fez em uma análise de dados atualmente, requer olhar para o <em>código</em>, e examinar minuciosamente as rotinas utilizadas pelas pessoas.</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Um estudo de caso</h2></hgroup><article  id="um-estudo-de-caso">
+
+</article></slide><slide class=''><hgroup><h2><em>The Duke trial saga</em></h2></hgroup><article  id="the-duke-trial-saga">
+
+<ul>
+<li>Anil Potti <em>et al</em>: A Genomic Strategy to Refine Prognosis in Early-Stage Non–Small-Cell Lung Cancer. <em>The New England Journal of Medicine</em>. 2006.</li>
+<li>Prever a evolução do câncer de pulmão de um paciente usando matrizes de expressão</li>
+<li>Anil Potti <em>et al</em>: Genomic signatures to guide the use of chemotherapeutics. <em>Nature Medicine</em>. 2006.</li>
+<li>Utilização de &quot;linhas de células&quot;, para prever a quimioterapia mais eficaz para pacientes que sofrem de câncer de pulmão, mama ou de ovário</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2><em>The Duke trial saga</em></h2></hgroup><article  id="the-duke-trial-saga-1">
+
+<ul>
+<li>O grupo de Duke iniciou três ensaios clínicos baseados nos trabalhos publicados.</li>
+<li>Bioestatísticos do <em>MD Anderson Cancer Centre</em> tentou reproduzir os resultados do artigo, com a finalidade de usar a nova técnica.</li>
+<li>Os pesquisadores solcitaram os dados brutos e os códigos da análise conduzida em Duke.</li>
+<li>Foram encontradas diversas falhas como linhas de células com nomes errados, nomes e números de células inconsistentes, etc.</li>
+<li>Depois disso, uma série de investigações foram realizadas, levando a cessar os ensaios clínicos já iniciados pela Universidade.</li>
+<li>Dr. Potti pediu demissão, e depois foi descoberto que ele tinha envolvimento com empresas da área biomédica.</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Análise de dados como arte</h2></hgroup><article  id="analise-de-dados-como-arte">
+
+</article></slide><slide class=''><hgroup><h2>Análise de dados como arte</h2></hgroup><article  id="analise-de-dados-como-arte-1">
+
+<blockquote>
+<p><em>Ciência é conhecimento que entendemos tão bem que podemos ensiná-la para um computador. Todo o resto é arte.</em></p>
+</blockquote>
+
+<blockquote>
+<p>Donald Knuth, 1974</p>
+</blockquote>
+
+<p>O processo de análise de dados por um pesquisador pode ser comparado ao processo de criação de uma música por um músico.</p>
+
+<p>Os métodos já foram ensinados ao computador, cabe ao analista saber como juntar todas estas ferramentas e aplicá-las para responder questões relevantes para a ciência e para as pessoas.</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Como a ciência funciona</h2></hgroup><article  id="como-a-ciencia-funciona">
+
+</article></slide><slide class=''><hgroup><h2>Como a ciência funciona</h2></hgroup><article  id="como-a-ciencia-funciona-1">
+
+<p>A Ciência é um processo de aprendizado da natureza, onde ideias concorrentes sobre como funciona o mundo são medidas contra observações (Feynman, 1965, 1985).</p>
+
+<p>Como as nossas descrições do mundo são incompletas, e nossas medidas envolvem incerteza e imprecisão, precisamos de métodos para avaliar a concordância entre as ideias e as observações = Estatística (Stigler, 1986).</p>
+
+</article></slide><slide class=''><hgroup><h2>Como a ciência funciona</h2></hgroup><article  id="como-a-ciencia-funciona-2">
+
+<p>A ideia geral é de que existe uma &quot;árvore de aprendizado&quot; a partir de experimentos críticos, denominada por Platt (1964) de <strong>inferência forte</strong> (<em>strong inference</em>), e que consiste das seguintes etapas:</p>
+
+<ol>
+<li>Conceber hipóteses alternativas.</li>
+<li>Conceber um experimento crucial (ou vários deles) com possíveis resultados alternativos, onde cada um poderá excluir, dentro do possível, uma ou mais hipóteses.</li>
+<li>Realizar o experimento de forma a obter resultados mais confiáveis possíveis.</li>
+<li>Reciclar o procedimento, criando subhipóteses ou hipóteses sequenciais para refinar as possibilidades que restam, e assim por diante.</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Como a ciência funciona</h2></hgroup><article  id="como-a-ciencia-funciona-3">
+
+<p>Esta visão de Platt é naturalmente uma extensão lógica do trabalho de Popper, que revolucionou a filosofia da Ciência no século 20, ao argumentar que uma hipótese não pode ser provada, apenas desprovada.</p>
+
+<p>A essência do método Popperiano é &quot;desafiar&quot; uma hipótese repetidamente. Se a hipótese permanece válida então ela não é validada, mas adquire um certo &quot;grau de confiança&quot;, que na prática passa a ser tratada como verdadeira.</p>
+
+<p>Coincidindo com esta filosofia de Popper está o trabalho estatístico de Ronald Fisher, Karl Perason, Jerzy Neyman e outros, que desenvolveram grande parte da teoria estatística atual associada à &quot;testes de hipótese&quot;.</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia">
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-1">
+
+<p>A <strong>replicação</strong> é um dos pilares fundamentais da ciência.</p>
+
+<p>É necessário que diversos cientistas coletem e analisem dados de forma independente, e cheguem no mesmo resultado.</p>
+
+<p>Se muitas pessoas diferentes chegarem à mesma conclusão de forma independente, então tendemos a pensar que a relação ou resultado provavelmente é verdadeiro (que vai de encontro com a filosofia de Popper).</p>
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-2">
+
+<p>Hoje em dia, a replicação tem se tornado cada vez mais desafiadora, uma vez que os estudos estão se tornando cada vez maiores e mais caros, e a disponibilidade de recursos financeiros para pesquisas cada vez mais escassa.</p>
+
+<p>Além disso, existem estudos que dificilmente podem ser replicados, como por exemplo, a avaliação do impacto de um terremoto em um determinado local, a evolução do crescimento de uma floresta, ou um estudo clínico que acompanhou as reações de pacientes à um medicamento durante 20 anos.</p>
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-3">
+
+<p>Existem muitas boas razões pelas quais não podemos replicar um estudo.</p>
+
+<p>Se replicar não é possível, então a opção seria não fazer nada, e ter como informação apenas o resultado de <em>um</em> estudo. No entanto, não fazer nada não é (e não pode ser) uma opção para cientistas.</p>
+
+<p>É nesse ponto que entra o conceito de <strong>pesquisa reproduzível</strong>. A ideia é criar uma espécie de &quot;padrão mínimo&quot;, ou um &quot;meio-termo&quot; entre replicar um estudo e não fazer nada, ou seja, fazer algo no meio.</p>
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-4">
+
+<p>Uma parte fundamental da pesquisa reproduzível é tornar disponíveis os <strong>dados</strong> do estudo original, e os <strong>métodos computacionais</strong> (em forma de código) utilizados para se chegar no resultado.</p>
+
+<p>Mas, se reproduzir uma análise leva à um resultado já conhecido e esperado, então qual seria o propósito de se fazer uma pesquisa reproduzível?</p>
+
+<ul>
+<li>Validação da análise de dados</li>
+<li>Diferentes cientistas, com diferentes visões e ideias podem colaborar no sentido de continuar a pesquisa, ou sugerir outras abordagens</li>
+<li>Novas possibilidades para novas perguntas</li>
+<li>Acelerar a geração de conhecimento</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-5">
+
+<ul>
+<li>A revista <em>Science</em> teve uma edição inteira dedicada à reproducibilidade.</li>
+<li>Muitas revistas científicas tem atualizado suas políticas de publicação, para encorajar a reproducibilidade dos artigos publicados.
+
+<ul>
+<li><em>Public Library of Science</em> (PLoS)</li>
+<li>Biostatistics</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Replicação e reprodução na Ciência</h2></hgroup><article  id="replicacao-e-reproducao-na-ciencia-6">
+
+<p>Preocupações:</p>
+
+<ul>
+<li>Como fica a questão da propriedade intelectual?</li>
+<li>Como fica a disponibilização de dados que foram coletados com financiamento privado ou público?</li>
+<li>Até que ponto a disponibilização dos dados não irá prejudicar meus projetos futuros?</li>
+<li>Será que não posso sofrer plágio?</li>
+</ul>
+
+<p>Muitas pesquisas tem mostrado que os cientistas estão preocupados em disponibilizar seus dados em detrimento de pesquisas futuras, mas na própria PLoS, cerca de 60% das publicações não disponibilizam dados suficientes para que as pesquisas possam ser reproduzidas.</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Elementos da reproducibilidade</h2></hgroup><article  id="elementos-da-reproducibilidade">
+
+</article></slide><slide class=''><hgroup><h2>Elementos da reproducibilidade</h2></hgroup><article  id="elementos-da-reproducibilidade-1">
+
+<p>Quatro elementos principais:</p>
+
+<ol>
+<li><strong>Dados</strong>: Os dados utilizados na análise devem ser disponibilizados <em>da maneira como foram analisados originalmente</em>.</li>
+<li><strong>Código</strong>: O código utilizado para produzir os resultados apresentados.</li>
+<li><strong>Documentação</strong>: Descrever o <strong>código</strong> e os <strong>dados</strong> utilizados na análise de maneira clara.</li>
+<li><strong>Distribuição</strong>: Distribuir todos esses elementos de maneira que sejam facilmente acessíveis.</li>
+</ol>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Boas práticas para a computação científica</h2></hgroup><article  id="boas-praticas-para-a-computacao-cientifica">
+
+</article></slide><slide class=''><hgroup><h2>Boas práticas para a computação científica</h2></hgroup><article  id="boas-praticas-para-a-computacao-cientifica-1">
+
+<p>Estudos recentes tem mostrado que cientistas passam cerca de 30% de seu tempo escrevendo códigos.</p>
+
+<p>No entanto, mais de 90% deles são primariamente auto-didatas, e portanto carecem de exposição à boas práticas de desenvolvimento de <em>software</em> como:</p>
+
+<ul>
+<li>escrever códigos de fácil manutenção</li>
+<li>usar um <em>sistema de controle de versões</em></li>
+<li>rastreadores de <em>bugs</em></li>
+<li>testes unitários</li>
+<li>automação de tarefas.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Boas práticas para a computação científica</h2></hgroup><article  id="boas-praticas-para-a-computacao-cientifica-2">
+
+<ol>
+<li>Escreva programas para humanos, não para computadores</li>
+<li>Deixe o computador fazer o trabalho</li>
+<li>Faça alterações incrementais</li>
+<li>Não repita você mesmo (ou outros)</li>
+<li>Prepare-se para erros</li>
+<li>Otimize código apenas depois que ele funcionar</li>
+<li>Documente a ideia e o propósito, não a mecânica</li>
+<li>Colabore</li>
+</ol>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Ferramentas da reproducibilidade</h2></hgroup><article  id="ferramentas-da-reproducibilidade">
+
+</article></slide><slide class=''><hgroup><h2>Ferramentas da reproducibilidade</h2></hgroup><article  id="ferramentas-da-reproducibilidade-1">
+
+<p>Publicar dados e códigos não é necessariamente uma tarefa trivial.</p>
+
+<p>Problemas comuns:</p>
+
+<ul>
+<li>Muitos autores simplesmente &quot;colocam&quot; arquivos na <em>web</em>.</li>
+<li>Existem jornais que disponibilizam materiais suplementares, mas que sabidamente são desorganizados ou falhos.</li>
+<li>Mesmo quando dados e códigos estão disponíveis, o leitor ainda tem que baixar os dados, baixar os códigos, e então tentar juntar tudo, geralmente &quot;a mão&quot;, uma tarefa que geralmente não é fácil e desencoraja a maioria das pessoas.</li>
+<li>O leitor pode não ter os mesmos recursos computacionais que o autor.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Ferramentas da reproducibilidade</h2></hgroup><article  id="ferramentas-da-reproducibilidade-2">
+
+<p>Por isso, a proposta de distribuir dados e códigos <strong>documentados</strong> de uma pesquisa científica, de maneira acessível e auto-contida.</p>
+
+<p>Objetivos: expor as ferramentas computacionais disponíveis no <strong>R</strong> para gerar documentos de análise (dinâmicos), auto-contidos em formato de pacote.</p>
+
+<p>Dessa forma, para reproduzir uma pesquisa é necessário apenas instalar o pacote no R e reproduzir as análises conforme a documentação.</p>
+
+</article></slide><slide class=''><hgroup><h2>Ferramentas da reproducibilidade</h2></hgroup><article  id="ferramentas-da-reproducibilidade-3">
+
+<p>Benefícios:</p>
+
+<ul>
+<li>Os dados e os códigos são disponibilizados conjuntamente</li>
+<li>As análises podem ser documentadas em forma de <strong>vinhetas</strong>, que são <strong>documentos dinâmicos</strong></li>
+<li>Eventuais funções que forem criadas para uma análise específica também já estão disponíveis</li>
+<li>O padrão estrutural (rígido) de criação de pacotes do R, garante uma <strong>padronização</strong> da maneira como a pesquisa é distribuída</li>
+<li>Facilidade na <strong>distribuição</strong>, já que o pacote pode ser disponibilizado no CRAN ou em repositórios como o Github</li>
+<li>A compatibilidade das análises entre sistemas operacionais é aumentada</li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

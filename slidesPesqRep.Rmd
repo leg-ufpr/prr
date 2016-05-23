@@ -1,0 +1,283 @@
+---
+title: "Pesquisa Reproduzível"
+author: "Fernando Mayer & Walmes Zeviani"
+output: ioslides_presentation
+---
+
+```{r setup, cache=FALSE, include=FALSE}
+source("setup_knitr.R")
+```
+
+# Introdução
+
+## Introdução
+
+- Evolução da tecnologia: coleta, processamento e análise com bases de
+  dados de alta dimensão
+- Rotinas de análise mais sofisicadas e complexas
+- Como garantir que toda essa informação, e todo esse resultado que vem
+  sendo gerado pode ser confiável?
+- As análises, os modelos e os algoritmos que usamos atualmente são
+  bastante complexos. Por isso é quase impossível descrever todos os
+  detalhes em palavras apenas.
+- Entender o que alguém fez em uma análise de dados atualmente, requer
+  olhar para o *código*, e examinar minuciosamente as rotinas utilizadas
+  pelas pessoas.
+
+# Um estudo de caso
+
+## *The Duke trial saga*
+
+- Anil Potti *et al*: A Genomic Strategy to Refine Prognosis in
+  Early-Stage Non–Small-Cell Lung Cancer. *The New England Journal of
+  Medicine*. 2006.
+- Prever a evolução do câncer de pulmão de um paciente usando matrizes
+  de expressão
+- Anil Potti *et al*: Genomic signatures to guide the use of
+  chemotherapeutics. *Nature Medicine*. 2006.
+- Utilização de "linhas de células", para prever a quimioterapia mais
+  eficaz para pacientes que sofrem de câncer de pulmão, mama ou de
+  ovário
+
+## *The Duke trial saga*
+
+- O grupo de Duke iniciou três ensaios clínicos baseados nos trabalhos
+  publicados.
+- Bioestatísticos do *MD Anderson Cancer Centre* tentou reproduzir os
+  resultados do artigo, com a finalidade de usar a nova técnica.
+- Os pesquisadores solcitaram os dados brutos e os códigos da análise
+  conduzida em Duke.
+- Foram encontradas diversas falhas como linhas de células com nomes
+  errados, nomes e números de células inconsistentes, etc.
+- Depois disso, uma série de investigações foram realizadas, levando a
+  cessar os ensaios clínicos já iniciados pela Universidade.
+- Dr. Potti pediu demissão, e depois foi descoberto que ele tinha
+  envolvimento com empresas da área biomédica.
+
+# Análise de dados como arte
+
+## Análise de dados como arte
+
+> *Ciência é conhecimento que entendemos tão bem que podemos ensiná-la
+> para um computador. Todo o resto é arte.*
+
+> Donald Knuth, 1974
+
+O processo de análise de dados por um pesquisador pode ser comparado ao
+processo de criação de uma música por um músico.
+
+Os métodos já foram ensinados ao computador, cabe ao analista saber como
+juntar todas estas ferramentas e aplicá-las para responder questões
+relevantes para a ciência e para as pessoas.
+
+# Como a ciência funciona
+
+## Como a ciência funciona
+
+A Ciência é um processo de aprendizado da natureza, onde ideias
+concorrentes sobre como funciona o mundo são medidas contra observações
+(Feynman, 1965, 1985).
+
+Como as nossas descrições do mundo são incompletas, e nossas medidas
+envolvem incerteza e imprecisão, precisamos de métodos para avaliar a
+concordância entre as ideias e as observações = Estatística (Stigler,
+1986).
+
+## Como a ciência funciona
+
+A ideia geral é de que existe uma "árvore de aprendizado" a partir de
+experimentos críticos, denominada por Platt (1964) de **inferência
+forte** (*strong inference*), e que consiste das seguintes etapas:
+
+1. Conceber hipóteses alternativas.
+2. Conceber um experimento crucial (ou vários deles) com possíveis
+   resultados alternativos, onde cada um poderá excluir, dentro do
+   possível, uma ou mais hipóteses.
+3. Realizar o experimento de forma a obter resultados mais confiáveis
+   possíveis.
+4. Reciclar o procedimento, criando subhipóteses ou hipóteses
+   sequenciais para refinar as possibilidades que restam, e assim por
+   diante.
+
+## Como a ciência funciona
+
+Esta visão de Platt é naturalmente uma extensão lógica do trabalho de
+Popper, que revolucionou a filosofia da Ciência no século 20, ao
+argumentar que uma hipótese não pode ser provada, apenas desprovada.
+
+A essência do método Popperiano é "desafiar" uma hipótese repetidamente.
+Se a hipótese permanece válida então ela não é validada, mas adquire um
+certo "grau de confiança", que na prática passa a ser tratada como
+verdadeira.
+
+Coincidindo com esta filosofia de Popper está o trabalho
+estatístico de Ronald Fisher, Karl Perason, Jerzy Neyman e outros, que
+desenvolveram grande parte da teoria estatística atual associada à
+"testes de hipótese".
+
+# Replicação e reprodução na Ciência
+
+## Replicação e reprodução na Ciência
+
+A **replicação** é um dos pilares fundamentais da ciência.
+
+É necessário que diversos cientistas coletem e analisem dados de forma
+independente, e cheguem no mesmo resultado.
+
+Se muitas pessoas diferentes chegarem à mesma conclusão de forma
+independente, então tendemos a pensar que a relação ou resultado
+provavelmente é verdadeiro (que vai de encontro com a filosofia de
+Popper).
+
+## Replicação e reprodução na Ciência
+
+Hoje em dia, a replicação tem se tornado cada vez mais desafiadora, uma
+vez que os estudos estão se tornando cada vez maiores e mais caros, e a
+disponibilidade de recursos financeiros para pesquisas cada vez mais
+escassa.
+
+Além disso, existem estudos que dificilmente podem ser replicados, como
+por exemplo, a avaliação do impacto de um terremoto em um determinado
+local, a evolução do crescimento de uma floresta, ou um estudo clínico
+que acompanhou as reações de pacientes à um medicamento durante 20 anos.
+
+## Replicação e reprodução na Ciência
+
+Existem muitas boas razões pelas quais não podemos replicar um estudo.
+
+Se replicar não é possível, então a opção seria não fazer nada, e ter
+como informação apenas o resultado de *um* estudo. No entanto, não fazer
+nada não é (e não pode ser) uma opção para cientistas.
+
+É nesse ponto que entra o conceito de **pesquisa reproduzível**. A ideia
+é criar uma espécie de "padrão mínimo", ou um "meio-termo" entre
+replicar um estudo e não fazer nada, ou seja, fazer algo no meio.
+
+## Replicação e reprodução na Ciência
+
+Uma parte fundamental da pesquisa reproduzível é tornar disponíveis os
+**dados** do estudo original, e os **métodos computacionais** (em forma
+de código) utilizados para se chegar no resultado.
+
+Mas, se reproduzir uma análise leva à um resultado
+já conhecido e esperado, então qual seria o propósito de se fazer uma
+pesquisa reproduzível?
+
+- Validação da análise de dados
+- Diferentes cientistas, com diferentes visões e ideias podem colaborar
+  no sentido de continuar a pesquisa, ou sugerir outras abordagens
+- Novas possibilidades para novas perguntas
+- Acelerar a geração de conhecimento
+
+## Replicação e reprodução na Ciência
+
+- A revista *Science* teve uma edição inteira dedicada à
+  reproducibilidade.
+- Muitas revistas científicas tem atualizado suas políticas de
+  publicação, para encorajar a reproducibilidade dos artigos publicados.
+    - *Public Library of Science* (PLoS)
+    - Biostatistics
+
+## Replicação e reprodução na Ciência
+
+Preocupações:
+
+- Como fica a questão da propriedade intelectual?
+- Como fica a disponibilização de dados que foram coletados com
+  financiamento privado ou público?
+- Até que ponto a disponibilização dos dados não irá prejudicar meus
+  projetos futuros?
+- Será que não posso sofrer plágio?
+
+Muitas pesquisas tem mostrado que os cientistas estão preocupados em
+disponibilizar seus dados em detrimento de pesquisas futuras, mas na
+própria PLoS, cerca de 60% das publicações não disponibilizam dados
+suficientes para que as pesquisas possam ser reproduzidas.
+
+# Elementos da reproducibilidade
+
+## Elementos da reproducibilidade
+
+Quatro elementos principais:
+
+1. **Dados**: Os dados utilizados na análise devem ser disponibilizados
+   *da maneira como foram analisados originalmente*.
+2. **Código**: O código utilizado para produzir os resultados
+   apresentados.
+3. **Documentação**: Descrever o **código** e os **dados** utilizados na
+   análise de maneira clara.
+4. **Distribuição**: Distribuir todos esses elementos de maneira que
+   sejam facilmente acessíveis.
+
+# Boas práticas para a computação científica
+
+## Boas práticas para a computação científica
+
+Estudos recentes tem mostrado que cientistas passam cerca de 30% de seu
+tempo escrevendo códigos.
+
+No entanto, mais de 90% deles são primariamente auto-didatas, e portanto
+carecem de exposição à boas práticas de desenvolvimento de *software*
+como:
+
+- escrever códigos de fácil manutenção
+- usar um *sistema de controle de versões*
+- rastreadores de *bugs*
+- testes unitários
+- automação de tarefas.
+
+## Boas práticas para a computação científica
+
+1. Escreva programas para humanos, não para computadores
+2. Deixe o computador fazer o trabalho
+3. Faça alterações incrementais
+4. Não repita você mesmo (ou outros)
+5. Prepare-se para erros
+6. Otimize código apenas depois que ele funcionar
+7. Documente a ideia e o propósito, não a mecânica
+8. Colabore
+
+# Ferramentas da reproducibilidade
+
+## Ferramentas da reproducibilidade
+
+Publicar dados e códigos não é necessariamente uma tarefa trivial.
+
+Problemas comuns:
+
+- Muitos autores simplesmente "colocam" arquivos na *web*.
+- Existem jornais que disponibilizam materiais suplementares, mas que
+  sabidamente são desorganizados ou falhos.
+- Mesmo quando dados e códigos estão disponíveis, o leitor
+  ainda tem que baixar os dados, baixar os códigos, e então tentar juntar
+  tudo, geralmente "a mão", uma tarefa que geralmente não é fácil
+  e desencoraja a maioria das pessoas.
+- O leitor pode não ter os mesmos recursos computacionais que o
+  autor.
+
+## Ferramentas da reproducibilidade
+
+Por isso, a proposta de distribuir dados e códigos **documentados** de
+uma pesquisa científica, de maneira acessível e auto-contida.
+
+Objetivos: expor as ferramentas computacionais disponíveis no **R** para
+gerar documentos de análise (dinâmicos), auto-contidos em formato de
+pacote.
+
+Dessa forma, para reproduzir uma pesquisa é necessário apenas instalar o
+pacote no R e reproduzir as análises conforme a documentação.
+
+## Ferramentas da reproducibilidade
+
+Benefícios:
+
+- Os dados e os códigos são disponibilizados conjuntamente
+- As análises podem ser documentadas em forma de **vinhetas**, que são
+  **documentos dinâmicos**
+- Eventuais funções que forem criadas para uma análise específica também
+  já estão disponíveis
+- O padrão estrutural (rígido) de criação de pacotes do R, garante uma
+  **padronização** da maneira como a pesquisa é distribuída
+- Facilidade na **distribuição**, já que o pacote pode ser
+  disponibilizado no CRAN ou em repositórios como o Github
+- A compatibilidade das análises entre sistemas operacionais é aumentada

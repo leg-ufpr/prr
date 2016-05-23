@@ -38,7 +38,9 @@ navbar:
       - text: "Dados e texto"
         href: capCompDados.html
     - text: "Slides"
-      href: slides.html
+      menu:
+      - text: "Pesquisa reproduzível"
+        href: slidesPesqRep.html
   right:
     - text: GitHub
       icon: fa-github fa-lg
