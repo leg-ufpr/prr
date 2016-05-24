@@ -1,0 +1,64 @@
+---
+title: "Vinheta Rmd para documento PDF"
+author: "Ferando Mayer & Walmes Zeviani"
+date: "`r Sys.time()`"
+output:
+  rmarkdown::pdf_document:
+    fig_width: 6
+    fig_height: 6
+    toc: true
+    toc_dep: 3
+vignette: >
+  %\VignetteIndexEntry{Vinheta Rmd para documento PDF}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## O teorema de Pitágoras
+
+```{r, include=FALSE}
+# Se não encontrar o pacote instalado, tenta dar um load_all.
+getwd()
+if (!require(meupacote)) {
+    try(eval(parse(text = 'devtools::load_all("../")')))
+    try(eval(parse(text = 'devtools::load_all("../meupacote/")')))
+}
+```
+
+O teorema de Pitágoras estabelece que o comprimento da hipetenusa ao
+quadrado é igual a soma do quadrado dos catetos, ou seja
+$$
+  h^2 = a^2 + b^2.
+$$
+
+A função `pitagoras()` calcula a hipótenusa ($h$) a partir do
+comprimento dos catetos fornecido.
+
+```{r, eval=FALSE}
+# Carrega o pacote instalado.
+library(meupacote)
+```
+```{r}
+# Conteúdo disponível do pacote.
+ls("package:meupacote")
+
+h <- pitagoras(a = 3, b = 4)
+h
+```
+
+## Um conjunto de dados
+
+Para produzir tabelas em documentos markdown, use a função
+`knitr::kable()`.
+
+```{r, results="asis"}
+knitr::kable(CostaEx5.7.2)
+```
+
+## Gráfico
+
+```{r, cap="Legenda do gráfico."}
+plot(dens ~ prof, data = CostaEx5.7.2,
+     xlab = "Profundidade do solo (cm)",
+     ylab = expression("Densidade do solo"~(g~cm^{-3})))
+```
