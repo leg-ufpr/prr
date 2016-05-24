@@ -76,7 +76,6 @@ Código robusto
 ## Custo
 
   - Criar os testes demanda tempo.
-  - TODO
 
 ## Testes em Pacotes R
 
