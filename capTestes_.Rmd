@@ -1,0 +1,324 @@
+---
+title: "Testes"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+opts_chunk$set(eval = FALSE)
+# setwd("~/repos/MRDCr/"); devtools::load_all()
+# source("~/Dropbox/labestData/func.R")
+```
+
+---
+
+<center>
+<iframe src="mcglm_network.html" width="100%" height="800px"></iframe>
+</center>
+
+## Por que fazer testes?
+
+  * Testes garantem que o código faça o que devem fazer.
+  * Testes informais são sempre feitos ao escrever código.
+  * Depois de certo tempo se esquece de aplicar os mesmos testes.
+  * Os bugs se tornam recorrentes e corrigí-los demanda tempo.
+  * O problema não é não testar, é não fazer de forma automática.
+
+---
+
+Menos *bugs*
+
+  * Filosofia da contabilidade de dupla entrada.
+  * Código escrito com teste associado.
+  * Código e testes verificam um ao outro.
+  * Bugs corrigidos jamais voltarão.
+
+---
+
+Melhor estrutura de código
+
+  * Códigos fáceis de testar são melhor desenhados.
+  * Reduz duplicação de código.
+  * Favorece o fatoramento do código.
+
+---
+
+Retomadas mais fáceis
+
+  * Termine a sessão criando um teste.
+  * Recomeçe fazendo o código atender o teste.
+
+---
+
+Código robusto
+
+  * Código coberto por testes está seguro contra acidentes.
+  * Reduz efeitos colaterais ao adicionar funcionalidades.
+
+## Testes de Unidade
+
+  - Projeto grande, prolongado, com muitos colaboradores.
+  - Evitar quebra acidental do código.
+  - Perceber os efeitos colaterais dos aprimoramentos.
+  - Repetir sempre os mesmos testes e acrescentar novos.
+  - Testar partes menos ou não usadas pelos usuários.
+  - Testar partes internas e indivisíveis do código.
+
+## Custo
+
+  - Criar os testes demanda tempo.
+  - TODO
+
+## Testes em Pacotes R
+
+  * [RUnit](http://cran-r.c3sl.ufpr.br/web/packages/RUnit/index.html),
+    Roman Zenka e colaboradores.
+  * [svUnit](http://cran-r.c3sl.ufpr.br/web/packages/svUnit/index.html),
+    Philippe Grosjean.
+
+<br><br><br>
+
+Wickham, Hadley. [testthat]: Get Started with Testing. *The R Journal*,
+v.3/1, June 2011.
+
+## Contruindo a Estrutura para Testes
+
+Na raíz do diretório do pacote
+```{r}
+library(devtools)
+
+use_testthat()
+```
+
+Cria de diretório e arquivos
+```
+.
+`-- tests/
+   |-- testthat/
+   `-- testthat.R
+```
+
+Acrescenta o `testthat` no `DESCRIPTION`
+```{r}
+Suggests:
+    testthat
+```
+
+## Organização dos Testes
+
+  - O `tests/testthat.R` configura o esquema de testes.
+  - O `tests/testthat` é um conjunto de arquivos de teste.
+  - Cada arquivo de teste `test_*.R` é um conjunto de testes.
+  - Cada teste `test_that()` é um conjunto de expectativas.
+  - Cada expectativa `expect_*()` avalia uma unidade testável.
+
+---
+
+Conteúdo *default* `/tests/testthat.R`
+```{r}
+library(testthat)
+library(MRDCr)
+
+test_check("MRDCr")
+```
+
+Os arquivos de teste devem ser `test_<.*>.R`
+```{r}
+# Criando dois arquivos.
+file.create("/tests/testthat/test_funprobs.R")
+file.create("/tests/testthat/test_logliks.R")
+```
+```
+.
+`-- tests/
+    |-- testthat/
+    |   |-- test_funprobs.R
+    |   `-- test_logliks.R
+    `-- testthat.R
+```
+
+---
+
+Conteúdo do arquivo `test_funprobs.R`
+```{r}
+context("Testa as Funções de Probabilidade")
+
+test_that("Iguais a Poisson", {
+    y <- 0:30
+    lambda <- 30 * runif(1)
+    py_pois <- dpois(x = y, lambda = lambda)
+    py_pgnz <- dpgnz(y = y, lambda = lambda, alpha = 0)
+    py_gcnt <- dgcnt(y = y, lambda = lambda, alpha = 1)
+    expect_equal(py_pgnz, py_pois)
+    expect_equal(py_gcnt, py_pois)
+})
+```
+
+---
+
+Conteúdo do arquivo `test_logliks.R`
+```{r}
+context("Testa as Funções de Log-Verossimilhança")
+
+test_that("Tem os mesmo argumentos", {
+    a_gcnt <- as.list(formals(llgcnt))
+    a_pgnz <- as.list(formals(llpgnz))
+    expect_equal(a_gcnt, a_pgnz)
+})
+
+test_that("São iguais a Poisson", {
+    y <- 0:10
+    X <- cbind(y * 0 + 1)
+    lamb <- 10 * runif(1)
+    ll_pois <- -sum(dpois(x = y, lambda = lamb, log = TRUE))
+    ll_pgnz <- llpgnz(params = c(0, log(lamb)), y = y, X = X)
+    ll_gcnt <- llgcnt(params = c(log(1), log(lamb)), y = y, X = X)
+    expect_equal(ll_pgnz, expected = ll_pois)
+    expect_equal(ll_gcnt, expected = ll_pois)
+})
+
+test_that("Inteiros negativos resultam em Warning", {
+    y <- -4:-1
+    X <- cbind(y * 0 + 1)
+    lamb <- 10 * runif(1)
+    expect_warning(llpgnz(params = c(0, log(lamb)), y = y, X = X))
+    expect_warning(llgcnt(params = c(log(1), log(lamb)), y = y, X = X))
+})
+```
+
+---
+
+Estrutura completa
+```
+.
+`-- tests/
+    |-- testthat/
+    |   |-- test_funprobs.R "Testa as Funções de Probabilidade"
+    |   |   `-- test_that: "Iguais a Poisson"
+    |   |       |-- expect ...
+    |   |       `-- expect ...
+    |   `-- test_logliks.R "Testa as Funções de Log-Verossimilhança"
+    |       |-- test_that: "Tem os mesmos argumentos"
+    |       |   `-- expect ...
+    |       |-- test_that: "São iguais a Poisson"
+    |       |   |-- expect ...
+    |       |   `-- expect ...
+    |       `-- test_that: "Inteiros negativos resultam em Warning"
+    |           |-- expect ...
+    |           `-- expect ...
+    `-- testthat.R
+```
+
+## Executando os Testes
+
+Executa apenas os Testes
+```{r}
+# Executa os scripts em /tests/testhat/ .
+test()
+```
+```
+Testing MRDCr
+Testa as Funções de Probabilidade: ..
+Testa as Funções de Log-Verossimilhança: .....
+```
+
+Verifica o pacote
+```{r}
+check()
+```
+```
+... omitido ...
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ...
+  Running ‘testthat.R’
+ OK
+* DONE
+```
+
+## Quando os Testes Falham
+
+```{r}
+test()
+```
+```
+Testing MRDCr
+Testa as Funções de Probabilidade: ..
+Testa as Funções de Log-Verossimilhança: 12...
+
+Failed -------------------------------------------------------------------------
+1. Failure: Tem os mesmo argumentos (@test_logliks.R#6) ------------------------
+`a_gcnt` not equal to 3.
+Modes: list, numeric
+names for target but not for current
+Length mismatch: comparison on first 1 components
+Component 1: Modes of target, current: name, numeric
+Component 1: target, current do not match when deparsed
+
+2. Failure: São iguais a Poisson (@test_logliks.R#16) --------------------------
+`ll_pgnz` not equal to `ll_pois`.
+1/1 mismatches
+[1] 30.8 - 43 == -12.2
+```
+
+## Recomendações
+
+  * Concentre testes na interface externa das funções.
+  * Teste um componente do código apenas em um lugar, evite duplicar.
+  * Concentre testes no código frágil, imaturo e cheio de
+    interdependências.
+  * Sempre escreva um teste ao encontrar um bug, adote a *test-first
+    philosophy*.
+
+## Pacotes para Fazer Consulta
+
+  - [`MRDCr`] - *Modelos de Regressão para Dados de Contagem com o R*,
+    Walmes Zeviani, Eduardo Jr e Cesar Taconeli (LEG/UFPR).
+  - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*,
+    Wagner Hugo Bonat e colaboradores (LEG/UFPR).
+  - [`breedR`] - *Statistical Methods for Forest Genetic Resources
+    analysts*, Facundo Muñoz.
+  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*,
+    Ben Bolker.
+
+---
+
+  - [`glmtools`] - *Tools for Interacting with the General Lake Model
+    (GLM) in R*, USGS-R.
+  - [`forecast`] - *Methods and Tools for Displaying and Analysing
+    Univariate Time Series*, Rob J Hyndman.
+  - [`lintr`] - *Static Code Analysis for R*, Jim Hester (RStudio,
+    Bioconductor).
+
+## Considerações Finais
+
+  * Testes garatem que o código faça o deve fazer.
+  * Exigem em uma camada extra de dedicação.
+  * São fundamentais em projetos colborativos, grande e longos.
+  * O `devtools + testthat` simplificam o processo para desenvolvimentos
+    de pacotes R.
+
+## Além disso
+
+  * Use um Sistema de Controle de Versão (e.g. Git).
+  * Disponibilize seu código (e.g. GitHub ou GitLab).
+
+<!------------------------------------------- -->
+
+[`MRDCr`]: https://github.com/leg/MRDCr/tree/master/tests
+[`mcglm`]: https://github.com/wbonat/mcglm/tree/master/tests
+[`breedR`]: https://github.com/famuvie/breedR/tree/master/tests
+[`glmtools`]: https://github.com/USGS-R/glmtools/tree/master/tests
+[`forecast`]: https://github.com/robjhyndman/forecast/tree/master/tests
+[`lintr`]: https://github.com/jimhester/lintr/tree/master/tests
+[`bbmle`]: https://github.com/cran/bbmle/tree/master/tests
+[testthat]: http://cran-r.c3sl.ufpr.br/web/packages/testthat/index.html

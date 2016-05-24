@@ -1,0 +1,366 @@
+---
+title: "Pacote R"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+```
+
+## Pacotes
+
+  * Conjunto de funções e dados ...
+
+## Estrutura de um pacote
+
+```
+meuPack/
+|-- DESCRIPTION    * (informação & configuração)
+|-- NAMESPACE      * (organização)
+|-- R/             * (código, .R)
+|-- man/           * (documentação, .Rd)
+|-- data/            (dados, .RData, .rda)
+|-- vignettes/       (tutoriais, .Rnw, Rmd)
+|-- tests/           (testes, .R)
+|-- inst/            (arquivos extras)
+|-- data-raw/        (dados crus, .txt, .csv, .R)
+|-- demo/            (demonstrações)
+|-- src/             (funções externas, .c, .cpp, .h)
+`-- LICENSE
+```
+
+---
+
+Você pode...
+
+  * Criar a estrutura passo a passo.
+  * Usar [`package.skeleton()`].
+  * Usar o pacote [`devtools`].
+
+<br><br><br><br><br>
+
+Você deve...
+
+  * Ler o [Writing R Extensions]
+
+---
+
+Com o `package.skeleton()`
+
+```
+> data(cars)
+> utils::package.skeleton()
+Creating directories ...
+Creating DESCRIPTION ...
+Creating NAMESPACE ...
+Creating Read-and-delete-me ...
+Saving functions and data ...
+Making help files ...
+Done.
+Further steps are described in './anRpackage/Read-and-delete-me'.
+```
+```
+anRpackage
+|-- data/
+|   `-- cars.rda
+|-- DESCRIPTION
+|-- man/
+|   |-- anRpackage-package.Rd
+|   `-- cars.Rd
+|-- NAMESPACE
+`-- Read-and-delete-me
+```
+
+## Usando o pacote `devtools`
+
+```{r create, comment=NA, include=FALSE, purl=FALSE}
+library(devtools)
+if (dir.exists(paths="./meupacote")) {
+    unlink("./meupacote/", recursive = TRUE, force = TRUE)
+}
+```
+```{r, comment=NA, eval=TRUE}
+# Carrega o pacote devtools.
+library(devtools)
+
+# Cria o pacote.
+create("meupacote", rstudio = FALSE)
+```
+```{r, include=FALSE}
+# Guarda no NAMESPACE vazio para exibir lá na frente.
+namespace <- readLines("./meupacote/NAMESPACE")
+```
+
+---
+
+```{r, echo=FALSE, results="markup", comment=NA}
+cat(system("tree -F --charset=ascii meupacote/", intern = TRUE),
+    sep = "\n")
+```
+
+## O arquivo `DESCRIPTION`
+
+```{r, include=FALSE}
+cat(file = "meupacote/DESCRIPTION", sep = "\n",
+    sprintf('Package: meupacote
+Title: Meu Primeiro Pacote R
+Version: 0.0-1
+Authors@R: as.person(c(
+    "Fernando de Pol Mayer <fernando.mayer@ufpr.br> [aut,cre]",
+    "Walmes Marques Zeviani <walmes@ufpr.br> [aut]"))
+Description: Esse é o primeiro pacoteque estamos fazendo. Nesse tutorial
+    o pacote será desenvolvido com funções, dados e vinheta.
+License: GPL-3
+URL: http://git.leg.ufpr.br/leg/prr
+BugReports: http://git.leg.ufpr.br/leg/prr/issues
+LazyData: true
+Encoding: UTF-8
+Depends:
+    R (>= %s)', getRversion()))
+```
+```{r, echo=FALSE, comment=NA}
+cat(readLines("./meupacote/DESCRIPTION"), sep = "\n")
+```
+
+---
+
+  * `Package`: nome do pacote, sem espaços, começar com alfa e conter
+     apenas alfanumerico.
+  * `Title`: título do pacote.
+  * `Version` : versão do pacote, `x.y-z` ou `x.y.z` para *major*,
+     *minor* e *patch*.
+  * `Author` ou `Authors@R`: declara os desenvolvedores do pacote, com
+     email e papel no desenvolvimento (criador/mantenedor, autor e
+     colaborador).
+  * `Description`: descrição do que o pacote faz.
+
+---
+
+  * `Depends`: Pacotes com as versões.
+  * `Imports`: Pacotes do qual o seu importa funções (ex: chama nas
+     definições das funções).
+  * `Suggests`: Pacotes que o seu usa sem importar (ex: chama nas
+     vinhetas ou testes).
+
+<br><br><br><br>
+
+[Imports v Depends](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/)
+
+---
+
+  * `License`: tipo de licensa.
+  * `LazyData`: Se TRUE, dados são carrados apenas quando chamados.
+  * `URL`: endereço do pacote
+  * `BugReports`: endereço para envio de bugs
+  * `Encoding`: `UTF-8` para permitir non-ASCII no pacote.
+  * `VignetteBuilder`: mecanismo de geração de vinheta.
+
+## Adicionando Funções ao Pacote
+
+```{r, eval=FALSE}
+# Função salva em R/pitagoras.R.
+pitagoras <- function(a, b){
+    h <- sqrt(a^2 + b^2)
+    return(h)
+}
+```
+```{r, include=FALSE}
+file.copy(from = "./aux/pitagoras.R", to = "./meupacote/R/pitagoras.R")
+```
+```{r, echo=FALSE, results="markup", comment=NA}
+cat(system("tree -F --charset=ascii meupacote/", intern = TRUE),
+    sep = "\n")
+```
+
+---
+
+
+```{r, echo=TRUE, eval=FALSE}
+# Carrega todas as funções do pacote. Assume estar em meupacote/.
+load_all()
+```
+```{r, echo=FALSE, eval=TRUE}
+load_all("meupacote/")
+```
+```{r}
+# Note que o package:meupacote foi carregado.
+head(search())
+
+# Os objetos do pacote disponíveis.
+ls("package:meupacote")
+
+pitagoras
+```
+
+## Documentar a função
+
+  * Documentação acontece em arquivos `man/*.Rd`.
+  * Definição e documentação ficam separadas.
+  * O `package.skeleton()` pode criar os moldes.
+  * Como o [`roxygen2`] a documentação é escrita com a função.
+
+```{r, eval=FALSE, include=FALSE}
+package.skeleton(path = "~/Downloads",
+                 list = "pitagoras",
+                 force = TRUE)
+```
+
+---
+
+Documentação com `roxygen2`
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/R/pitagoras.R"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+Processando o texto `R/pitagoras.R`
+```{r, echo=TRUE, eval=FALSE}
+# Gera/autualiza do diretório man/ com as documentações.
+document()
+```
+```{r, echo=FALSE, eval=TRUE}
+document("meupacote/")
+```
+```{r, echo=FALSE, comment=NA}
+cat(system("tree --charset=ascii -F ./meupacote/ | head -n -2",
+           intern = TRUE),
+    sep = "\n")
+```
+
+---
+
+Resulta na documentação em `man/pitagoras.Rd`
+```{r, echo=FALSE, comment=NA, results="asis"}
+cat("```r\n")
+cat(readLines("meupacote/man/pitagoras.Rd"), sep = "\n")
+cat("\n```")
+```
+
+---
+
+Resulta na inclusão no `NAMESPACE`
+```{r, echo=FALSE, comment=NA}
+cat(readLines("meupacote/NAMESPACE"), sep = "\n")
+```
+
+## `roxygen2`
+
+Campos mais utilizados
+```{r, results="asis", echo=FALSE}
+s <- c("@name", "@title", "@usage", "@description", "@param", "@return",
+       "@examples", "@inheritParams", "@author", "@method", "@details",
+       "@format", "@source", "@references", "@seealso", "@docType",
+       "@include", "@slot", "@section", "@field", "@note", "@concepts",
+       "@family", "@keywords", "@rdname", "@describeIn", "@aliases",
+       "@export", "@exportClass", "@exportMethod", "@import",
+       "@importFrom", "@importClassesFrom", "@importMethodsFrom")
+
+cbind.fill <- function(...){
+    nm <- list(...)
+    nm <- lapply(nm, as.matrix)
+    n <- max(sapply(nm, nrow))
+    do.call(cbind, lapply(nm, function (x)
+        rbind(x, matrix(, n - nrow(x), ncol(x)))))
+}
+L <- list(s[1:7], s[8:15], s[16:28], s[29:35])
+
+L <- do.call(cbind.fill, L)
+colnames(L) <- c("Indispensável", "Recomendado", "Organização",
+                 "Exportação")
+L[is.na(L)] <- ""
+knitr::kable(L)
+```
+
+---
+
+Comandos mais utilizados ([Text formatting reference sheet])
+```
+\emph{italico}
+\strong{negrito}
+\code{monoespaco}
+
+\pkg{pacote}
+\link{fun}
+\link[pkg]{fun}
+
+\email{wz@@ufpr.nr}
+\href{www}{texto}
+\url{www}
+
+\describe{\item }
+\itemize{\item }
+\enumerate{\item }
+
+\eqn{\alpha = 1}
+\deqn{X \sim Normal(\mu, \sigma^2)}
+
+\dontrun{x <- 10}
+\dontshow{x <- 10}
+\donttest{x <- 10}
+
+\if{html}{\figure{abc.jpg}{options: width="250px"}}
+\if{latex}{\figure{abc.jpg}{options: width=1.75in}}
+```
+
+---
+
+Verifica se existe mau formação dos campos e comandos
+```{r, echo=TRUE, eval=FALSE}
+# Gera/autualiza do diretório man/ com as documentações.
+check_man()
+```
+```{r, echo=FALSE, eval=TRUE}
+check_man("meupacote/")
+```
+
+## Verificar, construir e instalar
+
+Com mais 3 etapas, tá pronto
+```{r, eval=FALSE}
+# Verificação pente fino.
+check(pkg = "meupacote/", check_dir = "aux/")
+
+# Constroí o tar.gz.
+build()
+
+# Instala o pacote.
+install()
+```
+
+## Resumo
+
+  * Carregar o `devtools`
+  * Criar pacote com `create()`
+  * Editar o `DESCRIPTION`
+  * Criar conteúdo em `R/`
+  * Carregar e experimentar funções com `load_all()`
+  * Fazer a documentação com `roxygen2` nos `R/*.R`.
+  * Gerar `man/*.Rd` com `document()` e verificar com `check_man()`
+  * Verificar todo o pacote com `check()`
+  * Empacotar no `*.tar.gz.` com `build()`
+  * Instalar o pacote com `install()`
+
+## Mais
+
+[Adicionar Funções e Documentar](./capFuncoes_.html)
+
+<!------------------------------------------- -->
+
+[Writing R Extensions]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
+[`package.skeleton()`]: https://stat.ethz.ch/R-manual/R-devel/library/utils/html/package.skeleton.html
+[`devtools`]: https://cran.r-project.org/web/packages/devtools/index.html
+[`roxygen2`]: https://cran.r-project.org/web/packages/roxygen2/index.html
+
+[Text formatting reference sheet]: https://cran.r-project.org/web/packages/roxygen2/vignettes/formatting.html

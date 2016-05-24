@@ -1,0 +1,347 @@
+---
+title: "Vinhetas"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+opts_chunk$set(eval = FALSE)
+# setwd("~/repos/MRDCr/"); devtools::load_all()
+# setwd("~/repos/labestData/"); devtools::load_all()
+# source("~/Dropbox/labestData/func.R")
+```
+
+## Por que Fazer Vinhetas?
+
+  * *Vignette*: vinheta, esboço, epsódio, jingle ...
+  * A documentação do pacote é longa e individualizada.
+  * A vinheta é uma visão geral.
+  * Ilustrar o uso coordenado de funções para um propósito.
+  * Não tem restrição de tamanho, forma ou quantidade.
+  * Vinhetas são a melhor forma de divulgar o pacote.
+  * Permitem tabelas, gráficos, equações e referências bibliográficas.
+
+---
+
+```{r, eval=TRUE, echo=FALSE, results="hide", fig.width = 6, fig.height= 4, out.width = "1200px"}
+tb <- structure(
+    c(0.774686165394073, 0.171735473016695, 0.0535783615892326),
+    class = "table",
+    .Dim = 3L,
+    .Dimnames = structure(list(y = c("0", "1", ">1")),
+                          .Names = "y"))
+
+tbl <- structure(
+    list(px = c(5986L, 1327L, 235L, 85L, 34L, 29L, 11L, 4L, 3L, 4L, 2L,
+                1L, 0L, 1L, 0L, 0L, 0L, 1L, 0L, 1L, 1L, 0L, 1L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 1L),
+         x = 0:45),
+    .Names = c("px", "x"),
+    row.names = c(NA, -46L),
+    class = "data.frame")
+
+totPack <- sum(tbl$px)
+totVin <- sum(tbl$px * tbl$x)
+m <- totVin / totPack
+
+par(mar = c(5, 5, 2, 2))
+plot(px ~ x, data = tbl, type = "h", lwd = 4,
+     xlab = "Número de vinhetas no pacote no CRAN",
+     ylab = "Número no pacotes")
+par(fig = c(0.15, 0.95, 0.15, 1), new = TRUE)
+pie(tb,
+    col = c("red", "orange", "yellow"),
+    labels = sprintf(fmt = "%s (%0.1f%s)",
+                     c(0, 1, ">1"), 100*tb, "%"))
+text(x = 0, y = 0.9, labels = "Frequência relativa", cex = 1.2)
+```
+
+---
+
+Desde a versão 3.0.0 do R...
+
+  * Vinhetas não Sweave são permitidas.
+  * Rmd - RMarkDown: prosa em MarkDown + código R = {html, pdf}.
+  * Rnw-knitr - prosa em LaTex + código R = pdf.
+  * Vinhetas em Rnw-Sweave permanecem válidas.
+
+---
+
+As vinhetas podem ser...
+
+  * Artigos completos em PDF, com texto, equações, tabelas, gráficos e
+    referências.
+  * Usadas como páginas HTML na web como tutoriais, material
+    de ensino ou matérias de blog.
+  * Material de Curso contidas em um pacote com dados e funções
+    disponibilizado aos participantes.
+  * O TCC/Dissertação/Tese e o pacote disponibilizado é o produto final.
+
+## Consultando as Vinhetas Disponíveis
+
+```{r}
+# Abre no navegador.
+browseVignettes()
+
+# Exibe no console.
+vignette()
+
+# Filtra por pacote.
+browseVignettes(package = "devtools")
+vignette(package = "devtools")
+
+# Abre a vinheta.
+vignette(topic = "dependencies", package = "devtools")
+```
+
+## Construindo a Estrutura para Vinhetas
+
+Na raíz do diretório do pacote
+```{r}
+library(devtools)
+
+use_vignette(name = "AnaExpDIC")
+```
+
+Cria de diretório e arquivos
+```
+* Creating `vignettes`.
+* Adding `inst/doc` to ./.gitignore
+```
+```
+.
+`-- vignettes/
+    `-- AnaExpDIC.Rmd
+```
+
+Acrescenta automaticamente ao `DESCRIPTION`
+```
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+```
+
+## Vinheta em RMarkDown para documento HTML
+
+Metadados criados por padrão pela `use_vignettes()`
+```
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "``r paste("r Sys.Date()")``"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```
+
+Também pode ser usado `rmarkdown::html_document`, além de outros.
+
+## Vinheta em RMarkDown para documento PDF
+
+Use `rmarkdown::pdf_document`
+```
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "``r paste("r Sys.Date()")``"
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```
+
+## Vinheta em Rnw-knitr para documento PDF
+
+Crie um documento Rnw com os metadados no topo
+```
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Vignette Title}
+%\VignetteEncoding{UTF-8}
+
+\documentclass{article}
+
+... Preambulo ...
+
+\begin{document}
+
+... Corpo do texto ...
+
+\end{document}
+```
+
+Use *chunk headers* do knitr.
+
+---
+
+Estrutura resumida dos tipos de Vinheta
+```
+Rmd -> HTML | PDF
+|-- output:
+|   |-- rmarkdown::html_vignette
+|   |-- rmarkdown::html_document
+|   `-- rmarkdown::pdf_document
+|-- vignette: >
+|     %\VignetteIndexEntry{Vignette Title}
+|     %\VignetteEngine{knitr::rmarkdown}
+|     %\VignetteEncoding{UTF-8}
+`-- DESCRIPTION
+      Suggests: knitr,
+          rmarkdown
+      VignetteBuilder: knitr
+
+Rnw -> PDF
+|-- vignette: >
+|     %\VignetteIndexEntry{Vignette Title}
+|     %\VignetteEngine{knitr::knitr}
+|     %\VignetteEncoding{UTF-8}
+`-- DESCRIPTION
+      Suggests: knitr,
+      VignetteBuilder: knitr
+```
+
+## Compilando as Vinhetas
+
+Gera o documento final e move arquivos
+```{r}
+# Gera e move todas as vinhetas em vignettes/.
+# build_vignettes(dependencies = FALSE)
+build_vignettes()
+```
+```
+Building labestData vignettes
+Moving AnaExpDIC.pdf, anaExpDBC.pdf, AnaExpDIC.R,
+anaExpDBC.R to inst/doc/
+Copying AnaExpDIC.Rmd, anaExpDBC.Rnw to inst/doc/
+```
+
+Verifica o pacote e o código da vinheta
+```{r}
+check()
+```
+```
+... omitido ...
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+```
+
+## Gerando as Vinhetas Individualmente
+
+  * Útil quando a vinheta está sendo desenvolvida.
+  * `build_vignettes()` demora porque compila todas as vinhetas.
+
+<br><br><br><br>
+
+```{r}
+rmarkdown::render("vignettes/AnaExpDIC.Rmd")
+```
+```
+./vignettes
+|-- AnaExpDIC.html
+`-- AnaExpDIC.Rmd
+```
+
+Na `vignettes/` ficam os fontes e arquivos auxiliares, na `inst/doc`
+apenas os *outputs* finais.
+
+## MarkDown vs LaTeX
+
+  * Markdown é mais vantajoso.
+  * Menor distração, foco no conteúdo.
+  * Tem os ambinentes mais importantes.
+  * É facilmente convertido para outros formatos de saída.
+  * Converte bem para LaTeX.
+  * Aceita código LaTeX e HTML no meio do MarkDown.
+
+---
+
+Existe bastante recurso no MarkDown-Pandoc.
+
+```
+title: Minha Vinheta
+author: Joselito
+graphics: yes
+output:
+  pdf_document:
+    highlight: default
+    template: template.tex
+    keep_tex: true
+  html_document:
+    highlight: default
+    css: _style.css
+    includes:
+      in_header: _MathJax.html
+      before_body: _before_body.html
+      after_body: _after_body.html
+bibliography: refs.bib
+csl: ABNT_UFPR_2011-Mendeley.csl
+```
+
+Visite <http://rmarkdown.rstudio.com/index.html>.
+
+## Pacotes para Consulta
+
+  - [`MRDCr`] - *Modelos de Regressão para Dados de Contagem com o R*,
+    Walmes Zeviani, Eduardo Jr e Cesar Taconeli (LEG/UFPR).
+    [`labestData`] - *Conjuntos de Dados para Ensino de Estatística*,
+    PET Estatística UFPR.
+  - [`mcglm`] - *Multivariate Covariance Generalized Linear Models*,
+    Wagner Hugo Bonat e colaboradores (LEG/UFPR).
+  - [`breedR`] - *Statistical Methods for Forest Genetic Resources
+    analysts*, Facundo Muñoz.
+  - [`bbmle`] - *Tools for General Maximum Likelihood Estimation*,
+    Ben Bolker.
+  - [`knitr`] - *Elegant, flexible and fast dynamic report generation
+    with R*, [Yihui Xie].
+
+## Considerações Finais
+
+  * A documentação é especifica e individualizada, as vinhetas são 
+    gerais e coordenadas.
+  * As vinhetas são a representação mais fiel de Pesquisa Reproduzível
+    com o R.
+  * Os pacotes `devtools` tem recursos que facilitam a criação e
+    manutenção de vinhetas no pacote.
+  * O `knitr` junto com o PanDoc facilitam a elaboração de vinhetas em
+    RMarkDown.
+  * Vinhetas em HTML tem sido utilizadas com frequência pois permitem
+    animações em Gif, videos, JavaScript e Shiny.
+
+## Além disso
+
+  * Use um Sistema de Controle de Versão (e.g. Git).
+  * Disponibilize seu código (e.g. GitHub ou GitLab).
+  * Disponibilize suas vinhetas no GitHub com `gh-pages`.
+
+## Mais
+
+[Classes, Genéricas e Métodos em S3](./capFunMet_.html)
+
+<!------------------------------------------- -->
+
+[`MRDCr`]: https://github.com/leg/MRDCr/
+[`labestData`]: https://github.com/pet-estatistica/labestData
+[`mcglm`]: https://github.com/wbonat/mcglm/
+[`breedR`]: https://github.com/famuvie/breedR/
+[`bbmle`]: https://github.com/cran/bbmle/
+[Yihui Xie]: yihui.name/knitr/demo/vignette/
+[`knitr`]: https://github.com/yihui/knitr

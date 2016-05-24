@@ -1,0 +1,229 @@
+---
+title: "Classes, Genéricas e Métodos em S3"
+author: "Fernando Mayer & Walmes Zeviani"
+date: "61 RBRAS | 23 a 25 de Maio | Salvador/BA"
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    highlight: haddock
+    transition: fade
+    css: _style_revealjs.css
+    includes:
+      in_header: _MathJax.html
+---
+
+```{r, include=FALSE}
+source("_setup.R")
+# opts_chunk$set(eval = FALSE)
+# setwd("~/repos/MRDCr/"); devtools::load_all()
+# setwd("~/repos/labestData/"); devtools::load_all()
+# source("~/Dropbox/labestData/func.R")
+```
+
+## Definições
+
+Classe
+: Atributo de um objeto que permite associar funções a ele devido ...
+  Ex: `numeric`, `factor`, `data.frame`, `lm`, `glm`, `anova`.
+
+Função genérica
+: Funções cujo comportamento depende da classe do objeto recebido.
+  Ex: `print`, `summary`, `plot`, `anova`.
+
+Método
+: Função que aplicada a um objeto uma classe quando usada uma função
+  genérica. Ex: `summary.lm`, `summary.glm`, `plot.lm`.
+
+## Exemplos
+
+```{r}
+# Métodos disponíveis para a classe aov.
+methods(class = "aov")
+
+# Classes com métodos disponíveis para a função genérica anova().
+methods(generic.function = "anova")
+```
+```{r, eval=FALSE}
+# Exibe a definição da função.
+getS3method(f = "anova", class = "lm")
+getAnywhere("anova.lm")
+```
+
+## Criando Métodos em S3
+
+Função para fazer o teste t para a média de uma população
+
+```{r}
+testTs3 <- function(x, mu0) {
+    m <- mean(x)
+    s <- sd(x)
+    n <- length(x)
+    tstat <- sqrt(n) * abs(m - mu0)/s
+    pval <- 2 * pt(tstat, df = n - 1, lower.tail = FALSE)
+    L <- list(smp_mean = m, smp_sd = s, smp_size = n,
+              pop_mean = mu0, tstat = tstat, pval = pval)
+    class(L) <- "testT_S3"
+    return(L)
+}
+```
+
+---
+
+Método `print` para a classe `testT_S3`
+
+```{r}
+print.testT_S3 <- function(x, ...) {
+    cat("\n    Test t para a média de uma população\n\n")
+    cat("Hipótese H0: a verdadeira média é igual a",
+        x$pop_mean, "\n")
+    cat("Tamanho da amostra:", x$smp_size, "\n")
+    cat("Média da amostra:", x$smp_mean, "\n")
+    cat("Desvio-padrão da amostra:", x$smp_sd, "\n")
+    cat("Estatística do teste:", x$tstat, "\n")
+    cat("P-valor do teste:", x$tstat, "\n\n")
+    invisible()
+}
+```
+
+---
+
+Método `plot` para a classe `testT_S3`
+
+```{r}
+plot.testT_S3 <- function(x, ...) {
+    xlim <- range(c(-5, 5, x$tstat))
+    curve(dt(t, df = x$smp_size - 1),
+          from = xlim[1], to = xlim[2], xname = "t",
+          xlab = "t", ylab = "f(t)")
+    abline(v = x$tstat, col = 2)
+    abline(v = qt(c(0.025, 0.975), df = x$smp_size - 1),
+           lty = 2)
+    invisible()
+}
+```
+
+---
+
+Usando a função
+
+```{r}
+methods(class = "testT_S3")
+
+x <- rnorm(10, 0, 1)
+a <- testTs3(x = x, mu0 = 0)
+a
+```
+
+---
+
+```{r}
+plot(a)
+```
+
+## Documentando os Métodos S3
+
+A função principal não é método
+```{r, eval=FALSE}
+#' @name testTs3
+#' @title Teste t para a média com amostra de uma população
+#' @description Função que calcula o teste para a média de uma população
+#'     a partir de uma amostra aleatória simples.
+#' @param x Vetor com os valores observados na amostra.
+#' @param mu0 Média da população sob a hipótese nula.
+#' @return Uma lista com 6 elementos.
+#' @export
+#' @import graphics stats
+#' @examples
+#'
+#' x <- rnorm(10, 0, 1)
+#' a <- testTs3(x = x, mu0 = 0)
+#' print(a)
+#' plot(a)
+#'
+testTs3 <- function(x, mu0) {
+    m <- mean(x)
+    s <- sd(x)
+    n <- length(x)
+    tstat <- sqrt(n) * abs(m - mu0)/s
+    pval <- 2 * pt(tstat, df = n - 1, lower.tail = FALSE)
+    L <- list(smp_mean = m, smp_sd = s, smp_size = n,
+              pop_mean = mu0, tstat = tstat, pval = pval)
+    class(L) <- "testT_S3"
+    return(L)
+}
+```
+
+---
+
+Primeiro bloco do arquivo `metodos.R`.
+```{r, eval=FALSE}
+#' @name testT_S3-class
+#' @title Funções método para a classe
+#' @description Métodos para objetos da classe \code{testT_S3}.
+#' @param x Um objeto de classe \code{testT_S3}.
+#' @param ... Atualmente não usado para nada.
+NULL
+```
+
+---
+
+Segundo bloco do arquivo `metodos.R`.
+```{r, eval=FALSE}
+#' @rdname testT_S3-class
+#' @export
+#' @method print testT_S3
+print.testT_S3 <- function(x, ...) {
+    cat("\n    Test t para a m\u00e9dia de uma popula\u00e7\u00e3o\n\n")
+    cat("Hip\u00f3tese H0: a verdadeira m\u00e9dia \u00e9 igual a",
+        x$pop_mean, "\n")
+    cat("Tamanho da amostra:", x$smp_size, "\n")
+    cat("M\u00e9dia da amostra:", x$smp_mean, "\n")
+    cat("Desvio-padr\u00e3o da amostra:", x$smp_sd, "\n")
+    cat("Estat\u00edstica do teste:", x$tstat, "\n")
+    cat("P-valor do teste:", x$tstat, "\n\n")
+    invisible()
+}
+```
+
+Em texto non-ASCII, use:
+```{r}
+cat(stringi::stri_escape_unicode("Estatística do teste:"), "\n")
+```
+
+---
+
+Terceiro bloco do arquivo `metodos.R`.
+```{r, eval=FALSE}
+#' @rdname testT_S3-class
+#' @export
+#' @method plot testT_S3
+plot.testT_S3 <- function(x, ...) {
+    xlim <- range(c(-5, 5, x$tstat))
+    curve(dt(t, df = x$smp_size - 1),
+          from = xlim[1], to = xlim[2], xname = "t",
+          xlab = "t", ylab = "f(t)")
+    abline(v = x$tstat, col = 2)
+    abline(v = qt(c(0.025, 0.975), df = x$smp_size - 1),
+           lty = 2)
+    invisible()
+}
+```
+
+## Sobre S4
+
+  * [R packages part 3: full tilt](http://nicolaroberts.github.io/r-packages-part-3/),
+    por [Nicola Roberts](https://twitter.com/NicolaRbrts).
+  * [jefferis/lreg](https://github.com/jefferis/lreg) para ver um
+    exemplo de Gregory Jefferis.
+
+## Considerações Finais
+
+  * Programar em S3 é tão simples quanto documentar.
+  * Em S4 não é. Não existem tantos exemplos combinando `devtools +
+    roxygen2 + S4`.
+
+## Mais
+
+[Testes](./capTestes_.html)
+
+<!------------------------------------------- -->
